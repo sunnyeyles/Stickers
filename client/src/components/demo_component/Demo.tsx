@@ -8,7 +8,13 @@ export const Demo = () => {
     <>
       <Text>Count: {count}</Text>
       <Group position="center">
-        <Button onClick={handlers.increment}></Button>
+        <Button
+          // sx prop to override styles
+          sx={{}}
+          onClick={handlers.increment}
+          radius="sm"
+          variant="outline"
+        ></Button>
         <Button onClick={handlers.decrement}>Decrement</Button>
         <Button onClick={handlers.reset}>Reset</Button>
         <Button onClick={() => handlers.set(5)}>Set 5</Button>

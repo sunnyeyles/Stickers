@@ -1,4 +1,4 @@
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, Container, Button } from "@mantine/core";
 import { ReactNode } from "react";
 
 interface IMainTheme {
@@ -25,6 +25,30 @@ export const MainTheme = ({ children }: IMainTheme) => {
           sizes: {
             h1: { fontSize: "2rem" },
           },
+        },
+
+        components: {
+          // Button styles
+          // Button: {
+          //   defaultProps: {
+          //     size: "medium",
+          //     variant: "outline",
+          //   },
+          //   styles: {
+          //     root: {
+          //       // Add custom styles here
+          //       backgroundColor: "blue",
+          //       color: "white",
+          //       // border radiuses set, you can now pass the mantine Button component the radius prop(radius="") "sm", "md", "lg" respectively
+          //       // radius: {
+          //       //   sm: "4px",
+          //       //   md: "8px",
+          //       //   lg: "12px",
+          //       // },
+          //     },
+          //   },
+          // },
+          Input: {},
         },
       }}
     >
