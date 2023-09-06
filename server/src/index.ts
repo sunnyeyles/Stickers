@@ -1,7 +1,8 @@
-import fs from "fs";
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import bodyParser from "body-parser";
+import router from "./routes.ts/routes";
 
 const app: Express = express();
 const port = process.env.PORT || 3001;

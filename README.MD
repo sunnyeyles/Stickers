@@ -6,7 +6,7 @@
 
 ### naming
 
-- underscore(\_) for naming files - example_file.ts
+- underscore(_) for naming files - example_file.ts
 - PascalCase for naming tsx components - Example.tsx
 - use single quotes(''), not double quotes(""), and not semi-colons ; - this has been configured with eslint anyway to autocorrect
 - always use arrow functions, and export modularly(is that even a word?) -
