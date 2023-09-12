@@ -13,7 +13,7 @@ export const createNewUser = async (req: Request, res: Response) => {
   console.log(req.body);
   try {
     // Hash the user's password before saving it to the database
-    const saltRounds = 10; // Set the number of salt rounds
+    const saltRounds = 10;
     if (!newUser.password) {
       throw new Error("Password is required");
     }
@@ -27,7 +27,7 @@ export const createNewUser = async (req: Request, res: Response) => {
     // Send a success response with the newly created user data
     res.status(201).json(newUser);
   } catch (error) {
-    console.error("Error creating user:", error); // Log the error for debugging
+    console.error("Error creating user:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -39,6 +39,7 @@ export const userAuth = async (req: Request, res: Response) => {
 
   try {
     // Find the user in the database by email
+
     const user = await User.findOne({ email });
     if (!user) {
       return res
@@ -53,13 +54,9 @@ export const userAuth = async (req: Request, res: Response) => {
       return res
         .status(401)
         .json({ success: false, message: "Invalid password" });
+    } else {
+      return res.status(200).json({ success: true, "user:": user });
     }
-
-    // Create a payload for the JWT token
-    const payload = {
-      _id: user._id,
-      email: user.email,
-    };
   } catch (error) {
     console.error("Error during authentication:", error);
     return res
@@ -89,5 +86,43 @@ export const changeUserPassword = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+///// GET USER DETAILS
+export const getUserDetailsByEmail = async (req: Request, res: Response) => {
+  // const { email } = req.body;
+  const { email } = req.query;
+  try {
+    // Find the user in the database by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    res.status(201).json(user);
+  } catch (error) {
+    console.error("Error during authentication:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+////// GET ALL USERS
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+    if (!users) {
+      return res.status(404).json({ success: false, message: "Nothing Found" });
+    }
+    res.status(201).json(users);
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 };
