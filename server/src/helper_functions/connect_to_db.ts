@@ -8,7 +8,6 @@ export const connectToDatabase = async () => {
     const dbPassword = process.env.DB_PASSWORD;
     await mongoose.connect(
       `mongodb+srv://${dbUsername}:${dbPassword}@ecommerce.1rapvds.mongodb.net/?retryWrites=true&w=majority`,
-
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
