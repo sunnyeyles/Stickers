@@ -1,4 +1,4 @@
-import { MantineProvider, Container, Button } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { ReactNode } from "react";
 
 interface IMainTheme {
@@ -12,7 +12,7 @@ export const MainTheme = ({ children }: IMainTheme) => {
       withNormalizeCSS
       inherit
       theme={{
-        colorScheme: "dark",
+        colorScheme: "light",
         fontFamily: "monospace",
 
         shadows: {
@@ -28,27 +28,45 @@ export const MainTheme = ({ children }: IMainTheme) => {
         },
 
         components: {
-          // Button styles
-          // Button: {
-          //   defaultProps: {
-          //     size: "medium",
-          //     variant: "outline",
-          //   },
-          //   styles: {
-          //     root: {
-          //       // Add custom styles here
-          //       backgroundColor: "blue",
-          //       color: "white",
-          //       // border radiuses set, you can now pass the mantine Button component the radius prop(radius="") "sm", "md", "lg" respectively
-          //       // radius: {
-          //       //   sm: "4px",
-          //       //   md: "8px",
-          //       //   lg: "12px",
-          //       // },
-          //     },
-          //   },
-          // },
-          Input: {},
+          //Button styles
+          Button: {
+            defaultProps: {
+            },
+            styles: {
+              root: {
+                '&:focus-within': {
+                  backgroundColor: "#f5901c",
+                },
+                '&:hover': {
+                  backgroundColor: "#B14630",
+                },
+                // Add custom styles here
+                backgroundColor: "#f5901c",
+                color: "white",
+                // border radiuses set, you can now pass the mantine Button component the radius prop(radius="") "sm", "md", "lg" respectively
+                // radius: {
+                //   sm: "4px",
+                //   md: "8px",
+                //   lg: "12px",
+                // },
+              },
+            },
+          },
+          
+          Input: {
+            defaultProps: {
+              variant: 'filled',
+            },
+            styles: {
+              input: { 
+                '&:focus-within': {
+                  borderColor: "#f5901c",
+                },
+                backgroundColor: "#f7e3cb",
+                boxShadow: "5px 5px #f5901c"
+              },
+            },
+          },
         },
       }}
     >

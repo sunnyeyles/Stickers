@@ -1,9 +1,9 @@
 import { MainTheme } from "./styles/MainTheme";
-import { Demo } from "./components/demo_component/Demo";
+import { LoginForm } from "./components/loginForm/LoginForm";
 export default function App() {
   return (
     <MainTheme>
-      <Demo />
+      <LoginForm />
     </MainTheme>
   );
 }
