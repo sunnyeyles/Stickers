@@ -11,7 +11,8 @@ import {
   rem,
   Grid
 } from '@mantine/core';
-import { TextInput, PasswordInput } from 'react-hook-form-mantine';
+import { TextInput } from '../textInput/TextInput'
+import { PasswordInput } from '../passwordInput/PasswordInput'
 import { GoogleButton, TwitterButton } from '../socialButtons/SocialButtons';
 import Duck from '../../assets/duck_big.png'
 import { ButtonTheme } from '../../styles/ButtonTheme';
@@ -34,31 +35,31 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const formSchema = z
-    .object({
-      email: z.string().email("Invalid email").min(1, "Email is required"),
-      password: z
-        .string()
-        .min(1, "Password is required")
-        .min(8, "Password must have more than 8 characters")
-    })
+  .object({
+    email: z.string().email("Invalid email").min(1, "Email is required"),
+    password: z
+      .string()
+      .min(1, "Password is required")
+      .min(8, "Password must have more than 8 characters")
+  })
 
 type FormSchemaType = z.infer<typeof formSchema>
 
 export function LoginForm() {
   const [type, toggle] = useToggle(['login', 'register']);
   const { classes } = useStyles();
-  const { 
-    control, 
-    handleSubmit,
-    formState: {isSubmitting },
-  } = useForm<FormSchemaType>({
+  const { control,handleSubmit,formState: { isSubmitting }} = useForm<FormSchemaType>({
+    defaultValues: {
+      email: "",
+      password: ""
+    },
     resolver: zodResolver(formSchema),
   })
 
   const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
     console.log(data)
   }
-  
+
   return (
     <>
       <Grid justify="space-around" align="center">
@@ -79,6 +80,15 @@ export function LoginForm() {
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack>
+                    <TextInput
+                      control={control}
+                      placeholder="Email"
+                      size='md'
+                      radius="md"
+                      id='email'
+                      name='email'
+                    />
+
                 {/* {type === 'register' && (
                 <TextInput
                   label="Name"
@@ -89,16 +99,8 @@ export function LoginForm() {
                 />
               )} */}
 
-                <TextInput
-                  placeholder="Email"
-                  size='md'
-                  radius="md"
-                  id='email'
-                  control={control}
-                  name='email'
-                />
-
                 <PasswordInput
+                  type='password'
                   placeholder="Password"
                   mt="md"
                   size="md"
@@ -129,11 +131,11 @@ export function LoginForm() {
                     ? 'Already have an account? Login'
                     : "Don't have an account? Register"}
                 </Anchor>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   radius="xl"
                   disabled={isSubmitting}
-                  >
+                >
                   {upperFirst(type)}
                 </Button>
               </Group>
