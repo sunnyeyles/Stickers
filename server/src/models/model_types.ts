@@ -9,8 +9,11 @@ export interface IUser extends Document {
 }
 
 export interface IItem extends Document {
+  _id: mongoose.Types.ObjectId;
   itemName: string;
   itemPrice: string;
   itemCategory: string;
   itemsInStock: number;
+  reduced?: boolean;
+  percentageReduced?: number;
 }
