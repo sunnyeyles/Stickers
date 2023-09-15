@@ -1,12 +1,12 @@
 import express, { Router } from "express";
 import { User } from "../models/model";
 import {
-  createNewUser,
-  userAuth,
-  changeUserPassword,
   getUserDetailsByEmail,
   getAllUsers,
 } from "../controllers/usersController";
+import { createNewUser } from "../controllers/createUser";
+import { changeUserPassword } from "../controllers/changePassword";
+import { userAuth } from "../controllers/userAuth";
 import {
   getAllItemsFromDb,
   getItemsByCategory,
