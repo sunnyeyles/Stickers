@@ -67,7 +67,7 @@ export function LoginForm() {
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
     const user = await login(loginData).unwrap()
     dispatch(setCredentials(user))
-    navigate('/dashboard')
+    navigate('/')
   }
 
   return (
