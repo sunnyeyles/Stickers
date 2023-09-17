@@ -17,7 +17,6 @@ const navBarItems = [
 ];
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Demo } from "./components/demo_component/Demo";
 import { Dashboard } from "./components/dashboard/Dashboard";
 export default function App() {
   return (
@@ -27,7 +26,6 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Dashboard />}/>
           <Route path='/login' element={<LoginForm />}/>
-          <Route path='/dashboard' element={<Dashboard />}/>
         </Routes>
       </BrowserRouter>
     </MainTheme>
