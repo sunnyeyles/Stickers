@@ -17,27 +17,19 @@ export const changeUserPassword = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Debugging: Log the retrieved user and current password
-    console.log("Retrieved User:", user);
-    console.log("Current Password:", currentPassword);
-
     // Verify that the current password matches the user's actual password
-    const isPasswordValid = await bcrypt.compare(
-      currentPassword,
-      user.password
-    );
-
-    // Debugging: Log the result of password comparison
-    console.log("Is Password Valid:", isPasswordValid);
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
 
     // If the current password is incorrect, return a 401 response
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Current password is incorrect" });
     }
-    // problem with JSON data here
+    
+    // If current password is correct, hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // Update the user's password
-    user.password = newPassword;
+    user.password = hashedPassword;
     await user.save();
 
     // Return a 200 response with a success message and the updated user object
