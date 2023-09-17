@@ -1,4 +1,4 @@
-import { useToggle, upperFirst } from '@mantine/hooks';
+import { useToggle, upperFirst } from "@mantine/hooks";
 import {
   Title,
   Paper,
@@ -9,73 +9,82 @@ import {
   Anchor,
   Stack,
   rem,
-  Grid
-} from '@mantine/core';
-import { TextInput } from '../textInput/TextInput'
-import { PasswordInput } from '../passwordInput/PasswordInput'
-import { GoogleButton, TwitterButton } from '../socialButtons/SocialButtons';
-import Duck from '../../assets/duck_big.png'
-import { ButtonTheme } from '../../styles/ButtonTheme';
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../app/features/auth/authApi';
-import { setCredentials } from '../../app/features/auth/authSlice';
+  Grid,
+} from "@mantine/core";
+import { TextInput } from "../textInput/TextInput";
+import { PasswordInput } from "../passwordInput/PasswordInput";
+import { GoogleButton, TwitterButton } from "../socialButtons/SocialButtons";
+import Duck from "../../assets/duck_big.png";
+import { ButtonTheme } from "../../styles/ButtonTheme";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../app/features/auth/authApi";
+import { setCredentials } from "../../app/features/auth/authSlice";
 
 const useStyles = createStyles((theme) => ({
   form: {
     maxWidth: rem(450),
-    [theme.fn.smallerThan('sm')]: {
-      maxWidth: '100%',
+    [theme.fn.smallerThan("sm")]: {
+      maxWidth: "100%",
     },
   },
   title: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    color: theme.colorScheme === "dark" ? theme.white : theme.black,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
 }));
 
-const formSchema = z
-  .object({
-    email: z.string().email("Invalid email").min(1, "Email is required"),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .min(8, "Password must have more than 8 characters")
-  })
+const formSchema = z.object({
+  email: z.string().email("Invalid email").min(1, "Email is required"),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(8, "Password must have more than 8 characters"),
+});
 
-export type FormSchemaType = z.infer<typeof formSchema>
+export type FormSchemaType = z.infer<typeof formSchema>;
 
 export function LoginForm() {
-  const [type, toggle] = useToggle(['login', 'register']);
+  const [type, toggle] = useToggle(["login", "register"]);
   const { classes } = useStyles();
-  const { control, handleSubmit, formState: { isSubmitting } } = useForm<FormSchemaType>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<FormSchemaType>({
     defaultValues: {
       email: "",
-      password: ""
+      password: "",
     },
     resolver: zodResolver(formSchema),
-  })
+  });
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [login] = useLoginMutation()
+  const [login] = useLoginMutation();
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
-    const user = await login(loginData).unwrap()
-    dispatch(setCredentials(user))
-    navigate('/')
-  }
+    const user = await login(loginData).unwrap();
+    dispatch(setCredentials(user));
+    navigate("/");
+  };
 
   return (
     <>
       <Grid justify="space-around" align="center">
         <Grid.Col xs={12} sm={5} offsetSm={1} lg={4} offsetLg={1}>
           <Paper className={classes.form} radius={0} p={30}>
-            <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+            <Title
+              order={2}
+              className={classes.title}
+              ta="center"
+              mt="md"
+              mb={50}
+            >
               Welcome to the best Webstore ever, {type} with
             </Title>
 
@@ -86,17 +95,21 @@ export function LoginForm() {
               </ButtonTheme>
             </Group>
 
-            <Divider label="Or continue with email" labelPosition="center" my="lg" />
+            <Divider
+              label="Or continue with email"
+              labelPosition="center"
+              my="lg"
+            />
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack>
                 <TextInput
                   control={control}
                   placeholder="Email"
-                  size='md'
+                  size="md"
                   radius="md"
-                  id='email'
-                  name='email'
+                  id="email"
+                  name="email"
                 />
 
                 {/* {type === 'register' && (
@@ -109,15 +122,24 @@ export function LoginForm() {
                 />
               )} */}
 
-                <PasswordInput
-                  type='password'
+                {/* <PasswordInput
+                  type="password"
                   placeholder="Password"
                   mt="md"
                   size="md"
                   radius="md"
-                  id='password'
+                  id="password"
                   control={control}
-                  name='password'
+                  name="password"
+                /> */}
+                <PasswordInput
+                  placeholder="Password"
+                  mt="md"
+                  size="md"
+                  radius="md"
+                  id="password"
+                  control={control}
+                  name="password"
                 />
 
                 {/* {type === 'register' && (
@@ -137,15 +159,11 @@ export function LoginForm() {
                   onClick={() => toggle()}
                   size="xs"
                 >
-                  {type === 'register'
-                    ? 'Already have an account? Login'
+                  {type === "register"
+                    ? "Already have an account? Login"
                     : "Don't have an account? Register"}
                 </Anchor>
-                <Button
-                  type="submit"
-                  radius="xl"
-                  disabled={isSubmitting}
-                >
+                <Button type="submit" radius="xl" disabled={isSubmitting}>
                   {upperFirst(type)}
                 </Button>
               </Group>
@@ -155,7 +173,7 @@ export function LoginForm() {
 
         <Grid.Col xs={12} sm={6} lg={4}>
           <Paper p={30}>
-            <img src={Duck} alt="Your Image" width='100%' height='auto' />
+            <img src={Duck} alt="Your Image" width="100%" height="auto" />
           </Paper>
         </Grid.Col>
       </Grid>

@@ -3,20 +3,22 @@ import { User } from "../models/model";
 import {
   getUserDetailsByEmail,
   getAllUsers,
-} from "../controllers/usersController";
-import { createNewUser } from "../controllers/createUser";
-import { changeUserPassword } from "../controllers/changePassword";
-import { userAuth } from "../controllers/userAuth";
+} from "../controllers/users_controller";
+import { createNewUser } from "../controllers/create_user";
+import { changeUserPassword } from "../controllers/change_password";
+import { userAuth } from "../controllers/user_auth";
+import { userLogOut } from "../controllers/user_log_out";
 import {
   getAllItemsFromDb,
   getItemsByCategory,
-} from "../controllers/itemsController";
+} from "../controllers/items_controller";
 
 const router: Router = express.Router();
 
 //// USER ENDPOINTS
 router.post("/user/create-user", createNewUser);
 router.post("/user/authenticate-user", userAuth);
+router.post("/user/user-log-out", userLogOut);
 router.put("/user/change-user-password", changeUserPassword);
 router.get("/user/get-user-details-by-email", getUserDetailsByEmail);
 router.get("/user/get-all-users", getAllUsers);
