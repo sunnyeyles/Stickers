@@ -7,12 +7,15 @@ import bcrypt from "bcrypt";
 // ////// USER AUTH
 export const userAuth = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  console.log(req.body);
   try {
     // Find the user in the database by email
     const user = await User.findOne({ email });
+    console.log("user found:", user);
 
     // Check if the user exists
     if (!user) {
+      console.log("no user found");
       return res
         .status(401)
         .json({ success: false, message: "User not found" });
