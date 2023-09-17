@@ -26,6 +26,33 @@ export const MainTheme = ({ children }: IMainTheme) => {
       theme={{
         colorScheme: isDarkTheme ? "dark" : "light",
         fontFamily: "monospace",
+        colors: {
+          // declare colors for consistency, colors will go from lightest to darkest
+          primary: [
+            "#f7e3cb",
+            "#f5901c",
+            "#B14630",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+          ],
+          secondary: [
+            "#94c7c0",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+            "#FFF",
+          ],
+        },
 
         shadows: {
           md: "1px 1px 3px rgba(0, 0, 0, .25)",
@@ -38,45 +65,37 @@ export const MainTheme = ({ children }: IMainTheme) => {
             h1: { fontSize: "2rem" },
           },
         },
-
+        // custom styled deafult components now use the theme colors, this will help with maintainability
         components: {
-          //Button styles
           Button: {
-            defaultProps: {},
-            styles: {
+            styles: (theme) => ({
               root: {
                 "&:focus-within": {
-                  backgroundColor: "#f5901c",
+                  backgroundColor: theme.colors.primary[1],
                 },
                 "&:hover": {
-                  backgroundColor: "#B14630",
+                  backgroundColor: theme.colors.primary[2],
                 },
-                // Add custom styles here
-                backgroundColor: "#f5901c",
+                backgroundColor: theme.colors.primary[1],
                 color: "white",
-                // border radiuses set, you can now pass the mantine Button component the radius prop(radius="") "sm", "md", "lg" respectively
-                // radius: {
-                //   sm: "4px",
-                //   md: "8px",
-                //   lg: "12px",
-                // },
               },
-            },
+            }),
           },
 
           Input: {
             defaultProps: {
               variant: "filled",
             },
-            styles: {
+
+            styles: (theme) => ({
               input: {
                 "&:focus-within": {
-                  borderColor: "#f5901c",
+                  borderColor: theme.colors.primary[1],
                 },
-                backgroundColor: "#f7e3cb",
-                boxShadow: "5px 5px #f5901c",
+                backgroundColor: theme.colors.primary[0],
+                boxShadow: `5px 5px ${theme.colors.primary[1]}`,
               },
-            },
+            }),
           },
         },
       }}
