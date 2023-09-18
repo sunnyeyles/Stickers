@@ -1,9 +1,5 @@
+import { type UseControllerProps,  useController, type FieldValues} from "react-hook-form";
 import {
-    type UseControllerProps,
-    useController,
-    type FieldValues,
-  } from "react-hook-form";
-  import {
     PasswordInput as $PasswordInput,
     type PasswordInputProps as $PasswordInputProps,
   } from "@mantine/core";
@@ -18,6 +14,7 @@ import {
     rules,
     shouldUnregister,
     onChange,
+    visibilityToggleIcon,
     ...props
   }: PasswordInputProps<T>) {
     const {

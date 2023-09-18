@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../app/features/auth/authApi";
 import { setCredentials } from "../../app/features/auth/authSlice";
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 
 const useStyles = createStyles((theme) => ({
   form: {
@@ -140,6 +141,9 @@ export function LoginForm() {
                   id="password"
                   control={control}
                   name="password"
+                  visibilityToggleIcon={({ reveal, size }) =>
+                    reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
+                  }
                 />
 
                 {/* {type === 'register' && (
