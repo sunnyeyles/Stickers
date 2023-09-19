@@ -1,9 +1,9 @@
 import express, { Express, Request, Response } from "express";
 
-import { User } from "../models/model";
+import { User } from "../../models/model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { envConfig } from "../config/env_config";
+import { envConfig } from "../../config/env_config";
 
 // ////// USER AUTH
 export const userAuth = async (req: Request, res: Response) => {
