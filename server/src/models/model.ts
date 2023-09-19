@@ -14,7 +14,7 @@ const itemSchema: Schema = new Schema(
 );
 const userSchema: Schema = new Schema(
   {
-    name: { type: String },
+    // name: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     shoppingCart: [itemSchema],

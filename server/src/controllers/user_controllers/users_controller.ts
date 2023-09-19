@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 
-import { User } from "../models/model";
+import { User } from "../../models/model";
 
 import bcrypt from "bcrypt";
 

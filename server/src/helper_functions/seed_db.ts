@@ -1,9 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { Item } from "../models/model";
+import { Item, User } from "../models/model";
 //// SEED THE ITEMS COLLECTION IN DB
 export const seedItems = (numOfEntries: number) => {
-  //   const items: object[] = [];
-
   for (let i = 0; i < numOfEntries; i++) {
     // randomly choose if the item is reduced or not
     const isReduced = Math.random() <= 0.2;
@@ -22,10 +20,50 @@ export const seedItems = (numOfEntries: number) => {
       itemName: faker.commerce.productName(),
       itemPrice: faker.commerce.price({ min: 100, max: 200 }),
       itemCategory: faker.commerce.department(),
+      // itemCategory: "women",
       itemsInStock: faker.number.int(100),
       reduced: isReduced,
       percentageReduced: ifReduced,
     };
     Item.create(fakeItem);
+  }
+  console.log(`${numOfEntries} new items created`);
+};
+
+//// SEED USERS COLLECTION IN DB
+export const seedUsers = async (
+  numOfItemsInCart: number,
+  numOfUsers: number
+) => {
+  for (let i = 0; i < numOfUsers; i++) {
+    const cartItems = [];
+    const user = {
+      // Define user properties (e.g., name, email, password)
+      email: faker.internet.email(),
+      password: "password",
+      terms: true,
+      shoppingCart: cartItems,
+    };
+
+    // Create a user and retrieve the generated user object
+    const createdUser = await User.create(user);
+
+    // Generate cart items for the user
+    for (let j = 0; j < numOfItemsInCart; j++) {
+      const isReduced = Math.random() <= 0.2;
+      const fakeItem = {
+        itemName: faker.commerce.productName(),
+        itemPrice: faker.commerce.price({ min: 100, max: 200 }),
+        itemCategory: faker.commerce.department(),
+        itemsInStock: faker.number.int(100),
+        reduced: isReduced,
+        percentageReduced: isReduced ? Math.floor(Math.random() * 100) : 0,
+      };
+      cartItems.push(fakeItem);
+    }
+
+    // Save the user object with the cart
+    await createdUser.save();
+    console.log("User with cart and items created:", createdUser);
   }
 };
