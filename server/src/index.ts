@@ -3,13 +3,22 @@ import cors from "cors";
 import router from "./routes.ts/routes";
 import { connectToDatabase } from "./helper_functions/connect_to_db";
 import { seedItems, seedUsers } from "./helper_functions/seed_db";
+
 const app: Express = express();
 const port = process.env.PORT || 3001;
 
 connectToDatabase();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET, POST, PUT, DELETE",
+    credentials: true,
+  })
+);
 app.use(express.json());
+
 app.use(router);
+
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

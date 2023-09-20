@@ -15,6 +15,8 @@ import {
   getItemsByCategory,
 } from "../controllers/user_controllers/items_controller";
 
+import passport from "passport";
+
 const router: Router = express.Router();
 
 //// USER ENDPOINTS
@@ -24,6 +26,14 @@ router.post("/user/user-log-out", userLogOut);
 router.put("/user/change-user-password", changeUserPassword);
 router.get("/user/get-user-details-by-email", getUserDetailsByEmail);
 router.get("/user/get-all-users", getAllUsers);
+router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "login/failed",
+  })
+);
 
 //// ITEM ENDPOINTS
 router.get("/item/get-all-items", getAllItemsFromDb);
