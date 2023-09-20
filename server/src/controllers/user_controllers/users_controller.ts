@@ -40,3 +40,17 @@ export const getAllUsers = async (req: Request, res: Response) => {
       .json({ success: false, message: "Internal server error" });
   }
 };
+
+//// GOOGLE AUTH
+export const loginFailed = async (req: Request, res: Response) => {
+  res.status(401).json({
+    request: false,
+    message: "failed",
+  });
+};
+export const loginSuccess = async (req: Request, res: Response) => {
+  res.status(200).json({
+    request: true,
+    message: "success",
+  });
+};
