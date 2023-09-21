@@ -1,24 +1,36 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
-import router from "./routes.ts/routes";
+import session from "express-session"; // Import session middleware here
+import passport from "./middleware/google_auth"; // Import the Passport configuration
 import { connectToDatabase } from "./helper_functions/connect_to_db";
-import { seedItems, seedUsers } from "./helper_functions/seed_db";
+import router from "./routes.ts/routes";
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
 
 connectToDatabase();
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: "GET, POST, PUT, DELETE",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
+// Initialize Passport.js
+app.use(passport.initialize());
+
+// Configure session middleware before Passport.session()
+app.use(
+  session({
+    secret: "secret-key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Use Passport.session() after configuring session middleware
+app.use(passport.session());
+
+// Routes
 app.use(router);
 
+// START SERVER
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
