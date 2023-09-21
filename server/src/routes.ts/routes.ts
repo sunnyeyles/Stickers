@@ -14,6 +14,7 @@ import {
   getAllItemsFromDb,
   getItemsByCategory,
 } from "../controllers/user_controllers/items_controller";
+import { handleGoogleAuthCallback } from "../middleware/google_auth";
 import passport from "passport";
 
 const router: Router = express.Router();
@@ -57,13 +58,14 @@ router.get(
 // once user is authenticated, they will be routed here
 router.get(
   "/auth/google/callback",
-  // the failure redirect path would probably be "/login" or something to re-route the user back to the login screen
-  passport.authenticate("google", { failureRedirect: "/" }),
-  (req, res) => {
-    // successful authentication, you can redirect or respond as needed
-    console.log("User information:", req.user);
-    res.send("Authentication Successful");
-  }
+  handleGoogleAuthCallback
+  // // the failure redirect path would probably be "/login" or something to re-route the user back to the login screen
+  // passport.authenticate("google", { failureRedirect: "/" }),
+  // (req, res) => {
+  //   // successful authentication, you can redirect or respond as needed
+  //   console.log("User information:", req.user);
+  //   res.send("Authentication Successful");
+  // }
 );
 
 export default router;
