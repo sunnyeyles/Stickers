@@ -40,6 +40,7 @@ interface IUserData {
   };
 }
 
+// callback that is triggered when user successfully authenticates themself with google
 export const handleGoogleAuthCallback = (req: Request, res: Response) => {
   passport.authenticate(
     "google",
@@ -49,22 +50,17 @@ export const handleGoogleAuthCallback = (req: Request, res: Response) => {
         console.error(err);
         return res.redirect("/login");
       }
-
       if (!user) {
         return res.redirect("/login");
       }
-
-      // Authentication succeeded, user data is available in `req.user`
       const userData: IUserData = user as IUserData;
-
-      // Create a JWT token if needed
+      // Create a JWT
       const payload = {
         id: userData.id,
         name: userData.displayName,
       };
       const token = jwt.sign(payload, clientSecret, { expiresIn: "1h" });
-
-      res.send(`Hi ${userData.displayName} your token is Token: ${token}`);
+      res.status(201).json({ userData, token });
     }
   )(req, res);
 };
