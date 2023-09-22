@@ -14,7 +14,7 @@ import {
   getAllItemsFromDb,
   getItemsByCategory,
 } from "../controllers/user_controllers/items_controller";
-
+import { handleGoogleAuthCallback } from "../middleware/google_auth";
 import passport from "passport";
 
 const router: Router = express.Router();
@@ -46,5 +46,16 @@ router.get(
   }
 );
 router.get("/item/reduced", getReducedItems);
+
+// google Authentication Routes
+// initialize Google authentication
+// when google auth button is clicked, this uri will be fetched
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+// once user is authenticated, they will be routed here
+router.get("/auth/google/callback", handleGoogleAuthCallback);
 
 export default router;
