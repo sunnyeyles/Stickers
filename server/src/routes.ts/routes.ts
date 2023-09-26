@@ -42,7 +42,7 @@ router.get(
         .status(400)
         .json({ success: false, message: "Invalid parameters" });
     }
-    getItemsInCategory(req, res, itemCategory);
+    getItemsInCategory(res, itemCategory);
   }
 );
 router.get("/item/reduced", getReducedItems);
