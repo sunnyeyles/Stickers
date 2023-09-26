@@ -1,9 +1,8 @@
-import express, { Express, Request, Response } from "express";
-import { User, Item } from "../../models/model";
+import express, { Request, Response } from "express";
+import { Item } from "../../models/model";
 
 ////// GET ITEMS BY CATEGORY
 export const getItemsInCategory = async (
-  req: Request,
   res: Response,
   itemCategory: string
 ) => {

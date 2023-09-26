@@ -2,6 +2,8 @@ import passport from "passport";
 import jwt from "jsonwebtoken";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Request, Response } from "express";
+import { envConfig } from "../config/env_config";
+
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -54,12 +56,20 @@ export const handleGoogleAuthCallback = (req: Request, res: Response) => {
         return res.redirect("/login");
       }
       const userData: IUserData = user as IUserData;
-      // Create a JWT
+      // create payload for jwt
       const payload = {
         id: userData.id,
         name: userData.displayName,
       };
-      const token = jwt.sign(payload, clientSecret, { expiresIn: "1h" });
+      // create jwt
+      const token = jwt.sign(payload, clientSecret, {
+        expiresIn: envConfig.jwtExpiration,
+      });
+      // send the jwt to the client in a chocolate chip cookie
+      res.cookie("chocolateChipCookie", token, {
+        httpOnly: true,
+        maxAge: 3600000,
+      });
       res.status(201).json({ userData, token });
     }
   )(req, res);
