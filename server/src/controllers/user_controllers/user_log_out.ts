@@ -1,21 +1,21 @@
 import express, { Express, Request, Response } from "express";
 
-import { User } from "../models/model";
+import { User } from "../../models/model";
 
 import bcrypt from "bcrypt";
 
 import jwt from "jsonwebtoken";
 
 export const userLogOut = async (req: Request, res: Response) => {
-  //   const token = req.headers.authorization?.split(" ")[1];
   console.log(req.body);
+  const { email, token } = req.body;
 
   // Check if the token is valid
-  //   if (!token) {
-  //     return res
-  //       .status(401)
-  //       .json({ success: false, message: "Token not provided" });
-  //   }
+  if (!token) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Token not provided" });
+  }
 
   try {
     // Verify the token (this will throw an error if the token is invalid)
