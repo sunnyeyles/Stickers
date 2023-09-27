@@ -1,5 +1,5 @@
 import { MainTheme } from "./styles/MainTheme";
-import { LoginForm } from "./components/loginForm/LoginForm";
+import { Login } from "../src/pages/login/Login";
 import { MainNavBar } from "./components/navBar/MainNavBar";
 const navBarItems = [
   {
@@ -17,7 +17,7 @@ const navBarItems = [
 ];
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Dashboard } from "./components/dashboard/Dashboard";
+import { Dashboard } from "./pages/dashboard/Dashboard";
 export default function App() {
   return (
     <MainTheme>
@@ -25,7 +25,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Dashboard />}/>
-          <Route path='/login' element={<LoginForm />}/>
+          <Route path='/login' element={<Login />}/>
         </Routes>
       </BrowserRouter>
     </MainTheme>

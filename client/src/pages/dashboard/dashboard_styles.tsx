@@ -1,10 +1,10 @@
 import { createStyles, rem } from '@mantine/core';
-import HappyDog from '../../assets/duck_family.png';
+import BackgroundImage from '../../assets/duck_family.png';
 
 export const useStyles = createStyles((theme) => ({
-    hero: {
+    header: {
       position: 'relative',
-      background:`url(${HappyDog})`,
+      background:`url(${BackgroundImage})`,
       backgroundSize: 'cover',
     },
   

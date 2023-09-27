@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Overlay, Container, Title, Button, Text } from '@mantine/core';
 import { useStyles } from './dashboard_styles';
+import { ItemsCollection } from '../../components/itemsCollection/ItemsCollection';
 
 
 export function Dashboard() {
@@ -12,7 +13,7 @@ export function Dashboard() {
   }
   return (
     <>
-      <div className={classes.hero}>
+      <div className={classes.header}>
         <Overlay
           gradient="linear-gradient(180deg, rgba(247,227,203,0.25) 0%, rgba(148,199,192,0.5) 40%)"
           opacity={1}
@@ -28,6 +29,10 @@ export function Dashboard() {
             Login
           </Button>
         </Container>
+      </div>
+
+      <div>
+        <ItemsCollection />
       </div>
     </>
   );
