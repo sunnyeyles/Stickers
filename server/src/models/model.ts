@@ -1,27 +1,30 @@
-import mongoose, { Schema } from "mongoose";
-import { IUser, IItem } from "./model_types";
+import mongoose, { Schema } from 'mongoose'
+import { IUser, IItem } from './model_types'
 
 const itemSchema: Schema = new Schema(
   {
     itemName: { type: String, required: true },
     itemPrice: { type: String, required: true },
+    itemDescription: { type: String, required: true },
+    image: { type: String, required: true },
     itemCategory: { type: String, required: true },
     itemsInStock: { type: Number, required: true },
     reduced: { type: Boolean, required: false },
     percentageReduced: { type: Number, required: true },
   },
   { timestamps: true }
-);
+)
 const userSchema: Schema = new Schema(
   {
-    // name: { type: String },
+    userName: { type: String, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     shoppingCart: [itemSchema],
+    address: {},
     terms: { type: Boolean, required: true },
   },
   { timestamps: true }
-);
+)
 
-export const Item = mongoose.model<IItem>("Item", itemSchema);
-export const User = mongoose.model<IUser>("User", userSchema);
+export const Item = mongoose.model<IItem>('Item', itemSchema)
+export const User = mongoose.model<IUser>('User', userSchema)
