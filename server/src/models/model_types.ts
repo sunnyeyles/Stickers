@@ -5,13 +5,14 @@ export interface IUser extends Document {
   userName: string | null
   email: string
   password: string
-  shoppingCart: object[] | null
   address: {
     street: string
     streetNumber: number
     city: string
     postCode: string
   } | null
+  shoppingCart: object[] | null
+  orders: object[] | null
   terms: boolean
 }
 
@@ -22,7 +23,7 @@ export interface IItem extends Document {
   itemDescription: string
   image: string
   itemCategory: string
-  itemsInStock: number
+  numOfItems: number
   reduced?: boolean
   percentageReduced?: number
 }
