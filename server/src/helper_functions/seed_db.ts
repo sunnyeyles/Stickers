@@ -23,7 +23,7 @@ export const seedItems = (numOfEntries: number) => {
       itemDescription: "I'm with stupid t-shirt",
       image:
         'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.amazon.de%2F-%2Fen%2FIm-With-Stupid-T-Shirt%2Fdp%2FB07NVHPZBS&psig=AOvVaw3y_VgLw5BcenXIQOztnrux&ust=1695908591384000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCMDEkvv1yoEDFQAAAAAdAAAAABAE',
-      itemsInStock: faker.number.int(100),
+      numOfItems: faker.number.int(100),
       reduced: isReduced,
       percentageReduced: ifReduced,
     }
@@ -34,7 +34,7 @@ export const seedItems = (numOfEntries: number) => {
 
 //// SEED USERS COLLECTION IN DB
 export const seedUsers = async (
-  numOfItemsInCart: number,
+  // numOfItemsInCart: number,
   numOfUsers: number
 ) => {
   for (let i = 0; i < numOfUsers; i++) {
@@ -45,7 +45,7 @@ export const seedUsers = async (
       email: faker.internet.email(),
       password: 'password',
       terms: true,
-      shoppingCart: cartItems,
+      shoppingCart: [],
       address: {
         street: 'Fake',
         streetNumber: 123,
@@ -58,18 +58,18 @@ export const seedUsers = async (
     const createdUser = await User.create(user)
 
     // Generate cart items for the user
-    for (let j = 0; j < numOfItemsInCart; j++) {
-      const isReduced = Math.random() <= 0.2
-      const fakeItem = {
-        itemName: faker.commerce.productName(),
-        itemPrice: faker.commerce.price({ min: 100, max: 200 }),
-        itemCategory: faker.commerce.department(),
-        itemsInStock: faker.number.int(100),
-        reduced: isReduced,
-        percentageReduced: isReduced ? Math.floor(Math.random() * 100) : 0,
-      }
-      cartItems.push(fakeItem)
-    }
+    // for (let j = 0; j < numOfItemsInCart; j++) {
+    //   const isReduced = Math.random() <= 0.2
+    //   const fakeItem = {
+    //     itemName: faker.commerce.productName(),
+    //     itemPrice: faker.commerce.price({ min: 100, max: 200 }),
+    //     itemCategory: faker.commerce.department(),
+    //     numOfItems: faker.number.int(100),
+    //     reduced: isReduced,
+    //     percentageReduced: isReduced ? Math.floor(Math.random() * 100) : 0,
+    //   }
+    //   cartItems.push(fakeItem)
+    // }
 
     // Save the user object with the cart
     await createdUser.save()

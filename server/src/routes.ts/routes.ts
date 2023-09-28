@@ -14,6 +14,7 @@ import {
   getAllItemsFromDb,
   getItemsByCategory,
 } from '../controllers/user_controllers/items_controller'
+import { verifyCheckout } from '../controllers/item_controllers/verify_checkout'
 import { handleGoogleAuthCallback } from '../middleware/google_auth'
 import passport from 'passport'
 
@@ -46,6 +47,7 @@ router.get(
   }
 )
 router.get('/item/reduced', getReducedItems)
+router.post('/item/verify-checkout', verifyCheckout)
 
 // google Authentication Routes
 // initialize Google authentication

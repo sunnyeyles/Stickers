@@ -16,7 +16,6 @@ const port = process.env.PORT || 3001
 connectToDatabase()
 app.use(cors())
 app.use(express.json())
-
 // Initialize Passport.js
 app.use(passport.initialize())
 
@@ -28,7 +27,6 @@ app.use(
     saveUninitialized: true,
   })
 )
-
 // Use Passport.session() after configuring session middleware
 app.use(passport.session())
 
