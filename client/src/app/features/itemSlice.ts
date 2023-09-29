@@ -13,12 +13,12 @@ export const itemSlice = createSlice({
     name: 'item',
     initialState,
     reducers: {
-        itemState: (state, action: PayloadAction<IItemResponse>) => {
-            state.item = action.payload
-        },
+        // itemState: (state, action: PayloadAction<IItemResponse>) => {
+        //     state.item = action.payload
+        // },
     },
 })
 
 export default itemSlice.reducer
 
-export const { itemState } = itemSlice.actions
+//export const { itemState } = itemSlice.actions

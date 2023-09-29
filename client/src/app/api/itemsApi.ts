@@ -8,12 +8,7 @@ export const itmesApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/` }),
     endpoints: (builder) => ({
         getAllItems: builder.query<IItemResponse[], void>({
-            query() {
-                return {
-                    url: '/item/get-all-items',
-                    method: 'GET',
-                };
-            },
+            query: () => '/item/get-all-items'
         }),
     }),
 });
