@@ -19,8 +19,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../app/features/auth/authApi";
-import { setCredentials } from "../../app/features/auth/authSlice";
+import { useLoginMutation } from "../../app/api/authApi";
+import { setCredentials } from "../../app/features/authSlice";
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 import { useStyles } from './login_form_styles';
 

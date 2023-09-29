@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { UserResponse } from '../../api/types';
-import { FormSchemaType } from '../../../components/loginForm/LoginForm'
-import { RootState } from '../../store';
+import { IUserResponse } from './types';
+import { FormSchemaType } from '../../components/loginForm/LoginForm'
+import { RootState } from '../store';
 
 const BASE_URL: string = "http://localhost:3000"
 
@@ -18,7 +18,7 @@ export const authApi = createApi({
       },
     }),
     endpoints: (builder) => ({
-        login: builder.mutation<UserResponse, FormSchemaType>({
+        login: builder.mutation<IUserResponse, FormSchemaType>({
             query: (credentials) => ({
                 url: '/user/authenticate-user',
                 method: 'POST',
