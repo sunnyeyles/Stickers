@@ -16,6 +16,7 @@ import {
 } from '../controllers/user_controllers/items_controller'
 import { verifyCheckout } from '../controllers/item_controllers/verify_checkout'
 import { handleGoogleAuthCallback } from '../middleware/google_auth'
+import { moveCartToOrders } from '../controllers/item_controllers/move_user_shopping_cart_to_orders'
 import passport from 'passport'
 
 const router: Router = express.Router()
@@ -48,6 +49,7 @@ router.get(
 )
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
+router.post('/item/move-cart-to-orders', moveCartToOrders)
 
 // google Authentication Routes
 // initialize Google authentication
