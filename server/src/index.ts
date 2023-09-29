@@ -22,6 +22,7 @@ app.use(passport.initialize())
 // Configure session middleware before Passport.session()
 app.use(
   session({
+    // change secret to secret in .env file
     secret: 'secret-key',
     resave: false,
     saveUninitialized: true,
