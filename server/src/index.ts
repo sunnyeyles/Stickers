@@ -30,7 +30,6 @@ app.use(
 )
 // Use Passport.session() after configuring session middleware
 app.use(passport.session())
-
 // Routes
 app.use(router)
 
