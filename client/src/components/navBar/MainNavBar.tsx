@@ -53,7 +53,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
           <TextInput icon={<IconSearch size="1rem" />} placeholder="Search" />
         </Group>
       </Container>
-      <Box>
+      {/* <Box>
         <List
           spacing="lg"
           sx={{ textDecoration: "none", listStyleType: "none" }}
@@ -63,7 +63,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
           <List.Item>Accessories</List.Item>
           <List.Item>Sale</List.Item>
         </List>
-      </Box>
+      </Box> */}
     </Header>
   );
 }

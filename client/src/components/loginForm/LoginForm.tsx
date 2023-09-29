@@ -2,13 +2,11 @@ import { useToggle, upperFirst } from "@mantine/hooks";
 import {
   Title,
   Paper,
-  createStyles,
   Group,
   Button,
   Divider,
   Anchor,
   Stack,
-  rem,
   Grid,
 } from "@mantine/core";
 import { TextInput } from "../textInput/TextInput";
@@ -21,22 +19,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../app/features/auth/authApi";
-import { setCredentials } from "../../app/features/auth/authSlice";
+import { useLoginMutation } from "../../app/api/authApi";
+import { setCredentials } from "../../app/features/authSlice";
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
-
-const useStyles = createStyles((theme) => ({
-  form: {
-    maxWidth: rem(450),
-    [theme.fn.smallerThan("sm")]: {
-      maxWidth: "100%",
-    },
-  },
-  title: {
-    color: theme.colorScheme === "dark" ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-  },
-}));
+import { useStyles } from './login_form_styles';
 
 const formSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
