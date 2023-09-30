@@ -21,8 +21,8 @@ export const seedItems = (numOfEntries: number) => {
       itemPrice: faker.commerce.price({ min: 100, max: 200 }),
       itemCategory: faker.commerce.department(),
       itemDescription: "I'm with stupid t-shirt",
-      image:
-        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.amazon.de%2F-%2Fen%2FIm-With-Stupid-T-Shirt%2Fdp%2FB07NVHPZBS&psig=AOvVaw3y_VgLw5BcenXIQOztnrux&ust=1695908591384000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCMDEkvv1yoEDFQAAAAAdAAAAABAE',
+      imagePath:
+        '/Users/sunnyeyles/Documents/personal_projects/e_commerce_app/server/images/with_stupid.jpg',
       numOfItems: faker.number.int(100),
       reduced: isReduced,
       percentageReduced: ifReduced,

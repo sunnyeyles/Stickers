@@ -6,7 +6,7 @@ const itemSchema: Schema = new Schema(
     itemName: { type: String, required: true },
     itemPrice: { type: String, required: true },
     itemDescription: { type: String, required: true },
-    image: { type: String, required: true },
+    imagePath: { type: String, required: true },
     itemCategory: { type: String, required: true },
     numOfItems: { type: Number, required: true },
     reduced: { type: Boolean, required: false },
