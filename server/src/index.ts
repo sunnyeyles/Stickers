@@ -9,6 +9,7 @@ import {
   seedItems,
   seedUsers,
 } from './helper_functions/seed_db'
+import cookieParser from 'cookie-parser'
 
 const app: Express = express()
 const port = process.env.PORT || 3001
@@ -16,6 +17,9 @@ const port = process.env.PORT || 3001
 connectToDatabase()
 app.use(cors())
 app.use(express.json())
+
+app.use(cookieParser())
+
 // Initialize Passport.js
 app.use(passport.initialize())
 

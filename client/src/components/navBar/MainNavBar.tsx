@@ -15,11 +15,22 @@ import { useDisclosure } from "@mantine/hooks";
 import { navBarStyles } from "./nav_bar_styles";
 import { IHeaderMiddleProps } from "./main_nav_bar_types";
 import { IconSearch, IconBong } from "@tabler/icons-react";
+import { useNavigate } from 'react-router-dom'
+import { useLoginMutation } from "../../app/api/authApi";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes } = navBarStyles();
+  const navigate = useNavigate();
+
+  const userLogout = () => {
+    //const user = await logout(loginData).unwrap();
+    // selector from store the token
+    navigate('/login')
+  }
+
+  const [logout] = useLoginMutation();
 
   const items = links.map((link) => (
     <Button
@@ -52,6 +63,10 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
         <Group className={classes.textBox} spacing={0} position="right" noWrap>
           <TextInput icon={<IconSearch size="1rem" />} placeholder="Search" />
         </Group>
+        <Button onClick={userLogout} radius="xl"
+        >
+          Log out
+        </Button>
       </Container>
       {/* <Box>
         <List

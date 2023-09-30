@@ -21,8 +21,8 @@ import { Dashboard } from "./pages/dashboard/Dashboard";
 export default function App() {
   return (
     <MainTheme>
-      <MainNavBar links={navBarItems} />
       <BrowserRouter>
+        <MainNavBar links={navBarItems} />
         <Routes>
           <Route path='/' element={<Dashboard />}/>
           <Route path='/login' element={<Login />}/>

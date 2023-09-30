@@ -1,30 +1,16 @@
 import express, { Express, Request, Response } from "express";
 
-import { User } from "../../models/model";
-
-import bcrypt from "bcrypt";
-
-import jwt from "jsonwebtoken";
-
+//clear cookie if it exists
 export const userLogOut = async (req: Request, res: Response) => {
-  console.log(req.body);
-  const { email, token } = req.body;
-
-  // Check if the token is valid
-  if (!token) {
-    return res
-      .status(401)
-      .json({ success: false, message: "Token not provided" });
+  const cookies = req.cookies
+  
+  if(!cookies?.jwt){
+    return res.sendStatus(204) //No content
   }
-
-  try {
-    // Verify the token (this will throw an error if the token is invalid)
-    // jwt.verify(token, "your-secret-key");
-
-    // Respond with a success message
-    res.json({ success: true, message: "Logged out successfully" });
-  } catch (error) {
-    // Handle token verification error (e.g., expired token)
-    return res.status(401).json({ success: false, message: "Invalid token" });
-  }
+  res.clearCookie('jwt', 
+  {
+    httpOnly: true,
+    secure: true
+  })
+  res.json({ message: 'Cookie cleared - User logged out' })
 };

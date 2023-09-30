@@ -1,7 +1,6 @@
+import jwt from 'jsonwebtoken';
 import express, { Express, Request, Response } from 'express'
-
 import { User } from '../../models/model'
-import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { envConfig } from '../../config/env_config'
 import dotenv from 'dotenv'
@@ -30,39 +29,42 @@ export const userAuth = async (req: Request, res: Response) => {
     if (!isPasswordValid) {
       res.status(401).json({ success: false, message: 'Invalid password' })
     }
-    // define payload for jwt
-    const payload = {
+    // define payload for accessToken
+    //this info is inserted into accessToken
+    // we need to destructure this token when we return that info in the frontend
+    //frontend has the token in state until we decrypt it and pull this info out
+    const payloadToken = {
       _id: user._id,
       email: user.email,
     }
-    // create jwt
-    const token = jwt.sign(
-      payload,
-      clientSecret,
-      {
-        expiresIn: envConfig.jwtExpiration,
-      },
-      (error: Error | null, token: string | undefined) => {
-        if (error) {
-          console.error('Error creating jwt:', error)
-          return res.status(500).json({ message: 'Error creating jwt' })
-        }
-        if (!token) {
-          console.error('Token is undefined')
-          return res.status(500).json({ message: 'Token is undefined' })
-        }
-
-        // put the token in a cookie
-        res.cookie('chocolateChipCookie', token, {
-          httpOnly: true,
-          maxAge: 3600000,
-        })
-
-        res.status(200).json({
-          message: `Thanks for logging in, here's a cookie : ${token}`,
-        })
-      }
+    // create accessToken
+    const accessToken = jwt.sign(
+      payloadToken,
+      //google auth
+      //clientSecret,
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '3s' },
     )
+
+    console.log("accessToken", accessToken)
+
+    // create refreshToken
+    const refreshToken = jwt.sign(
+      payloadToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: envConfig.jwtRefreshExpiration }
+    )
+    console.log("refreshToken", refreshToken)
+
+    // create secure cookie with refreshToken
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true, // accessible only by web server 
+      secure: true, //https
+      maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry match refreshToken
+    })
+
+    //we sending back accessToken containing userId and email
+    res.json({ accessToken })
   } catch (error) {
     console.error('Error during authentication:', error)
     return res
@@ -70,3 +72,5 @@ export const userAuth = async (req: Request, res: Response) => {
       .json({ success: false, message: 'Internal server error' })
   }
 }
+
+
