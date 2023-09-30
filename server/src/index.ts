@@ -22,7 +22,6 @@ app.use(cookieParser())
 
 // Initialize Passport.js
 app.use(passport.initialize())
-
 // Configure session middleware before Passport.session()
 app.use(
   session({

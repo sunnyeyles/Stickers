@@ -10,6 +10,7 @@ import { userAuth } from '../controllers/user_controllers/user_auth'
 import { refreshToken } from '../controllers/user_controllers/refresh_token'
 import { userLogOut } from '../controllers/user_controllers/user_log_out'
 import { getItemsInCategory } from '../controllers/item_controllers/get_items_in_category'
+import { getSpecificItem } from '../controllers/item_controllers/get_specific_item'
 import { getReducedItems } from '../controllers/item_controllers/get_reduced_items'
 import {
   getAllItemsFromDb,
@@ -50,6 +51,7 @@ router.get(
     getItemsInCategory(res, itemCategory)
   }
 )
+router.get('/item/get-specific-item', getSpecificItem)
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
 router.post('/item/move-cart-to-orders', moveCartToOrders)
