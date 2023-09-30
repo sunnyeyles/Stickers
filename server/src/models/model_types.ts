@@ -21,7 +21,7 @@ export interface IItem extends Document {
   itemName: string
   itemPrice: string
   itemDescription: string
-  image: string
+  imagePath: string
   itemCategory: string
   numOfItems: number
   reduced?: boolean

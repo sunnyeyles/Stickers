@@ -18,7 +18,6 @@ app.use(cors())
 app.use(express.json())
 // Initialize Passport.js
 app.use(passport.initialize())
-
 // Configure session middleware before Passport.session()
 app.use(
   session({
