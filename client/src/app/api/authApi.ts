@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IUserResponse } from './types';
 import { FormSchemaType } from '../../components/loginForm/LoginForm'
 import { RootState } from '../store';
+import { logOut } from '../features/authSlice';
 
 const BASE_URL: string = "http://localhost:3000"
 
@@ -22,24 +23,33 @@ export const authApi = createApi({
       query: (credentials) => ({
         url: '/user/authenticate-user',
         method: 'POST',
-        body: credentials,
+        body: { ...credentials}
       }),
     }),
-    logout: builder.mutation({
-      query: (token) => ({
+    sendLogout: builder.mutation({
+      query: () => ({
         url: '/user/user-log-out',
         method: 'POST',
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      //we verify that query has fullfilled
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
           console.log("logout data: ", data)
+          //sets token to null in local state
+          dispatch(logOut())
         } catch (err) {
           console.log(err)
         }
       }
+    }),
+    refresh: builder.mutation({
+      query: () => ({
+        url: '/user/refresh-token',
+        method: 'GET'
+      })
     })
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation } = authApi;
+export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } = authApi;

@@ -52,12 +52,16 @@ export function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
-    const user = await login(loginData).unwrap();
-    dispatch(setCredentials(user));
-    navigate("/");
+    const accessToken = await login(loginData).unwrap();
+    console.log('accessToken:', accessToken)
+    dispatch(setCredentials(accessToken))
+    navigate("/")
   };
 
   return (
@@ -72,7 +76,7 @@ export function LoginForm() {
               mt="md"
               mb={50}
             >
-              Welcome to the best Webstore ever, {type} with
+              Welcome to STICKERS, {type} with
             </Title>
 
             <Group grow mb="md" mt="md">

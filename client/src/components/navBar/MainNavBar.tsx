@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Header,
   Group,
@@ -9,14 +9,17 @@ import {
   Box,
   List,
   Anchor,
+  Menu,
+  rem,
+  Avatar,
 } from "@mantine/core";
-
 import { useDisclosure } from "@mantine/hooks";
 import { navBarStyles } from "./nav_bar_styles";
 import { IHeaderMiddleProps } from "./main_nav_bar_types";
-import { IconSearch, IconBong } from "@tabler/icons-react";
+import { IconBong, IconLogout, IconSettings } from "@tabler/icons-react";
 import { useNavigate } from 'react-router-dom'
-import { useLoginMutation } from "../../app/api/authApi";
+import { useSendLogoutMutation } from "../../app/api/authApi";
+import { useAppSelector } from "../../app/hooks";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
   const [opened, { toggle }] = useDisclosure(false);
@@ -24,13 +27,22 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   const { classes } = navBarStyles();
   const navigate = useNavigate();
 
-  const userLogout = () => {
-    //const user = await logout(loginData).unwrap();
-    // selector from store the token
-    navigate('/login')
-  }
+  const [logout, {
+    isLoading,
+    isSuccess
+  }] = useSendLogoutMutation()
 
-  const [logout] = useLoginMutation();
+  const currentUser = useAppSelector(state => state.auth)
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     navigate('/login')
+  //   }
+  // }, [isSuccess, navigate])
+
+  if (isLoading) {
+    return <p>Logging out...</p>
+  }
 
   const items = links.map((link) => (
     <Button
@@ -44,6 +56,36 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
       {link.label}
     </Button>
   ));
+
+  const authButton = () => {
+    console.log("currentUser:", currentUser)
+    if (currentUser.userName === null) {
+      return (
+        <Group>
+          <Button component="a" href="/login" radius="xl">Login</Button>
+          <Button component="a" href="/signup" radius="xl">Signup</Button>
+        </Group>
+      )
+    } else {
+      return (
+        <>
+          <Group>
+            <Menu shadow="md" width={200}>
+              <Menu.Target>
+                <Avatar color="orange" radius="xl" />
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item>
+                  <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+            <Button onClick={logout} radius="xl"><IconLogout size="1rem" /></Button>
+          </Group>
+        </>
+      )
+    }
+  }
 
   return (
     <Header height={56} m="1rem">
@@ -60,13 +102,10 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
         <Box display="flex">
           <IconBong size="3rem" />
         </Box>
-        <Group className={classes.textBox} spacing={0} position="right" noWrap>
+        {/* <Group className={classes.textBox} spacing={0} position="right" noWrap>
           <TextInput icon={<IconSearch size="1rem" />} placeholder="Search" />
-        </Group>
-        <Button onClick={userLogout} radius="xl"
-        >
-          Log out
-        </Button>
+        </Group> */}
+        {authButton()}
       </Container>
       {/* <Box>
         <List

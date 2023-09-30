@@ -17,6 +17,8 @@ export const userAuth = async (req: Request, res: Response) => {
     // find the user in the database by email
     const user = await User.findOne({ email })
     console.log('user found:', user)
+    const userName = user.userName
+    const userEmail = user.email
 
     // check if the user exists
     if (!user) {
@@ -64,7 +66,7 @@ export const userAuth = async (req: Request, res: Response) => {
     })
 
     //we sending back accessToken containing userId and email
-    res.json({ accessToken })
+    res.json({ accessToken, userName, userEmail })
   } catch (error) {
     console.error('Error during authentication:', error)
     return res
