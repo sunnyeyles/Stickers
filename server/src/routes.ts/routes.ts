@@ -19,6 +19,7 @@ import { verifyCheckout } from '../controllers/item_controllers/verify_checkout'
 import { handleGoogleAuthCallback } from '../middleware/google_auth'
 import { moveCartToOrders } from '../controllers/item_controllers/move_user_shopping_cart_to_orders'
 import passport from 'passport'
+import { verifyJWT } from '../middleware/verifyJWT'
 
 const router: Router = express.Router()
 
@@ -33,7 +34,7 @@ router.get('/user/get-all-users', getAllUsers)
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
 //// ITEM ENDPOINTS
-router.get('/item/get-all-items', getAllItemsFromDb)
+router.get('/item/get-all-items', verifyJWT as any, getAllItemsFromDb)
 router.get('/item/get-items-by-category', getItemsByCategory)
 router.get(
   '/item/get-items-in-category/:itemCategory',
