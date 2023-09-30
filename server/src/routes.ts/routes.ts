@@ -7,6 +7,7 @@ import {
 import { createNewUser } from '../controllers/user_controllers/create_user'
 import { changeUserPassword } from '../controllers/user_controllers/change_password'
 import { userAuth } from '../controllers/user_controllers/user_auth'
+import { refreshToken } from '../controllers/user_controllers/refresh_token'
 import { userLogOut } from '../controllers/user_controllers/user_log_out'
 import { getItemsInCategory } from '../controllers/item_controllers/get_items_in_category'
 import { getSpecificItem } from '../controllers/item_controllers/get_specific_item'
@@ -19,12 +20,14 @@ import { verifyCheckout } from '../controllers/item_controllers/verify_checkout'
 import { handleGoogleAuthCallback } from '../middleware/google_auth'
 import { moveCartToOrders } from '../controllers/item_controllers/move_user_shopping_cart_to_orders'
 import passport from 'passport'
+import { verifyJWT } from '../middleware/verifyJWT'
 
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
-router.post('/user/create-user', createNewUser)
-router.post('/user/authenticate-user', userAuth)
+router.post('/user/create-user',createNewUser) //register
+router.post('/user/authenticate-user', userAuth) //login
+router.get('/user/refresh-token', refreshToken)
 router.post('/user/user-log-out', userLogOut)
 router.put('/user/change-user-password', changeUserPassword)
 router.get('/user/get-user-details-by-email', getUserDetailsByEmail)

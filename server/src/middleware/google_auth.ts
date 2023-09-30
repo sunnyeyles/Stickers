@@ -63,7 +63,7 @@ export const handleGoogleAuthCallback = (req: Request, res: Response) => {
       };
       // create jwt
       const token = jwt.sign(payload, clientSecret, {
-        expiresIn: envConfig.jwtExpiration,
+        expiresIn: envConfig.jwtRefreshExpiration,
       });
       // send the jwt to the client in a chocolate chip cookie
       res.cookie("chocolateChipCookie", token, {

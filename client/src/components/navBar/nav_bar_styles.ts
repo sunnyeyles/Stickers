@@ -32,5 +32,5 @@ export const navBarStyles = createStyles((theme) => ({
     [theme.fn.largerThan("sm")]: {
       display: "none",
     },
-  },
+  }
 }));

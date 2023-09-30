@@ -4,7 +4,8 @@ dotenv.config()
 
 export const envConfig = {
   jwtSecret: process.env.JWT_SECRET,
-  jwtExpiration: '1h',
+  jwtAccessExpiration: '10s',
+  jwtRefreshExpiration: '1d',
   dbUsername: process.env.DB_USERNAME,
   dbPassword: process.env.DB_PASSWORD,
 }
