@@ -1,6 +1,10 @@
 import { MainTheme } from "./styles/MainTheme";
 import { Login } from "../src/pages/login/Login";
 import { MainNavBar } from "./components/navBar/MainNavBar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Dashboard } from "./pages/dashboard/Dashboard";
+import { Register } from "./pages/register/Register";
+
 const navBarItems = [
   {
     link: "#women",
@@ -16,8 +20,6 @@ const navBarItems = [
   },
 ];
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Dashboard } from "./pages/dashboard/Dashboard";
 export default function App() {
   return (
     <MainTheme>
@@ -26,6 +28,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Dashboard />}/>
           <Route path='/login' element={<Login />}/>
+          <Route path='/register' element={<Register />}/>
         </Routes>
       </BrowserRouter>
     </MainTheme>

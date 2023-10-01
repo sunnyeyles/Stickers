@@ -23,6 +23,9 @@ export const authSlice = createSlice({
             state.token = null
             state.userName = null
             state.email = null
+        },
+        signUp: (state, action) => {
+            
         }
     },
 });

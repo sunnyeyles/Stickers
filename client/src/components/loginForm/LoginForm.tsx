@@ -1,4 +1,3 @@
-import { useToggle, upperFirst } from "@mantine/hooks";
 import {
   Title,
   Paper,
@@ -35,7 +34,7 @@ const formSchema = z.object({
 export type FormSchemaType = z.infer<typeof formSchema>;
 
 export function LoginForm() {
-  const [type, toggle] = useToggle(["login", "register"]);
+  
   const { classes } = useStyles();
   const {
     control,
@@ -51,6 +50,10 @@ export function LoginForm() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const navigateToRegister = () => {
+    navigate("/register")
+  }
 
   const [login, { isLoading }] = useLoginMutation();
   if (isLoading) {
@@ -76,13 +79,12 @@ export function LoginForm() {
               mt="md"
               mb={50}
             >
-              Welcome to STICKERS, {type} with
+              Welcome to STICKERS, login with
             </Title>
 
             <Group grow mb="md" mt="md">
               <ButtonTheme>
                 <GoogleButton radius="xl">Google</GoogleButton>
-                <TwitterButton radius="xl">Twitter</TwitterButton>
               </ButtonTheme>
             </Group>
 
@@ -103,26 +105,6 @@ export function LoginForm() {
                   name="email"
                 />
 
-                {/* {type === 'register' && (
-                <TextInput
-                  label="Name"
-                  placeholder="Your name"
-                  value={form.values.name}
-                  onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
-                  radius="md"
-                />
-              )} */}
-
-                {/* <PasswordInput
-                  type="password"
-                  placeholder="Password"
-                  mt="md"
-                  size="md"
-                  radius="md"
-                  id="password"
-                  control={control}
-                  name="password"
-                /> */}
                 <PasswordInput
                   placeholder="Password"
                   mt="md"
@@ -136,13 +118,6 @@ export function LoginForm() {
                   }
                 />
 
-                {/* {type === 'register' && (
-                <Checkbox
-                  label="I accept terms and conditions"
-                  checked={form.values.terms}
-                  onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
-                />
-              )} */}
               </Stack>
 
               <Group position="apart" mt="xl">
@@ -150,15 +125,13 @@ export function LoginForm() {
                   component="button"
                   type="button"
                   color="dimmed"
-                  onClick={() => toggle()}
+                  onClick={() => navigateToRegister()}
                   size="xs"
                 >
-                  {type === "register"
-                    ? "Already have an account? Login"
-                    : "Don't have an account? Register"}
+                  Don't have an account? Register
                 </Anchor>
                 <Button type="submit" radius="xl" disabled={isSubmitting}>
-                  {upperFirst(type)}
+                  Login
                 </Button>
               </Group>
             </form>
