@@ -21,8 +21,8 @@ const registerSchema = z.object({
     .min(1, "Password is required")
     .min(8, "Password must have more than 8 characters"),
   confirm: z.string().min(1, "Password is required"),
-  terms: z.literal(true, {
-    errorMap: () => ({ message: "You must accept Terms and Conditions" }),
+  terms: z.boolean().refine((value) => value === true, {
+    message: "You must accept Terms and Conditions"
   })
 })
   .refine((data) => data.password === data.confirm, {
@@ -44,6 +44,7 @@ export function RegisterForm() {
       email: "",
       password: "",
       confirm: "",
+      terms: false
     },
     resolver: zodResolver(registerSchema)
   });
