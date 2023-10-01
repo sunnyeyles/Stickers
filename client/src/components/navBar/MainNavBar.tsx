@@ -58,7 +58,6 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   ));
 
   const authButton = () => {
-    console.log("currentUser:", currentUser)
     if (currentUser.userName === null) {
       return (
         <Group>

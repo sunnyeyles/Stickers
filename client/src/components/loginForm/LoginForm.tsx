@@ -85,7 +85,6 @@ export function LoginForm() {
             <Group grow mb="md" mt="md">
               <ButtonTheme>
                 <GoogleButton radius="xl">Google</GoogleButton>
-                <TwitterButton radius="xl">Twitter</TwitterButton>
               </ButtonTheme>
             </Group>
 

@@ -62,7 +62,7 @@ export function RegisterForm() {
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
     await register(data)
-    navigate("/login")
+    navigateToLogin()
   };
 
   return (
@@ -77,20 +77,16 @@ export function RegisterForm() {
         >
           Welcome to STICKERS, register with
         </Title>
-
         <Group grow mb="md" mt="md">
           <ButtonTheme>
             <GoogleButton radius="xl">Google</GoogleButton>
-            <TwitterButton>Twitter</TwitterButton>
           </ButtonTheme>
         </Group>
-
         <Divider
           label="Or continue with email"
           labelPosition="center"
           my="lg"
         />
-
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack>
             <TextInput
@@ -101,7 +97,6 @@ export function RegisterForm() {
               id="username"
               name="userName"
             />
-
             <TextInput
               control={control}
               placeholder="Email"
@@ -110,7 +105,6 @@ export function RegisterForm() {
               id="email"
               name="email"
             />
-
             <PasswordInput
               placeholder="Password"
               mt="md"
@@ -123,7 +117,6 @@ export function RegisterForm() {
                 reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
               }
             />
-
             <PasswordInput
               placeholder="Confirm Password"
               mt="md"
@@ -136,7 +129,6 @@ export function RegisterForm() {
                 reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
               }
             />
-
             <Checkbox
               control={control}
               label='I accept terms and conditions'
@@ -144,9 +136,7 @@ export function RegisterForm() {
               id='terms'
               value="false"
             />
-
           </Stack>
-
           <Group position="apart" mt="xl">
             <Anchor
               component="button"
