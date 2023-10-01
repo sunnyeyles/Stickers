@@ -23,7 +23,7 @@ export const authApi = createApi({
       query: (credentials) => ({
         url: '/user/authenticate-user',
         method: 'POST',
-        body: { ...credentials}
+        body: { ...credentials }
       }),
     }),
     sendLogout: builder.mutation({
@@ -48,8 +48,20 @@ export const authApi = createApi({
         url: '/user/refresh-token',
         method: 'GET'
       })
+    }),
+    register: builder.mutation({
+      query: (userData) => ({
+        url: '/user/create-user',
+        method: 'POST',
+        body: { ...userData }
+      })
     })
   }),
 });
 
-export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } = authApi;
+export const { 
+  useLoginMutation, 
+  useSendLogoutMutation, 
+  useRefreshMutation,
+  useRegisterMutation 
+} = authApi;

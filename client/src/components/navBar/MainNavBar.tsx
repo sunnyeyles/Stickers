@@ -63,7 +63,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
       return (
         <Group>
           <Button component="a" href="/login" radius="xl">Login</Button>
-          <Button component="a" href="/signup" radius="xl">Signup</Button>
+          <Button component="a" href="/register" radius="xl">Signup</Button>
         </Group>
       )
     } else {
