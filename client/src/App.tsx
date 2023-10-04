@@ -1,24 +1,24 @@
-import { MainTheme } from "./styles/MainTheme";
-import { Login } from "../src/pages/login/Login";
-import { MainNavBar } from "./components/navBar/MainNavBar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Dashboard } from "./pages/dashboard/Dashboard";
-import { Register } from "./pages/register/Register";
-
+import { MainTheme } from './styles/MainTheme'
+import { Login } from '../src/pages/login/Login'
+import { MainNavBar } from './components/navBar/MainNavBar'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Dashboard } from './pages/dashboard/Dashboard'
+import { Register } from './pages/register/Register'
+import { OrderSummaryCard } from './components/orderSummaryCard/OrderSummaryCard'
 const navBarItems = [
   {
-    link: "#women",
-    label: "Women",
+    link: '#women',
+    label: 'Women',
   },
   {
-    link: "#men",
-    label: "Men",
+    link: '#men',
+    label: 'Men',
   },
   {
-    link: "#kids",
-    label: "Kids",
+    link: '#kids',
+    label: 'Kids',
   },
-];
+]
 
 export default function App() {
   return (
@@ -26,11 +26,12 @@ export default function App() {
       <BrowserRouter>
         <MainNavBar links={navBarItems} />
         <Routes>
-          <Route path='/' element={<Dashboard />}/>
-          <Route path='/login' element={<Login />}/>
-          <Route path='/register' element={<Register />}/>
+          <Route path="/" element={<Dashboard />} />
+          {/* <Route path='/login' element={<Login />}/>
+          <Route path='/register' element={<Register />}/> */}
+          <Route path="/order-summary" element={<OrderSummaryCard />} />
         </Routes>
       </BrowserRouter>
     </MainTheme>
-  );
+  )
 }

@@ -1,13 +1,13 @@
-import { MantineProvider } from "@mantine/core";
-import { ReactNode, useState } from "react";
+import { MantineProvider } from '@mantine/core'
+import { ReactNode, useState } from 'react'
 
 interface IMainTheme {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const MainTheme = ({ children }: IMainTheme) => {
   // this example is with useState(), we would use redux to hold the theme state in practice
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false)
 
   // fancy looking mantine component we can use for the toggle button: https://v3.mantine.dev/core/switch/
   // for now we can just keep the default mantine dark theme, maybe tweak it slightly at the end, probably don't even need to though
@@ -15,8 +15,8 @@ export const MainTheme = ({ children }: IMainTheme) => {
   // simple function to toggle between light/dark theme
   // the function will trigger onClick()
   const toggleTheme = () => {
-    setIsDarkTheme((prevTheme) => !prevTheme);
-  };
+    setIsDarkTheme((prevTheme) => !prevTheme)
+  }
 
   return (
     <MantineProvider
@@ -24,72 +24,85 @@ export const MainTheme = ({ children }: IMainTheme) => {
       withNormalizeCSS
       inherit
       theme={{
-        colorScheme: isDarkTheme ? "dark" : "light",
-        fontFamily: "monospace",
+        colorScheme: isDarkTheme ? 'dark' : 'light',
+        fontFamily: 'monospace',
+        // fontSizes: {
+        //   sm: '0.75rem',
+        //   md: '1rem',
+        //   lg: '1.25rem',
+        //   xl: '1.5rem',
+        // },
         colors: {
           // declare colors for consistency, colors will go from lightest to darkest
           primary: [
-            "#f7e3cb",
-            "#f5901c",
-            "#B14630",
-            "#347c72",
-            "#77bfb4",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
+            '#f7e3cb',
+            '#f5901c',
+            '#B14630',
+            '#347c72',
+            '#77bfb4',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
           ],
           secondary: [
-            "#94c7c0",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
-            "#FFF",
+            '#94c7c0',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
+            '#FFF',
           ],
         },
 
         shadows: {
-          md: "1px 1px 3px rgba(0, 0, 0, .25)",
-          xl: "5px 5px 3px rgba(0, 0, 0, .25)",
+          md: '1px 1px 3px rgba(0, 0, 0, .25)',
+          xl: '5px 5px 3px rgba(0, 0, 0, .25)',
         },
 
         headings: {
-          fontFamily: "Roboto, sans-serif",
+          fontFamily: 'Roboto, sans-serif',
           sizes: {
-            h1: { fontSize: "2rem" },
+            h1: { fontSize: '2rem' },
           },
+        },
+        breakpoints: {
+          xs: '30em',
+          sm: '48em',
+          md: '64em',
+          lg: '74em',
+          xl: '90em',
         },
         // custom styled deafult components now use the theme colors, this will help with maintainability
         components: {
           Button: {
             styles: (theme) => ({
               root: {
-                "&:focus-within": {
+                '&:focus-within': {
                   backgroundColor: theme.colors.primary[1],
                 },
-                "&:hover": {
+                '&:hover': {
                   backgroundColor: theme.colors.primary[2],
                 },
                 backgroundColor: theme.colors.primary[1],
-                color: "white",
+                color: 'white',
               },
             }),
           },
 
           Input: {
             defaultProps: {
-              variant: "filled",
+              variant: 'filled',
             },
 
             styles: (theme) => ({
               input: {
-                "&:focus-within": {
+                '&:focus-within': {
                   borderColor: theme.colors.primary[1],
                 },
                 backgroundColor: theme.colors.primary[0],
@@ -102,5 +115,5 @@ export const MainTheme = ({ children }: IMainTheme) => {
     >
       {children}
     </MantineProvider>
-  );
-};
+  )
+}
