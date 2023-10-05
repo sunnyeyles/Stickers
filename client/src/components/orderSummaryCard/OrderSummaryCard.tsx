@@ -1,70 +1,67 @@
-import {
-  Card,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  Box,
-  Grid,
-  Title,
-  NativeSelect,
-  SimpleGrid,
-} from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
-import { useStyles } from './order_summary_styles'
+import { Card, Text, Badge, Button, Box, Grid, Title } from '@mantine/core'
+import { ReactNode } from 'react'
+import { ShoppingCartItem } from '../shoppingCartItem/ShoppingCartItem'
+import frogWaterfall from '../../assets/frog_waterfall.png'
 
-import TwoDucks from '../../assets/frog_waterfall.png'
-
-const numOfItems = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-
-function ItemCard() {
-  const { classes } = useStyles()
-  const matches = useMediaQuery('(max-width: 450px)')
-  return (
-    <Card sx={{ border: '2px solid black' }}>
-      <Grid p="md">
-        <Grid.Col span={{ sm: 4 }} m="sm">
-          <Image src={TwoDucks} alt="Your Image" width="100%" height="auto" />
-        </Grid.Col>
-        <Grid.Col span={4} p="lg">
-          <Title>3 Froggos</Title>
-
-          <NativeSelect mt="md" placeholder="Native select" data={numOfItems} />
-        </Grid.Col>
-        <Grid.Col span={4} p="lg">
-          <Title>$13.90</Title>
-        </Grid.Col>
-      </Grid>
-    </Card>
-  )
+interface IOrderSummaryCard {
+  amountTotal: string
+  shippingCost: string | ReactNode
 }
+const items = ['1', '2', '3', '4']
 
-export function OrderSummaryCard() {
-  const { classes } = useStyles()
-
+export function OrderSummaryCard({
+  amountTotal,
+  shippingCost,
+}: IOrderSummaryCard) {
   return (
     <Box>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Card.Section></Card.Section>
+        <Title>Order Summary</Title>
 
-        <Group mt="md" mb="xs"></Group>
-
-        <ItemCard />
-        <ItemCard />
-        <Grid>
-          <Grid.Col>
-            <Text>Total</Text>
+        {items.map((item, index) => {
+          return (
+            <ShoppingCartItem
+              image={frogWaterfall}
+              itemName="Frog Waterfall"
+              alt="Frog Waterfall"
+              itemPrice="$13.95"
+            />
+          )
+        })}
+        <Grid p="md">
+          <Grid.Col span={6}>
+            <Text sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+              Shipping
+            </Text>
           </Grid.Col>
-          <Grid.Col>
-            <Text>$14.89</Text>
+          <Grid.Col
+            span={6}
+            sx={{ display: 'flex', justifyContent: 'flex-end' }}
+          >
+            {/* <Badge size="lg">FREE</Badge> */}
+            {shippingCost}
           </Grid.Col>
         </Grid>
+        <Box>
+          <Grid p="md">
+            <Grid.Col
+              span={6}
+              sx={{ display: 'flex', justifyContent: 'flex-start' }}
+            >
+              Total
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <Text sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                {amountTotal}
+              </Text>
+            </Grid.Col>
+          </Grid>
+        </Box>
 
-        <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+        <Button variant="light" fullWidth mt="md" radius="md">
           Paypal
         </Button>
-        <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+        <Button variant="light" fullWidth mt="md" radius="md">
           Debit or Credit Card
         </Button>
       </Card>

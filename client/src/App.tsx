@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Dashboard } from './pages/dashboard/Dashboard'
 import { Register } from './pages/register/Register'
 import { OrderSummaryCard } from './components/orderSummaryCard/OrderSummaryCard'
+import { ShippingInfoOrderPage } from './pages/shippingInfoOrderSummaryPage/ShippingInfoOrderPage'
 const navBarItems = [
   {
     link: '#women',
@@ -29,7 +30,7 @@ export default function App() {
           <Route path="/" element={<Dashboard />} />
           {/* <Route path='/login' element={<Login />}/>
           <Route path='/register' element={<Register />}/> */}
-          <Route path="/order-summary" element={<OrderSummaryCard />} />
+          <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
         </Routes>
       </BrowserRouter>
     </MainTheme>
