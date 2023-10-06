@@ -38,7 +38,6 @@ export function OrderSummaryCard({
             span={6}
             sx={{ display: 'flex', justifyContent: 'flex-end' }}
           >
-            {/* <Badge size="lg">FREE</Badge> */}
             {shippingCost}
           </Grid.Col>
         </Grid>
