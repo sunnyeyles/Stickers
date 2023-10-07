@@ -2,7 +2,7 @@ import { Grid, Box, Badge } from '@mantine/core'
 
 import { OrderSummaryCard } from '../../components/orderSummaryCard/OrderSummaryCard'
 import { ShoppingCartItem } from '../../components/shoppingCartItem/ShoppingCartItem'
-import { ShippingInfoForm } from '../../components/shipping-info-form/ShippingInfoForm'
+import { ShippingInfoForm } from '../../components/shippingInfoForm/ShippingInfoForm'
 export const ShippingInfoOrderPage = () => {
   return (
     <Grid>
