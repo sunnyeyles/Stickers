@@ -7,7 +7,7 @@ export const userApi = createApi({
   reducerPath: 'itemsApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/` }),
   endpoints: (builder) => ({
-    getAllItems: builder.query<IUserAddressInfo, void>({
+    getAllItems: builder.query<IShippingInfoFormData, void>({
       // need to work out what the best enpoint would be, user could either use this data only for this order OR update their shipping info
       query: () => '/user',
     }),

@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Dashboard } from './pages/dashboard/Dashboard'
 import { Register } from './pages/register/Register'
 import { ShippingInfoOrderPage } from './pages/shippingInfoOrderSummaryPage/ShippingInfoOrderPage'
+import { Footer } from './components/footer/Footer'
 
 const navBarItems = [
   {
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </MainTheme>
   )
