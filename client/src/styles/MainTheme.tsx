@@ -25,7 +25,7 @@ export const MainTheme = ({ children }: IMainTheme) => {
       inherit
       theme={{
         colorScheme: isDarkTheme ? 'dark' : 'light',
-        fontFamily: 'monospace',
+        fontFamily: 'Noto Sans',
         // fontSizes: {
         //   sm: '0.75rem',
         //   md: '1rem',
@@ -107,6 +107,24 @@ export const MainTheme = ({ children }: IMainTheme) => {
                 },
                 backgroundColor: theme.colors.primary[0],
                 boxShadow: `5px 5px ${theme.colors.primary[1]}`,
+              },
+            }),
+          },
+
+          ActionIcon: {
+            defaultProps: {
+              variant: 'filled',
+            },
+            styles: (theme) => ({
+              root: {
+                '&:focus-within': {
+                  backgroundColor: theme.colors.primary[1],
+                },
+                '&:hover': {
+                  backgroundColor: theme.colors.primary[2],
+                },
+                backgroundColor: theme.colors.primary[1],
+                color: 'white',
               },
             }),
           },
