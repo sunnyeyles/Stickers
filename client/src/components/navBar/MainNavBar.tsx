@@ -95,10 +95,10 @@ export function MainNavBar({}) {
       <Image height="3.5rem" width="3.5rem" src={dogHappy} alt="Happy Dog" />
       <Group className={classes.items} spacing={5}>
         <Group>
-          <Button>Shop</Button>
-          <Button>Contact</Button>
-          <Button>Shop</Button>
-          <Button>Contact</Button>
+          <Button variant="outline">Shop</Button>
+          <Button variant="outline">Contact</Button>
+          <Button variant="outline">Shop</Button>
+          <Button variant="outline">Contact</Button>
         </Group>
       </Group>
       <UserButtons />

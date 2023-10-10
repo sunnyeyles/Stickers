@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import { Overlay, Container, Title, Button, Text } from '@mantine/core';
-import { useStyles } from './dashboard_styles';
-import { ItemsCollection } from '../../components/itemsCollection/ItemsCollection';
-
+import { Overlay, Container, Title, Button, Text } from '@mantine/core'
+import { useStyles } from './dashboard_styles'
+import { ItemsCollection } from '../../components/itemsCollection/ItemsCollection'
 
 export function Dashboard() {
-  const { classes } = useStyles();
-  const navigate = useNavigate();
+  const { classes } = useStyles()
+  const navigate = useNavigate()
 
   const navigateToLogin = () => {
     navigate('/login')
@@ -25,7 +24,12 @@ export function Dashboard() {
             Funny drawings characterised by ...
           </Text>
 
-          <Button onClick={navigateToLogin} size="xl" radius="xl" className={classes.control}>
+          <Button
+            onClick={navigateToLogin}
+            size="md"
+            radius="xl"
+            className={classes.control}
+          >
             Login
           </Button>
         </Container>
@@ -35,6 +39,5 @@ export function Dashboard() {
         <ItemsCollection />
       </div>
     </>
-  );
+  )
 }
-

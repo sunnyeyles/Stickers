@@ -28,11 +28,10 @@ export default function App() {
       <BrowserRouter>
         <MainNavBar />
         <Routes>
-          {/* <Route path="/" element={<Dashboard />} /> */}
-          {/* <Route path="/" element={<MainNavBar links={navBarItems} />} /> */}
-          {/* <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/order-summary" element={<ShippingInfoOrderPage />} /> */}
+          <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
