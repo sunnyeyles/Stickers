@@ -21,6 +21,7 @@ import { handleGoogleAuthCallback } from '../middleware/google_auth'
 import { moveCartToOrders } from '../controllers/item_controllers/move_user_shopping_cart_to_orders'
 import passport from 'passport'
 import { verifyJWT } from '../middleware/verifyJWT'
+import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 
 const router: Router = express.Router()
 
@@ -33,6 +34,7 @@ router.put('/user/change-user-password', changeUserPassword)
 router.get('/user/get-user-details-by-email', getUserDetailsByEmail)
 router.get('/user/get-all-users', getAllUsers)
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
+router.put('/user/upload-profile-image', uploadProfileImage)
 
 //// ITEM ENDPOINTS
 router.get('/item/get-all-items', getAllItemsFromDb)

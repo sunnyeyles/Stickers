@@ -75,7 +75,9 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item>
-                  <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                  <Button component="a" href="/profile" radius="xl">
+                    <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                  </Button>
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>

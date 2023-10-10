@@ -6,6 +6,7 @@ import { Dashboard } from './pages/dashboard/Dashboard'
 import { Register } from './pages/register/Register'
 import { ShippingInfoOrderPage } from './pages/shippingInfoOrderSummaryPage/ShippingInfoOrderPage'
 import { Footer } from './components/footer/Footer'
+import { Profile } from './pages/profile/Profile'
 
 const navBarItems = [
   {
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
       </BrowserRouter>
