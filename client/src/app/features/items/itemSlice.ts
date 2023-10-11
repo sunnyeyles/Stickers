@@ -1,4 +1,4 @@
-import { IItemResponse } from '../api/types';
+import { IItemResponse } from '../../api/types';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface IItemState {

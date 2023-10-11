@@ -17,8 +17,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { navBarStyles } from "./nav_bar_styles";
 import { IHeaderMiddleProps } from "./main_nav_bar_types";
 import { IconBong, IconLogout, IconSettings } from "@tabler/icons-react";
-import { useNavigate } from 'react-router-dom'
-import { useSendLogoutMutation } from "../../app/api/authApi";
+import { Link, useNavigate } from 'react-router-dom'
+import { useSendLogoutMutation } from "../../app/features/auth/authApiSlice";
 import { useAppSelector } from "../../app/hooks";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
@@ -32,7 +32,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
     isSuccess
   }] = useSendLogoutMutation()
 
-  const currentUser = useAppSelector(state => state.auth)
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
 
   // useEffect(() => {
   //   if (isSuccess) {
@@ -58,11 +58,15 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   ));
 
   const authButton = () => {
-    if (currentUser.userName === null) {
+    if (isAuthenticated === false) {
       return (
         <Group>
-          <Button component="a" href="/login" radius="xl">Login</Button>
-          <Button component="a" href="/register" radius="xl">Signup</Button>
+          <Link to="/login">
+            Login
+          </Link>
+          <Link to="/register">
+            Signup
+          </Link>
         </Group>
       )
     } else {
@@ -75,9 +79,9 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item>
-                  <Button component="a" href="/profile" radius="xl">
-                    <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
-                  </Button>
+                  <Link to= "/profile">
+                      <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                  </Link>
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>

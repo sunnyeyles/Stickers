@@ -1,5 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { Item, User } from '../models/model'
+
+import bcrypt from "bcrypt";
+
 //// SEED THE ITEMS COLLECTION IN DB
 export const seedItems = (numOfEntries: number) => {
   for (let i = 0; i < numOfEntries; i++) {
@@ -33,17 +36,21 @@ export const seedItems = (numOfEntries: number) => {
 }
 
 //// SEED USERS COLLECTION IN DB
+
 export const seedUsers = async (
-  // numOfItemsInCart: number,
+  numOfItemsInCart: number,
   numOfUsers: number
-) => {
+  ) => {
+  const password = 'password'
+  const saltRounds = 10
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
   for (let i = 0; i < numOfUsers; i++) {
     const cartItems = []
     const user = {
       // Define user properties (e.g., name, email, password)
       userName: faker.person.firstName(),
       email: faker.internet.email(),
-      password: 'password',
+      password: hashedPassword,
       terms: true,
       shoppingCart: [],
       address: {
@@ -52,24 +59,25 @@ export const seedUsers = async (
         city: 'Berlin',
         postCode: 13357,
       },
+      profileImage: null
     }
 
     // Create a user and retrieve the generated user object
     const createdUser = await User.create(user)
 
     // Generate cart items for the user
-    // for (let j = 0; j < numOfItemsInCart; j++) {
-    //   const isReduced = Math.random() <= 0.2
-    //   const fakeItem = {
-    //     itemName: faker.commerce.productName(),
-    //     itemPrice: faker.commerce.price({ min: 100, max: 200 }),
-    //     itemCategory: faker.commerce.department(),
-    //     numOfItems: faker.number.int(100),
-    //     reduced: isReduced,
-    //     percentageReduced: isReduced ? Math.floor(Math.random() * 100) : 0,
-    //   }
-    //   cartItems.push(fakeItem)
-    // }
+    for (let j = 0; j < numOfItemsInCart; j++) {
+      const isReduced = Math.random() <= 0.2
+      const fakeItem = {
+        itemName: faker.commerce.productName(),
+        itemPrice: faker.commerce.price({ min: 100, max: 200 }),
+        itemCategory: faker.commerce.department(),
+        numOfItems: faker.number.int(100),
+        reduced: isReduced,
+        percentageReduced: isReduced ? Math.floor(Math.random() * 100) : 0,
+      }
+      cartItems.push(fakeItem)
+    }
 
     // Save the user object with the cart
     await createdUser.save()

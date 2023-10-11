@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUserAddressInfo } from '../api/types'
+import { IUserAddressInfo } from '../../api/types'
 
 const initialState: IUserAddressInfo = {
   email: '',

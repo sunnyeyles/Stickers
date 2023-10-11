@@ -1,6 +1,6 @@
 import { Card, Image, Container, AspectRatio, SimpleGrid, Text, Title } from '@mantine/core'
 import { useStyles } from './items_collection_styles';
-import { useGetAllItemsQuery } from '../../app/api/itemsApi';
+import { useGetAllItemsQuery } from '../../app/features/items/itemsApiSlice';
 
 export function ItemsCollection() {
     const { classes } = useStyles();

@@ -22,6 +22,7 @@ import { moveCartToOrders } from '../controllers/item_controllers/move_user_shop
 import passport from 'passport'
 import { verifyJWT } from '../middleware/verifyJWT'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
+import {upload} from '../middleware/upload'
 
 const router: Router = express.Router()
 
@@ -34,7 +35,6 @@ router.put('/user/change-user-password', changeUserPassword)
 router.get('/user/get-user-details-by-email', getUserDetailsByEmail)
 router.get('/user/get-all-users', getAllUsers)
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
-router.put('/user/upload-profile-image', uploadProfileImage)
 
 //// ITEM ENDPOINTS
 router.get('/item/get-all-items', getAllItemsFromDb)
@@ -68,5 +68,9 @@ router.get(
 
 // once user is authenticated, they will be routed here
 router.get('/auth/google/callback', handleGoogleAuthCallback)
+
+// UPLOAD FILES
+router.put('/user/upload-profile-image', upload.single('prfileImage'), uploadProfileImage)
+
 
 export default router

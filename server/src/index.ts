@@ -15,6 +15,11 @@ const app: Express = express()
 const port = process.env.PORT || 3001
 
 connectToDatabase()
+
+//dropCollections()
+
+//seedUsers(2,2)
+
 app.use(cors())
 app.use(express.json())
 

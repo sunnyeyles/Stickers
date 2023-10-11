@@ -10,7 +10,6 @@ import {
 import { TextInput } from '../textInput/TextInput'
 import { PasswordInput } from '../passwordInput/PasswordInput'
 import { Checkbox } from '../checkboxInput/CheckboxInput'
-import { TwitterButton } from '@mantine/ds'
 import { ButtonTheme } from '../../styles/ButtonTheme'
 import { GoogleButton } from '../socialButtons/SocialButtons'
 import { useStyles } from '../loginForm/login_form_styles'
@@ -19,7 +18,7 @@ import { useNavigate } from 'react-router-dom'
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRegisterMutation } from '../../app/api/authApi'
+import { useRegisterMutation } from '../../app/features/auth/authApiSlice'
 
 const registerSchema = z
   .object({

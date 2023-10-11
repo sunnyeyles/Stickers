@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   userAddressInfoSlice,
   setAddressInfoState,
-} from '../../app/features/userAddressInfoSlice'
+} from '../../app/features/users/userAddressInfoSlice'
 
 const shippingInfoSchema = z.object({
   firstName: z

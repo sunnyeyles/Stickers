@@ -32,6 +32,11 @@ export interface IUserAddressInfo {
   country: string
   email: string
 }
+
 export interface IPlacedOrderData extends IUserAddressInfo {
 
+}
+
+export interface IShippingInfoFormData {
+  
 }

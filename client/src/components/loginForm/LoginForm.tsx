@@ -18,8 +18,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../app/api/authApi";
-import { setCredentials } from "../../app/features/authSlice";
+import { useLoginMutation } from "../../app/features/auth/authApiSlice";
+import { setCredentials } from "../../app/features/auth/authSlice";
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 import { useStyles } from './login_form_styles';
 
@@ -62,7 +62,7 @@ export function LoginForm() {
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
     const accessToken = await login(loginData).unwrap();
-    console.log('accessToken:', accessToken)
+    //console.log('accessToken:', accessToken)
     dispatch(setCredentials(accessToken))
     navigate("/")
   };
