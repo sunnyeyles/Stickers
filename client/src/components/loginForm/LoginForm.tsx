@@ -7,65 +7,64 @@ import {
   Anchor,
   Stack,
   Grid,
-} from "@mantine/core";
-import { TextInput } from "../textInput/TextInput";
-import { PasswordInput } from "../passwordInput/PasswordInput";
-import { GoogleButton, TwitterButton } from "../socialButtons/SocialButtons";
-import Duck from "../../assets/duck_big.png";
-import { ButtonTheme } from "../../styles/ButtonTheme";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../app/api/authApi";
-import { setCredentials } from "../../app/features/authSlice";
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
-import { useStyles } from './login_form_styles';
+} from '@mantine/core'
+import { TextInput } from '../textInput/TextInput'
+import { PasswordInput } from '../passwordInput/PasswordInput'
+import { GoogleButton, TwitterButton } from '../socialButtons/SocialButtons'
+import Duck from '../../assets/duck_big.png'
+// import { ButtonTheme } from "../../styles/ButtonTheme";
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useLoginMutation } from '../../app/api/authApi'
+import { setCredentials } from '../../app/features/authSlice'
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react'
+import { useStyles } from './login_form_styles'
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is required"),
+  email: z.string().email('Invalid email').min(1, 'Email is required'),
   password: z
     .string()
-    .min(1, "Password is required")
-    .min(8, "Password must have more than 8 characters"),
-});
+    .min(1, 'Password is required')
+    .min(8, 'Password must have more than 8 characters'),
+})
 
-export type FormSchemaType = z.infer<typeof formSchema>;
+export type FormSchemaType = z.infer<typeof formSchema>
 
 export function LoginForm() {
-  
-  const { classes } = useStyles();
+  const { classes } = useStyles()
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<FormSchemaType>({
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     resolver: zodResolver(formSchema),
-  });
+  })
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const navigateToRegister = () => {
-    navigate("/register")
+    navigate('/register')
   }
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation()
   if (isLoading) {
     return <p>Loading...</p>
   }
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
-    const accessToken = await login(loginData).unwrap();
+    const accessToken = await login(loginData).unwrap()
     console.log('accessToken:', accessToken)
     dispatch(setCredentials(accessToken))
-    navigate("/")
-  };
+    navigate('/')
+  }
 
   return (
     <>
@@ -83,9 +82,7 @@ export function LoginForm() {
             </Title>
 
             <Group grow mb="md" mt="md">
-              <ButtonTheme>
-                <GoogleButton radius="xl">Google</GoogleButton>
-              </ButtonTheme>
+              <GoogleButton radius="xl">Google</GoogleButton>
             </Group>
 
             <Divider
@@ -114,10 +111,13 @@ export function LoginForm() {
                   control={control}
                   name="password"
                   visibilityToggleIcon={({ reveal, size }) =>
-                    reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
+                    reveal ? (
+                      <IconEyeOff size={size} />
+                    ) : (
+                      <IconEyeCheck size={size} />
+                    )
                   }
                 />
-
               </Stack>
 
               <Group position="apart" mt="xl">
@@ -145,5 +145,5 @@ export function LoginForm() {
         </Grid.Col>
       </Grid>
     </>
-  );
+  )
 }

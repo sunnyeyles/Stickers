@@ -11,7 +11,7 @@ import { TextInput } from '../textInput/TextInput'
 import { PasswordInput } from '../passwordInput/PasswordInput'
 import { Checkbox } from '../checkboxInput/CheckboxInput'
 import { TwitterButton } from '@mantine/ds'
-import { ButtonTheme } from '../../styles/ButtonTheme'
+// import { ButtonTheme } from '../../styles/ButtonTheme'
 import { GoogleButton } from '../socialButtons/SocialButtons'
 import { useStyles } from '../loginForm/login_form_styles'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -84,9 +84,7 @@ export function RegisterForm() {
           Welcome to STICKERS, register with
         </Title>
         <Group grow mb="md" mt="md">
-          <ButtonTheme>
-            <GoogleButton radius="xl">Google</GoogleButton>
-          </ButtonTheme>
+          <GoogleButton radius="xl">Google</GoogleButton>
         </Group>
         <Divider
           label="Or continue with email"
