@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Header,
   Group,
   Container,
   Burger,
-  TextInput,
   Button,
   Box,
-  List,
-  Anchor,
   Menu,
   rem,
   Avatar,
