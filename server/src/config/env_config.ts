@@ -8,4 +8,5 @@ export const envConfig = {
   jwtRefreshExpiration: '1d',
   dbUsername: process.env.DB_USERNAME,
   dbPassword: process.env.DB_PASSWORD,
+  imagePath: './Images'
 }

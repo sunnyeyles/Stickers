@@ -2,13 +2,15 @@ import { apiSlice } from '../../api/apiSlice';
 
 export const uploadApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    upload: builder.mutation({
-      query: ({data}) => ({
+    upload: builder.mutation<{}, FormData>({
+      query: (data) => {
+        return {
           url: '/user/upload-profile-image',
           method: 'POST',
           body: data,
           formData: true
-      }),
+        }
+      },
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
@@ -18,9 +20,9 @@ export const uploadApiSlice = apiSlice.injectEndpoints({
         }
       }
     })
-
-
   }),
 });
 
-export const { useUploadMutation } = uploadApiSlice
+export const {
+  useUploadMutation
+} = uploadApiSlice

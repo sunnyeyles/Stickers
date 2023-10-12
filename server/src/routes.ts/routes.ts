@@ -22,12 +22,12 @@ import { moveCartToOrders } from '../controllers/item_controllers/move_user_shop
 import passport from 'passport'
 import { verifyJWT } from '../middleware/verifyJWT'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
-import {upload} from '../middleware/upload'
+import { upload } from '../middleware/upload'
 
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
-router.post('/user/create-user',createNewUser) //register
+router.post('/user/create-user', createNewUser) //register
 router.post('/user/authenticate-user', userAuth) //login
 router.get('/user/refresh-token', refreshToken)
 router.post('/user/user-log-out', userLogOut)
@@ -70,7 +70,7 @@ router.get(
 router.get('/auth/google/callback', handleGoogleAuthCallback)
 
 // UPLOAD FILES
-router.put('/user/upload-profile-image', upload.single('prfileImage'), uploadProfileImage)
+router.post('/user/upload-profile-image', upload.single('profileImage'), uploadProfileImage)
 
 
 export default router

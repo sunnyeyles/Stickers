@@ -1,66 +1,40 @@
-import { Avatar, Button, FileButton, Grid, Group, Stack, Text, FileInput } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { Button, Grid, Stack, Text } from "@mantine/core";
 import { useUploadMutation } from "../../app/features/upload/uploadApiSlice";
 import { useAppSelector } from "../../app/hooks";
-
-import { z } from "zod";
+import { object, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { FileInput } from "../../components/fileInput/FileInput";
 
-import { useForm } from "@mantine/form";
+const imageUploadSchema = object({
+    profileImage: z.instanceof(File),
+});
 
-// const formSchema = z.object({
-//     profileImage: z.any()
-// });
-
-// export type FormSchemaType = z.infer<typeof formSchema>;
+export type UploadImageType = z.infer<typeof imageUploadSchema>;
 
 export function Profile() {
 
-    type FormValues = {
-        profileImage: File | null
-    }
     const userEmail = useAppSelector(state => state.auth.email)
     console.log("userEmail: ", userEmail)
 
-    //const [profileImage, setProfileImage] = useState<File | null>(null);
-
-    // const {
-    //     control,
-    //     handleSubmit,
-    //     formState: { isSubmitting },
-    // } = useForm<FormSchemaType>({
-    //     defaultValues: {
-    //         profileImage: null,
-    //     },
-    //     resolver: zodResolver(formSchema),
-    // });
-
-    const form = useForm<FormValues>({
-        initialValues: {
-            profileImage: null,
-        }
+    const {
+        control,
+        handleSubmit
+    } = useForm<UploadImageType>({
+        resolver: zodResolver(imageUploadSchema),
     });
 
-
-
-    // useEffect(() => {
-    //     handleImageUpload()
-    // },[profileImage])
     const [upload, { isLoading }] = useUploadMutation()
     if (isLoading) {
         return <p>Loading...</p>
     }
 
-    // const handleImageUpload = async () => {
-    //     console.log("profileImage", profileImage)
-
-    // }
-
-    const handleSubmit = async (data: typeof form.values) => {
-        console.log("data: ", data)
-        const returnValue = await upload({ email: userEmail, profileImage: data })
-        //const returnValue = await upload(data).unwrap()
-        console.log("returnValue: ", returnValue)
+    const onSubmit: SubmitHandler<UploadImageType> = async (values: any) => {
+        const formData = new FormData()
+        formData.append('profileImage', values.profileImage);
+        values.userEmail = userEmail
+        formData.append('userEmail', values.userEmail)
+        await upload(formData)
     };
 
     return (
@@ -72,11 +46,9 @@ export function Profile() {
                 </Grid.Col>
                 <Grid.Col xs={12} sm={6}>
                     {/* <Avatar color="orange" radius="xl" /> */}
-                    {/* <form action="/upload" method="POST" enctype="multipart/form-data"> */}
-                    <form onSubmit={form.onSubmit(handleSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <Stack>
-                            {/* <input type="profileImage" name="profileImage" required /> */}
-                            {/* <FileInput
+                            <FileInput
                                 control={control}
                                 placeholder="Choose image"
                                 size="md"
@@ -84,32 +56,12 @@ export function Profile() {
                                 id="profileImage"
                                 name="profileImage"
                                 accept="image/*"
-                            /> */}
-                            <FileInput
-                                placeholder="Upload a profile picture"
-                                accept="image/*"
-                                {...form.getInputProps("profileImage")}
                             />
-
                             <Button type="submit" radius="xl">
                                 Save
                             </Button>
                         </Stack>
                     </form>
-
-
-
-                    {/* <Group>
-                        <FileButton onChange={setProfileImage} accept="image/png,image/jpeg">
-                            {(props) => <Button {...props}>Upload image</Button>}
-                        </FileButton>
-                        {profileImage && (
-                            <Text size="sm" ta="center" mt="sm">
-                                Picked file: {profileImage.name}
-                            </Text>
-                        )}
-                        <Button onClick={handleImageUpload}>Save</Button>
-                    </Group> */}
                 </Grid.Col>
             </Grid>
         </>

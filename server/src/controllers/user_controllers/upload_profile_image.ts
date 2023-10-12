@@ -1,24 +1,25 @@
 import express, { Express, Request, Response } from "express";
-import {User} from '../../models/model'
-
-
-
+import { envConfig } from '../../config/env_config'
+import { User } from "../../models/model";
 
 //// UPLOAD PROFILE IMAGE TO DB
 export const uploadProfileImage = async (req: Request, res: Response) => {
-    console.log("request body",req.body)
-    console.log("request files",req.files)
-    const { profileImage, email } = req.body;
-    console.log("profileImage",profileImage)
-    console.log("email", email)
+
+    //console.log("request file",req.file)
     try {
-        const user = await User.findById(email);
+        const userEmail = JSON.parse(JSON.stringify(req.body))
+        const email: string = Object.values(userEmail).toString()
+
+        const user = await User.findOne({ email })
+
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        user.profileImage = req.file.originalname;
+
+        user.profileImage = envConfig.imagePath + "/" + req.file.filename;
+
         await user.save();
-        res.status(201).json({ message: "New profile Image uploaded", user });
+        res.status(201).json({ message: "New profile Image uploaded" });
     } catch (error) {
         res.status(409).json({ message: error.message })
     }
