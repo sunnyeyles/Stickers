@@ -1,5 +1,5 @@
 import { MantineProvider } from '@mantine/core'
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import { Button } from './button'
 import { Input } from './input'
 import { ActionIcon } from './actionIcon'
@@ -15,7 +15,7 @@ export const MainTheme = ({ children }: IMainTheme) => {
       inherit
       theme={{
         fontFamily: 'Noto Sans',
-        colorScheme: 'dark',
+        colorScheme: 'light',
         primaryColor: 'orange',
 
         colors: {

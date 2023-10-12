@@ -2,12 +2,9 @@ import { useEffect, useState } from 'react'
 import {
   Header,
   Group,
-  Container,
   Burger,
   Button,
-  Box,
   Menu,
-  rem,
   Avatar,
   ActionIcon,
   Image,
@@ -19,6 +16,8 @@ import { navBarStyles } from './nav_bar_styles'
 import { IconLogout, IconSettings } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
 import dogHappy from './../../assets/dog_happy.svg'
+import { LightDarkToggleButton } from '../lightDarkToggleButton/LightDarkToggleButton'
+import { DogHappy } from '../../assets/DogHappy'
 
 // import { useSendLogoutMutation } from '../../app/api/authApi'
 // import { useAppSelector } from '../../app/hooks'
@@ -63,6 +62,7 @@ export function MainNavBar({}) {
           <Button component="a" href="/register" radius="xl">
             Signup
           </Button>
+          {/* <LightDarkToggleButton /> */}
         </Group>
       )
     } else {
@@ -78,6 +78,7 @@ export function MainNavBar({}) {
             <ActionIcon aria-label="Logout Icon">
               <IconLogout />
             </ActionIcon>
+            <ActionIcon>{/* <LightDarkToggleButton /> */}</ActionIcon>
           </Menu>
         </Group>
       )
@@ -92,7 +93,8 @@ export function MainNavBar({}) {
         size="sm"
         className={classes.burger}
       ></Burger>
-      <Image height="3.5rem" width="3.5rem" src={dogHappy} alt="Happy Dog" />
+      {/* <Image height="3.5rem" width="3.5rem" src={dogHappy} alt="Happy Dog" /> */}
+      <DogHappy />
       <Group className={classes.items} spacing={5}>
         <Group>
           <Button variant="outline">Shop</Button>
