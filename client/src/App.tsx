@@ -6,7 +6,7 @@ import { Register } from './pages/register/Register'
 import { ShippingInfoOrderPage } from './pages/shippingInfoOrderSummaryPage/ShippingInfoOrderPage'
 import { Footer } from './components/footer/Footer'
 import { Profile } from './pages/profile/Profile'
-import { BrowserRouter as Router, Route, Routes, Outlet, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useAppSelector } from './app/hooks'
 
 const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
@@ -53,7 +53,9 @@ export default function App() {
           <Route 
             path="/profile" 
             element={(
-            <Profile />
+              <PrivateWrapper>
+                <Profile />
+              </PrivateWrapper>
             )}
           />
         </Routes>
