@@ -10,9 +10,9 @@ import {
 } from "@mantine/core";
 import { TextInput } from "../textInput/TextInput";
 import { PasswordInput } from "../passwordInput/PasswordInput";
-import { GoogleButton, TwitterButton } from "../socialButtons/SocialButtons";
+import { GoogleButton } from "../socialButtons/SocialButtons";
 import Duck from "../../assets/duck_big.png";
-import { ButtonTheme } from "../../styles/ButtonTheme";
+//import { ButtonTheme } from "../../styles/ButtonTheme";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +26,7 @@ import { usePersistentState } from "../../hooks/usePersistentState";
 import { Checkbox } from '../checkboxInput/CheckboxInput'
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is required"),
+  email: z.string().email('Invalid email').min(1, 'Email is required'),
   password: z
     .string()
     .min(1, "Password is required")
@@ -34,7 +34,7 @@ const formSchema = z.object({
   persist: z.any()
 });
 
-export type FormSchemaType = z.infer<typeof formSchema>;
+export type FormSchemaType = z.infer<typeof formSchema>
 
 export function LoginForm() {
 
@@ -51,16 +51,16 @@ export function LoginForm() {
       persist: persist
     },
     resolver: zodResolver(formSchema),
-  });
+  })
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const navigateToRegister = () => {
-    navigate("/register")
+    navigate('/register')
   }
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation()
   if (isLoading) {
     return <p>Loading...</p>
   }
@@ -92,9 +92,7 @@ export function LoginForm() {
             </Title>
 
             <Group grow mb="md" mt="md">
-              <ButtonTheme>
-                <GoogleButton radius="xl">Google</GoogleButton>
-              </ButtonTheme>
+              <GoogleButton radius="xl">Google</GoogleButton>
             </Group>
 
             <Divider
@@ -123,10 +121,13 @@ export function LoginForm() {
                   control={control}
                   name="password"
                   visibilityToggleIcon={({ reveal, size }) =>
-                    reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
+                    reveal ? (
+                      <IconEyeOff size={size} />
+                    ) : (
+                      <IconEyeCheck size={size} />
+                    )
                   }
                 />
-
               </Stack>
 
               <Group position="apart" mt="xl">
@@ -163,5 +164,5 @@ export function LoginForm() {
         </Grid.Col>
       </Grid>
     </>
-  );
+  )
 }

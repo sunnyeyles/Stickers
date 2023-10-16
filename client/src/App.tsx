@@ -34,10 +34,8 @@ export default function App() {
 
   return (
     <MainTheme>
-      <Router>
-
+      <BrowserRouter>
         <MainNavBar links={navBarItems} />
-
         <Routes>
 
           {/* landing page */}
