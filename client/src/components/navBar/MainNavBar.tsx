@@ -16,13 +16,15 @@ import { IHeaderMiddleProps } from "./main_nav_bar_types";
 import { IconBong, IconLogout, IconSettings } from "@tabler/icons-react";
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from "../../app/features/auth/authApiSlice";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../hooks/hooks";
+//import { useGetUserByIdMutation, useGetUserByIdQuery } from "../../app/features/users/usersApiSlice";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes } = navBarStyles();
   const navigate = useNavigate();
+ 
 
   const [logout, {
     isLoading,
@@ -30,12 +32,11 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   }] = useSendLogoutMutation()
 
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     navigate('/login')
-  //   }
-  // }, [isSuccess, navigate])
+  const profileImage = useAppSelector(state => state.auth.user?.profileImage)
+  const userId = useAppSelector(state => state.auth.user?._id) as string
+  //console.log(userId)
+  //const { data } = useGetUserByIdMutation(userId)
+  //console.log(data)
 
   if (isLoading) {
     return <p>Logging out...</p>
@@ -69,15 +70,16 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
     } else {
       return (
         <>
+        <h2>{isAuthenticated}</h2>
           <Group>
             <Menu shadow="md" width={200}>
               <Menu.Target>
-                <Avatar color="orange" radius="xl" />
+                <Avatar src={profileImage} color="orange" radius="xl" />
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item>
-                  <Link to= "/profile">
-                      <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                  <Link to="/profile">
+                    <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
                   </Link>
                 </Menu.Item>
               </Menu.Dropdown>

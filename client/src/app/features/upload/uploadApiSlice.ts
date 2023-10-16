@@ -1,8 +1,9 @@
 import { apiSlice } from '../../api/apiSlice';
+import { IUserResponse } from '../../api/types';
 
 export const uploadApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    upload: builder.mutation<{}, FormData>({
+    upload: builder.mutation<IUserResponse, FormData>({
       query: (data) => {
         return {
           url: '/user/upload-profile-image',

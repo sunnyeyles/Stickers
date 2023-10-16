@@ -1,32 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
 
-type AuthState = {
+export type AuthState = {
+  user: any
   token: string | null
-  userName: string | null
-  email: string | null
   isAuthenticated: boolean
 }
 
 //we expect to receive the token back after login
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: { token: null, userName: null, email: null, isAuthenticated: false } as AuthState,
+  initialState: { user: null, token: null, isAuthenticated: false } as AuthState,
   reducers: {
     setCredentials: (state, action) => {
-      const { accessToken, userName, userEmail } = action.payload
+      const { user, accessToken } = action.payload
+      console.log(action.payload)
+      state.user = user
+      //console.log("accessToken", accessToken)
       state.token = accessToken
-      state.userName = userName
-      state.email = userEmail
       state.isAuthenticated = true
+      //console.log("user from auth login", user)
     },
     logOut: (state) => {
+      state.user = null
       state.token = null
-      state.userName = null
-      state.email = null
       state.isAuthenticated = false
     },
-    signUp: (state, action) => {}
+    signUp: (state, action) => { }
   },
 })
 
@@ -34,5 +34,6 @@ export const { setCredentials, logOut } = authSlice.actions
 
 export default authSlice.reducer
 
-export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
+export const selectCurrentUser = (state: RootState) => state.auth.user
 export const selectCurrentToken = (state: RootState) => state.auth.token
+export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;

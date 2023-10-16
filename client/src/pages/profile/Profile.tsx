@@ -1,11 +1,12 @@
-import { Button, Grid, Paper, Stack, Text, Title } from "@mantine/core";
+import { Avatar, Button, Grid, Paper, Stack, Text, Title } from "@mantine/core";
 import { useUploadMutation } from "../../app/features/upload/uploadApiSlice";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../hooks/hooks";
 import { object, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FileInput } from "../../components/fileInput/FileInput";
 import { useStyles } from "./profile_styles";
+import { Link } from "react-router-dom";
 
 const imageUploadSchema = object({
     profileImage: z.instanceof(File),
@@ -17,8 +18,7 @@ export function Profile() {
 
     const { classes } = useStyles();
 
-    const userEmail = useAppSelector(state => state.auth.email)
-    console.log("userEmail: ", userEmail)
+    const userEmail = useAppSelector(state => state.auth.user?.email)
 
     const {
         control,
@@ -56,7 +56,7 @@ export function Profile() {
                         <Text size="md">Upload/Update your profile Image</Text>
                     </Grid.Col>
                     <Grid.Col sm={6}>
-                        {/* <Avatar color="orange" radius="xl" /> */}
+                        <Avatar color="orange" radius="xl" />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Stack>
                                 <FileInput
@@ -80,8 +80,9 @@ export function Profile() {
                         </form>
                     </Grid.Col>
                 </Grid>
+                <Link to="/">Back to Dashboard</Link>
             </Paper>
         </>
-    );
+    )
 }
 

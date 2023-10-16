@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import {
   getUserDetailsByEmail,
   getAllUsers,
+  getUserById
 } from '../controllers/user_controllers/users_controller'
 import { createNewUser } from '../controllers/user_controllers/create_user'
 import { changeUserPassword } from '../controllers/user_controllers/change_password'
@@ -27,6 +28,7 @@ import { upload } from '../middleware/upload'
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
+router.get('/user/get-user-by-id', getUserById)
 router.post('/user/create-user', createNewUser) //register
 router.post('/user/authenticate-user', userAuth) //login
 router.get('/user/refresh-token', refreshToken)
@@ -37,7 +39,7 @@ router.get('/user/get-all-users', getAllUsers)
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
 //// ITEM ENDPOINTS
-router.get('/item/get-all-items', getAllItemsFromDb)
+router.get('/item/get-all-items', verifyJWT, getAllItemsFromDb)
 router.get('/item/get-items-by-category', getItemsByCategory)
 router.get(
   '/item/get-items-in-category/:itemCategory',
@@ -69,7 +71,7 @@ router.get(
 // once user is authenticated, they will be routed here
 router.get('/auth/google/callback', handleGoogleAuthCallback)
 
-// UPLOAD FILES
+// UPLOAD SINGLE FILE
 router.post('/user/upload-profile-image', upload.single('profileImage'), uploadProfileImage)
 
 

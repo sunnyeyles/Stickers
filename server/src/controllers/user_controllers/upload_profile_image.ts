@@ -16,12 +16,16 @@ export const uploadProfileImage = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        user.profileImage = envConfig.imagePath + "/" + req.file.filename;
+        user.profileImage = envConfig.developmentServer + envConfig.imagePath + "/" + req.file.filename;
 
         await user.save();
-        res.status(201).json({ message: "New profile Image uploaded" });
+        res.status(201).json(
+            {
+                message: "New profile Image uploaded",
+                profileImagePath: user.profileImage,
+            }
+        );
     } catch (error) {
         res.status(409).json({ message: error.message })
     }
 };
-

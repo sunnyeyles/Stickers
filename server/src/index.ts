@@ -10,6 +10,8 @@ import {
   seedUsers,
 } from './helper_functions/seed_db'
 import cookieParser from 'cookie-parser'
+import path from 'path'
+import { corsOptions } from './config/cors_options'
 
 const app: Express = express()
 const port = process.env.PORT || 3001
@@ -17,11 +19,17 @@ const port = process.env.PORT || 3001
 connectToDatabase()
 
 //dropCollections()
-
 //seedUsers(2,2)
+//seedItems(10)
 
-app.use(cors())
+app.use(cors(corsOptions))
+
 app.use(express.json())
+
+// built in - middleware: Serve static files from the "uploads" directory
+const _dirname = path.resolve();
+//console.log(_dirname)
+app.use('/uploads', express.static(path.join(_dirname, 'uploads')))
 
 app.use(cookieParser())
 
@@ -36,10 +44,12 @@ app.use(
     saveUninitialized: true,
   })
 )
+
 // Use Passport.session() after configuring session middleware
 app.use(passport.session())
 // Routes
 app.use(router)
+
 
 // START SERVER
 app.listen(port, () => {

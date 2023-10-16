@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker'
 import { Item, User } from '../models/model'
 
 import bcrypt from "bcrypt";
+import { envConfig } from '../config/env_config';
 
 //// SEED THE ITEMS COLLECTION IN DB
 export const seedItems = (numOfEntries: number) => {
@@ -19,13 +20,15 @@ export const seedItems = (numOfEntries: number) => {
     }
     const ifReduced = createReducedByValue()
 
+    envConfig.developmentServer
+
     const fakeItem: object = {
       itemName: faker.commerce.productName(),
       itemPrice: faker.commerce.price({ min: 100, max: 200 }),
       itemCategory: faker.commerce.department(),
-      itemDescription: "I'm with stupid t-shirt",
+      itemDescription: "Three Froggos",
       imagePath:
-        '/Users/sunnyeyles/Documents/personal_projects/e_commerce_app/server/images/with_stupid.jpg',
+        `${envConfig.developmentServer}/images/three-froggos.png`,
       numOfItems: faker.number.int(100),
       reduced: isReduced,
       percentageReduced: ifReduced,

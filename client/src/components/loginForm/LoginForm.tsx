@@ -22,6 +22,8 @@ import { useLoginMutation } from "../../app/features/auth/authApiSlice";
 import { setCredentials } from "../../app/features/auth/authSlice";
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 import { useStyles } from './login_form_styles';
+import { usePersistentState } from "../../hooks/usePersistentState";
+import { Checkbox } from '../checkboxInput/CheckboxInput'
 
 const formSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
@@ -29,12 +31,14 @@ const formSchema = z.object({
     .string()
     .min(1, "Password is required")
     .min(8, "Password must have more than 8 characters"),
+  persist: z.boolean()
 });
 
 export type FormSchemaType = z.infer<typeof formSchema>;
 
 export function LoginForm() {
-  
+
+  const [persist, setPersist] = usePersistentState("persist", null)
   const { classes } = useStyles();
   const {
     control,
@@ -44,6 +48,7 @@ export function LoginForm() {
     defaultValues: {
       email: "",
       password: "",
+      persist: persist
     },
     resolver: zodResolver(formSchema),
   });
@@ -61,11 +66,13 @@ export function LoginForm() {
   }
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
-    const accessToken = await login(loginData).unwrap();
-    //console.log('accessToken:', accessToken)
-    dispatch(setCredentials(accessToken))
-    navigate("/")
+    const userData = await login(loginData).unwrap();
+    console.log('userData:', userData)
+    dispatch(setCredentials({ ...userData }))
+    navigate("/profile")
   };
+
+  const handleToggle = () => setPersist((prev: any) => !prev)
 
   return (
     <>
@@ -134,6 +141,15 @@ export function LoginForm() {
                   Login
                 </Button>
               </Group>
+
+              <Checkbox
+                control={control}
+                name="persist"
+                id="persist"
+                label="Trust this device"
+                value="false"
+                onChange={handleToggle}
+              />
             </form>
           </Paper>
         </Grid.Col>

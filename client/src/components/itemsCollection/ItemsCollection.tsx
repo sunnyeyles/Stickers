@@ -23,7 +23,7 @@ export function ItemsCollection() {
 
                             <Card key={item.itemName} component="a" href="#">
                                 <AspectRatio ratio={1920 / 1080}>
-                                    <Image src={item.image} />
+                                    <Image src={item.imagePath} />
                                 </AspectRatio>
                                 <Text className={classes.itemTitle}>
                                     {item.itemName}

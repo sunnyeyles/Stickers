@@ -2,7 +2,28 @@ import express, { Request, Response } from 'express'
 
 import { User } from '../../models/model'
 
-///// GET USER DETAILS
+
+///// GET USER DETAILS by id
+export const getUserById = async (req: Request, res: Response) => {
+  const { _id } = req.body
+  console.log(req.body)
+  try {
+    const user = await User.findOne({ _id })
+    console.log(user)
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'No User found' })
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    console.error('Error:', error)
+    return res
+      .status(500)
+      .json({ success: false, message: 'Internal server error' })
+  }
+}
+
+
+///// GET USER DETAILS by email
 export const getUserDetailsByEmail = async (req: Request, res: Response) => {
   const { email } = req.query
   try {
