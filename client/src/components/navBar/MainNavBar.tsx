@@ -8,6 +8,7 @@ import {
   Menu,
   Avatar,
   ActionIcon,
+  rem,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { navBarStyles } from "./nav_bar_styles";
@@ -23,6 +24,7 @@ import { DogHappy } from '../../assets/DogHappy'
 //import { useGetUserByIdMutation, useGetUserByIdQuery } from "../../app/features/users/usersApiSlice";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
+
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes } = navBarStyles();
@@ -46,36 +48,8 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
 
   if (isLoading) return <p>Logging Out...</p>
 
-
-  // if (isLoading) {
-  //   return <p>Logging out...</p>
-  // }
-
-  // const authButton = () => {
-  //   if (isAuthenticated === false) {
-  //     return (
-  //       <Group>
-  //         <Link to="/login">
-  //           Login
-  //         </Link>
-  //         <Link to="/register">
-  //           Signup
-  //         </Link>
-  // const items = links.map((link) => (
-  //   <Button
-  //     key={link.label}
-  //     onClick={(event) => {
-  //       event.preventDefault()
-  //       // Set the active state to indicate the currently selected button/link
-  //       setActive(link.link)
-  //     }}
-  //   >
-  //     {link.label}
-  //   </Button>
-  // ))
-
   const UserButtons = () => {
-    if ('currentUser.userName === null') {
+    if (isAuthenticated === false) {
       return (
         <Group>
           <Button component="a" href="/login" radius="xl">
@@ -89,24 +63,6 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
       )
     } else {
       return (
-        // <>
-        //   <h2>{isAuthenticated}</h2>
-        //   <Group>
-        //     <Menu shadow="md" width={200}>
-        //       <Menu.Target>
-        //         <Avatar src={''} color="orange" radius="xl" />
-        //       </Menu.Target>
-        //       <Menu.Dropdown>
-        //         <Menu.Item>
-        //           <Link to="/profile">
-        //             <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
-        //           </Link>
-        //         </Menu.Item>
-        //       </Menu.Dropdown>
-        //     </Menu>
-        //     <Button onClick={logout} radius="xl"><IconLogout size="1rem" /></Button>
-        //   </Group>
-        // </>
         <Group>
           <Menu shadow="md" width={200}>
             <ActionIcon aria-label="Shopping Cart Icon">
@@ -115,8 +71,15 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
             <Menu.Target>
               <Avatar radius="xl" />
             </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item>
+                <Link to="/profile">
+                  <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                </Link>
+              </Menu.Item>
+            </Menu.Dropdown>
             <ActionIcon aria-label="Logout Icon">
-              <IconLogout />
+              <IconLogout onClick={logout} />
             </ActionIcon>
             <ActionIcon>{/* <LightDarkToggleButton /> */}</ActionIcon>
           </Menu>

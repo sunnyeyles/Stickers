@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <MainTheme>
-      <BrowserRouter>
+      <Router>
         <MainNavBar links={navBarItems} />
         <Routes>
 

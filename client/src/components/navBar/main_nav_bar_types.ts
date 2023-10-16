@@ -1,3 +1,3 @@
-// export interface IHeaderMiddleProps {
-//   links: { link: string; label: string }[];
-// }
+export interface IHeaderMiddleProps {
+  links: { link: string; label: string }[];
+}
