@@ -14,6 +14,7 @@ export interface IUser extends Document {
   shoppingCart: object[] | null
   orders: object[] | null
   terms: boolean
+  profileImage: string
 }
 
 export interface IItem extends Document {

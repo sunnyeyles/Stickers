@@ -4,56 +4,52 @@ import {
   Group,
   Burger,
   Button,
+  Box,
   Menu,
   Avatar,
   ActionIcon,
-  Image,
-} from '@mantine/core'
+  rem,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { navBarStyles } from "./nav_bar_styles";
+import { IconBong, IconLogout, IconSettings } from "@tabler/icons-react";
+import { Link, useNavigate } from 'react-router-dom'
+import { useSendLogoutMutation } from "../../app/features/auth/authApiSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import { IconShoppingCartFilled } from '@tabler/icons-react'
-import { useDisclosure } from '@mantine/hooks'
-import { navBarStyles } from './nav_bar_styles'
-// import { IHeaderMiddleProps } from './main_nav_bar_types'
-import { IconLogout, IconSettings } from '@tabler/icons-react'
-import { useNavigate } from 'react-router-dom'
+import { IHeaderMiddleProps } from './main_nav_bar_types'
 import dogHappy from './../../assets/dog_happy.svg'
 import { LightDarkToggleButton } from '../lightDarkToggleButton/LightDarkToggleButton'
 import { DogHappy } from '../../assets/DogHappy'
+//import { useGetUserByIdMutation, useGetUserByIdQuery } from "../../app/features/users/usersApiSlice";
 
-// import { useSendLogoutMutation } from '../../app/api/authApi'
-// import { useAppSelector } from '../../app/hooks'
+export function MainNavBar({ links }: IHeaderMiddleProps) {
 
-export function MainNavBar({}) {
-  const [opened, { toggle }] = useDisclosure(false)
-  // const [active, setActive] = useState(links[0].link)
-  const { classes } = navBarStyles()
-  const navigate = useNavigate()
-  // const [logout, { isLoading, isSuccess }] = useSendLogoutMutation()
-  // // get user state from store to check if user is logged in
-  // const currentUser = useAppSelector((state) => state.auth)
-  // // control user logged in state here for testing purposes
-  const currentUser = {
-    userName: true,
-  }
+  const [opened, { toggle }] = useDisclosure(false);
+  const [active, setActive] = useState(links[0].link);
+  const { classes } = navBarStyles();
+  const navigate = useNavigate();
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
+  //  TO DO  show profile image from user
+  //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
+  //const userId = useAppSelector(state => state.auth.user?._id) as string
+  //console.log(userId)
+  //const { data } = useGetUserByIdMutation(userId)
+  //console.log(data)
 
-  // if (isLoading) {
-  //   return <p>Logging out...</p>
-  // }
+  const [logout, {
+    isLoading,
+    isSuccess
+  }] = useSendLogoutMutation()
 
-  // const items = links.map((link) => (
-  //   <Button
-  //     key={link.label}
-  //     onClick={(event) => {
-  //       event.preventDefault()
-  //       // Set the active state to indicate the currently selected button/link
-  //       setActive(link.link)
-  //     }}
-  //   >
-  //     {link.label}
-  //   </Button>
-  // ))
+  useEffect(() => {
+    if (isSuccess) navigate('/')
+  }, [isSuccess, navigate])
+
+  if (isLoading) return <p>Logging Out...</p>
 
   const UserButtons = () => {
-    if (currentUser.userName === null) {
+    if (isAuthenticated === false) {
       return (
         <Group>
           <Button component="a" href="/login" radius="xl">
@@ -75,8 +71,15 @@ export function MainNavBar({}) {
             <Menu.Target>
               <Avatar radius="xl" />
             </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item>
+                <Link to="/profile">
+                  <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                </Link>
+              </Menu.Item>
+            </Menu.Dropdown>
             <ActionIcon aria-label="Logout Icon">
-              <IconLogout />
+              <IconLogout onClick={logout} />
             </ActionIcon>
             <ActionIcon>{/* <LightDarkToggleButton /> */}</ActionIcon>
           </Menu>

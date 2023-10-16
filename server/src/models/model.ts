@@ -23,6 +23,7 @@ const userSchema: Schema = new Schema(
     shoppingCart: [itemSchema],
     orders: [],
     terms: { type: Boolean, required: true },
+    profileImage: {type: String}
   },
   { timestamps: true }
 )

@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import {
   getUserDetailsByEmail,
   getAllUsers,
+  getUserById
 } from '../controllers/user_controllers/users_controller'
 import { createNewUser } from '../controllers/user_controllers/create_user'
 import { changeUserPassword } from '../controllers/user_controllers/change_password'
@@ -21,11 +22,14 @@ import { handleGoogleAuthCallback } from '../middleware/google_auth'
 import { moveCartToOrders } from '../controllers/item_controllers/move_user_shopping_cart_to_orders'
 import passport from 'passport'
 import { verifyJWT } from '../middleware/verifyJWT'
+import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
+import { upload } from '../middleware/upload'
 
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
-router.post('/user/create-user',createNewUser) //register
+router.get('/user/get-user-by-id', getUserById)
+router.post('/user/create-user', createNewUser) //register
 router.post('/user/authenticate-user', userAuth) //login
 router.get('/user/refresh-token', refreshToken)
 router.post('/user/user-log-out', userLogOut)
@@ -66,5 +70,9 @@ router.get(
 
 // once user is authenticated, they will be routed here
 router.get('/auth/google/callback', handleGoogleAuthCallback)
+
+// UPLOAD SINGLE FILE
+router.post('/user/upload-profile-image', upload.single('profileImage'), uploadProfileImage)
+
 
 export default router

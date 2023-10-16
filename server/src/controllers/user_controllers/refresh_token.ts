@@ -12,19 +12,19 @@ dotenv.config()
 export const refreshToken = async (req: Request, res: Response) => {
   //we expecting a cookie with the request
   const cookies = req.cookies
-  console.log('cookie jwt ', cookies.jwt)
+  //console.log('cookie jwt ', cookies.jwt)
 
   try {
-    if (!cookies?.jwt){
+    if (!cookies?.jwt) {
       return res.status(401).json({ message: 'Unauthorized' })
-    } 
+    }
 
     const refreshToken = cookies.jwt
-    console.log('refreshToken', refreshToken)
+    //console.log('refreshToken', refreshToken)
 
     // than we need to verify this token
     const decoded: ITokenData = jwt_decode(refreshToken)
-    console.log('decoded token: ', decoded)
+    //console.log('decoded token: ', decoded)
 
     const { _id } = decoded._id;
     const foundUser = await User.findOne(_id).exec()
@@ -40,7 +40,7 @@ export const refreshToken = async (req: Request, res: Response) => {
         }
       },
       `${process.env.ACCESS_TOKEN_SECRET}`,
-      { expiresIn: '3s' }
+      { expiresIn: "7min" }
     )
 
     res.json({ accessToken })

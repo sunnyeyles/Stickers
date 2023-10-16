@@ -1,6 +1,6 @@
 import { Card, Image, Container, AspectRatio, SimpleGrid, Text, Title } from '@mantine/core'
 import { useStyles } from './items_collection_styles';
-import { useGetAllItemsQuery } from '../../app/api/itemsApi';
+import { useGetAllItemsQuery } from '../../app/features/items/itemsApiSlice';
 
 export function ItemsCollection() {
     const { classes } = useStyles();
@@ -23,7 +23,7 @@ export function ItemsCollection() {
 
                             <Card key={item.itemName} component="a" href="#">
                                 <AspectRatio ratio={1920 / 1080}>
-                                    <Image src={item.image} />
+                                    <Image src={item.imagePath} />
                                 </AspectRatio>
                                 <Text className={classes.itemTitle}>
                                     {item.itemName}

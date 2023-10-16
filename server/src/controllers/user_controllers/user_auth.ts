@@ -19,6 +19,8 @@ export const userAuth = async (req: Request, res: Response) => {
     console.log('user found:', user)
     const userName = user.userName
     const userEmail = user.email
+    const profileImage = user.profileImage
+    const id = user._id
 
     // check if the user exists
     if (!user) {
@@ -45,7 +47,7 @@ export const userAuth = async (req: Request, res: Response) => {
       //google auth
       //clientSecret,
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '3s' },
+      { expiresIn: "7min" },
     )
 
     console.log("accessToken", accessToken)
@@ -54,7 +56,9 @@ export const userAuth = async (req: Request, res: Response) => {
     const refreshToken = jwt.sign(
       payloadToken,
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: envConfig.jwtRefreshExpiration }
+      {
+        expiresIn: "15min"
+      }
     )
     console.log("refreshToken", refreshToken)
 
@@ -66,7 +70,7 @@ export const userAuth = async (req: Request, res: Response) => {
     })
 
     //we sending back accessToken containing userId and email
-    res.json({ accessToken, userName, userEmail })
+    res.json({ accessToken , user })
   } catch (error) {
     console.error('Error during authentication:', error)
     return res

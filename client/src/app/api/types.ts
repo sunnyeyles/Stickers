@@ -1,6 +1,8 @@
 export interface IUser {
+  _id: string
   email: string
   password?: string
+  profileImage: string | null
 }
 
 export interface IUserResponse {
@@ -13,7 +15,7 @@ export interface IItemResponse {
   itemName: string
   itemPrice: string
   itemDescription: string
-  image: string
+  imagePath: string
   itemCategory: string
   itemsInStock: number
   reduced: boolean
@@ -32,6 +34,11 @@ export interface IUserAddressInfo {
   country: string
   email: string
 }
+
 export interface IPlacedOrderData extends IUserAddressInfo {
+
+}
+
+export interface IShippingInfoFormData {
 
 }
