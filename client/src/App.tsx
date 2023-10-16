@@ -40,6 +40,8 @@ export default function App() {
 
         <Routes>
 
+          {/* landing page */}
+          <Route path="/" element={<Dashboard />} />
 
           {/* public */}
           <Route path="/login" element={<Login />} />
@@ -47,9 +49,6 @@ export default function App() {
 
           {/* private */}
           <Route element={<PersistLogin />}>
-
-            {/* landing page */}
-            <Route path="/" element={<Dashboard />} />
 
             <Route
               path="/order-summary"

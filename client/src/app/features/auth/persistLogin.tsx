@@ -7,7 +7,7 @@ import { selectCurrentToken } from "./authSlice"
 
 export const PersistLogin = () => {
 
-    const [persist] = usePersistentState("persist", null)
+    const [persist] = usePersistentState()
     const token = useSelector(selectCurrentToken)
     const effectRan = useRef<boolean>(true)
 
@@ -17,8 +17,7 @@ export const PersistLogin = () => {
         isUninitialized,
         isLoading,
         isSuccess,
-        isError,
-        error
+        isError
     }] = useRefreshMutation()
 
     useEffect(() => {
@@ -48,13 +47,13 @@ export const PersistLogin = () => {
 
     let content: JSX.Element = <></>
     if (!persist) { // persist: no
-        console.log('no persist')
-        content = <h2></h2>
+        //console.log('no persist')
+        content = <Outlet />
     } else if (isLoading) { //persist: yes, token: no
-        console.log('loading')
+        //console.log('loading')
         content = <p>Loading...</p>
     } else if (isError) { //persist: yes, token: no
-        console.log('error')
+        //console.log('error')
         content = (
             <p className='errmsg'>
                 {/* {error.data?.message} */}
@@ -62,11 +61,11 @@ export const PersistLogin = () => {
             </p>
         )
     } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
-        console.log('success')
+        //console.log('success')
         content = <Outlet />
     } else if (token && isUninitialized) { //persist: yes, token: yes
-        console.log('token and uninit')
-        console.log(isUninitialized)
+        //console.log('token and uninit')
+        //console.log(isUninitialized)
         content = <Outlet />
     }
 

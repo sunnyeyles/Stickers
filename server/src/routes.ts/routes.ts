@@ -39,7 +39,7 @@ router.get('/user/get-all-users', getAllUsers)
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
 //// ITEM ENDPOINTS
-router.get('/item/get-all-items', verifyJWT, getAllItemsFromDb)
+router.get('/item/get-all-items', getAllItemsFromDb)
 router.get('/item/get-items-by-category', getItemsByCategory)
 router.get(
   '/item/get-items-in-category/:itemCategory',

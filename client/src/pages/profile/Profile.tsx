@@ -19,7 +19,7 @@ export function Profile() {
     const { classes } = useStyles();
 
     const userEmail = useAppSelector(state => state.auth.user?.email)
-
+    
     const {
         control,
         handleSubmit

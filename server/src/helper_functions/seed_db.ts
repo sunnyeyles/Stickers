@@ -28,7 +28,7 @@ export const seedItems = (numOfEntries: number) => {
       itemCategory: faker.commerce.department(),
       itemDescription: "Three Froggos",
       imagePath:
-        `${envConfig.developmentServer}/images/three-froggos.png`,
+        `${envConfig.developmentServer}/uploads/three-froggos.png`,
       numOfItems: faker.number.int(100),
       reduced: isReduced,
       percentageReduced: ifReduced,

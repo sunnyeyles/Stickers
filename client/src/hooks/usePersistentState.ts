@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 
-export const usePersistentState = (key: string, defaultValue: any) => {
+export const usePersistentState = (): [boolean, Dispatch<SetStateAction<boolean>>] => { 
 
   // read key from local storage if not found use default value
   const [value, setValue] = useState(() => {
-    let currentValue
+    let currentValue : boolean
 
     try {
-      currentValue = JSON.parse(
-        localStorage.getItem(key) || String(defaultValue)
-      );
-    } catch (error) {
-      currentValue = defaultValue
-    }
+      // currentValue = JSON.parse(
+      //   localStorage.getItem("persist")!)
 
+        const valueJson = localStorage.getItem("persist")
+        currentValue = valueJson !== null ? JSON.parse(valueJson) : false
+    } catch (error) {
+      currentValue = false
+    }
     return currentValue
   });
 

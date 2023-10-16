@@ -6,6 +6,7 @@ import { User } from "../../models/model";
 export const uploadProfileImage = async (req: Request, res: Response) => {
 
     //console.log("request file",req.file)
+    console.log(req.body)
     try {
         const userEmail = JSON.parse(JSON.stringify(req.body))
         const email: string = Object.values(userEmail).toString()

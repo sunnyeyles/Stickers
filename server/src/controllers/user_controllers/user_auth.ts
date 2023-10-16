@@ -70,7 +70,7 @@ export const userAuth = async (req: Request, res: Response) => {
     })
 
     //we sending back accessToken containing userId and email
-    res.json({ accessToken })
+    res.json({ accessToken , user })
   } catch (error) {
     console.error('Error during authentication:', error)
     return res

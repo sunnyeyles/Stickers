@@ -31,14 +31,14 @@ const formSchema = z.object({
     .string()
     .min(1, "Password is required")
     .min(8, "Password must have more than 8 characters"),
-  persist: z.boolean()
+  persist: z.any()
 });
 
 export type FormSchemaType = z.infer<typeof formSchema>;
 
 export function LoginForm() {
 
-  const [persist, setPersist] = usePersistentState("persist", null)
+  const [persist, setPersist] = usePersistentState()
   const { classes } = useStyles();
   const {
     control,
@@ -64,16 +64,18 @@ export function LoginForm() {
   if (isLoading) {
     return <p>Loading...</p>
   }
-
+  
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
     const userData = await login(loginData).unwrap();
     console.log('userData:', userData)
     dispatch(setCredentials({ ...userData }))
     navigate("/profile")
   };
-
-  const handleToggle = () => setPersist((prev: any) => !prev)
-
+  
+  const handleToggle = () => {
+    setPersist((prev: boolean) => !prev)
+  }
+  
   return (
     <>
       <Grid justify="space-around" align="center">

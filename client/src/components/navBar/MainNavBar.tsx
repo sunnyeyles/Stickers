@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Header,
   Group,
@@ -24,23 +24,25 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   const [active, setActive] = useState(links[0].link);
   const { classes } = navBarStyles();
   const navigate = useNavigate();
- 
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
+  //  TO DO  show profile image from user
+  //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
+  //const userId = useAppSelector(state => state.auth.user?._id) as string
+  //console.log(userId)
+  //const { data } = useGetUserByIdMutation(userId)
+  //console.log(data)
 
   const [logout, {
     isLoading,
     isSuccess
   }] = useSendLogoutMutation()
 
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
-  const profileImage = useAppSelector(state => state.auth.user?.profileImage)
-  const userId = useAppSelector(state => state.auth.user?._id) as string
-  //console.log(userId)
-  //const { data } = useGetUserByIdMutation(userId)
-  //console.log(data)
+  useEffect(() => {
+    if (isSuccess) navigate('/')
+  }, [isSuccess, navigate])
 
-  if (isLoading) {
-    return <p>Logging out...</p>
-  }
+  if (isLoading) return <p>Logging Out...</p>
+
 
   const items = links.map((link) => (
     <Button
@@ -70,11 +72,11 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
     } else {
       return (
         <>
-        <h2>{isAuthenticated}</h2>
+          <h2>{isAuthenticated}</h2>
           <Group>
             <Menu shadow="md" width={200}>
               <Menu.Target>
-                <Avatar src={profileImage} color="orange" radius="xl" />
+                <Avatar src={''} color="orange" radius="xl" />
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item>
