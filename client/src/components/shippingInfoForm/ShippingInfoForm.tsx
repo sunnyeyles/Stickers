@@ -28,8 +28,7 @@ const shippingInfoSchema = z.object({
     .min(3, 'Invalid Postcode')
     .max(5, { message: 'Invalid Postcode' }),
   city: z.string().min(2, { message: 'City is Required' }).toLowerCase(),
-  country: z.string().min(2, { message: 'Country is Required' }).toLowerCase(),
-  email: z.string().email().min(1, { message: 'Email is Required' }),
+  country: z.string().min(2, { message: 'Country is Required' }).toLowerCase()
 })
 
 type FormSchemaType = z.infer<typeof shippingInfoSchema>
@@ -48,8 +47,7 @@ export function ShippingInfoForm() {
       houseNumber: '',
       postCode: '',
       city: '',
-      country: '',
-      email: '',
+      country: ''
     },
     resolver: zodResolver(shippingInfoSchema),
   })
@@ -59,7 +57,7 @@ export function ShippingInfoForm() {
   }
 
   return (
-    <Box m="sm">
+    <Box m="xl">
       <Title mb="lg">Shipping Information</Title>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid>
@@ -93,7 +91,7 @@ export function ShippingInfoForm() {
               )}
             />
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={8}>
             <Controller
               name="streetName"
               control={control}
@@ -108,7 +106,7 @@ export function ShippingInfoForm() {
               )}
             />
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={4}>
             <Controller
               name="houseNumber"
               control={control}
@@ -123,7 +121,7 @@ export function ShippingInfoForm() {
               )}
             />
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={4}>
             <Controller
               name="postCode"
               control={control}
@@ -138,7 +136,7 @@ export function ShippingInfoForm() {
               )}
             />
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={8}>
             <Controller
               name="city"
               control={control}
@@ -153,7 +151,7 @@ export function ShippingInfoForm() {
               )}
             />
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={12}>
             <Controller
               name="country"
               control={control}
@@ -167,22 +165,6 @@ export function ShippingInfoForm() {
                 />
               )}
             />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  placeholder="email"
-                  size="md"
-                  radius="md"
-                  id="email"
-                  {...field}
-                />
-              )}
-            />
-            {/* {errors.email?.message && <p>{errors.email?.message}</p>} */}
           </Grid.Col>
           <Grid.Col>
             <Button size="md" type="submit">
