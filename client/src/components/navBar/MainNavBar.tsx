@@ -97,7 +97,9 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
         className={classes.burger}
       ></Burger>
       {/* <Image height="3.5rem" width="3.5rem" src={dogHappy} alt="Happy Dog" /> */}
-      <DogHappy />
+      <Link to="/">
+        <DogHappy />
+      </Link>
       <Group className={classes.items} spacing={5}>
         <Group>
           <Button variant="outline">Shop</Button>
