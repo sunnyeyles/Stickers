@@ -9,7 +9,7 @@ export interface IUser extends Document {
     street: string
     streetNumber: number
     city: string
-    postCode: string
+    postCode: number
   } | null
   shoppingCart: object[] | null
   orders: object[] | null
