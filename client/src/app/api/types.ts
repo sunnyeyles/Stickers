@@ -32,7 +32,6 @@ export interface IUserAddressInfo {
   postCode: string
   city: string
   country: string
-  email: string
 }
 
 export interface IPlacedOrderData extends IUserAddressInfo {

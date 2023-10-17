@@ -1,62 +1,11 @@
-import { Card, Text, Badge, Button, Box, Grid, Title } from '@mantine/core'
-import { ReactNode } from 'react'
-import { ShoppingCartItem } from '../shoppingCartItem/ShoppingCartItem'
-import frogWaterfall from '../../assets/frog_waterfall.png'
+import { Card, Button, Box } from '@mantine/core'
+import { ShoppingTableItem } from '../shoppingTableItem/ShoppingTableItem'
 
-interface IOrderSummaryCard {
-  amountTotal: string
-  shippingCost: string | ReactNode
-}
-const items = ['1', '2', '3', '4']
-
-export function OrderSummaryCard({
-  amountTotal,
-  shippingCost,
-}: IOrderSummaryCard) {
+export function OrderSummaryCard() {
   return (
-    <Box>
+    <Box m="xl">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Title>Order Summary</Title>
-
-        {items.map((item, index) => {
-          return (
-            <ShoppingCartItem
-              image={frogWaterfall}
-              itemName="Frog Waterfall"
-              alt="Frog Waterfall"
-              itemPrice="$13.95"
-            />
-          )
-        })}
-        <Grid p="md">
-          <Grid.Col span={6}>
-            <Text sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-              Shipping
-            </Text>
-          </Grid.Col>
-          <Grid.Col
-            span={6}
-            sx={{ display: 'flex', justifyContent: 'flex-end' }}
-          >
-            {shippingCost}
-          </Grid.Col>
-        </Grid>
-        <Box>
-          <Grid p="md">
-            <Grid.Col
-              span={6}
-              sx={{ display: 'flex', justifyContent: 'flex-start' }}
-            >
-              Total
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <Text sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                {amountTotal}
-              </Text>
-            </Grid.Col>
-          </Grid>
-        </Box>
-
+        <ShoppingTableItem />
         <Button variant="light" fullWidth mt="md" radius="md">
           Paypal
         </Button>
