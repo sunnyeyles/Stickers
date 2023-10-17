@@ -1,5 +1,5 @@
 import { IUser, IUserResponse } from '../../api/types';
-import { FormSchemaType } from '../../../components/loginForm/LoginForm'
+import { FormSchemaType } from '../../../components/form/loginForm/LoginForm'
 import { logOut, setCredentials } from './authSlice';
 import { apiSlice } from '../../api/apiSlice';
 

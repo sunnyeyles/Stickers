@@ -1,5 +1,5 @@
 import { Grid, Paper, Image } from '@mantine/core'
-import { RegisterForm } from '../../components/registerForm/RegisterForm'
+import { RegisterForm } from '../../components/form/registerForm/RegisterForm'
 import TwoDucks from '../../assets/two_ducks_with_hat.png'
 
 export function Register() {

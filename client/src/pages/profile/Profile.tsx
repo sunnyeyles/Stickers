@@ -4,7 +4,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import { object, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FileInput } from "../../components/fileInput/FileInput";
+import { FileInput } from "../../components/form/custom_input_fields/fileInput/FileInput";
 import { useStyles } from "./profile_styles";
 import { Link } from "react-router-dom";
 
