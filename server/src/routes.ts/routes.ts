@@ -57,7 +57,7 @@ router.get(
     getItemsInCategory(res, itemCategory)
   }
 )
-router.get('/item/get-specific-item', getSpecificItem)
+router.get('/item/get-specific-item/:itemId', getSpecificItem)
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
 router.post('/item/move-cart-to-orders', moveCartToOrders)
