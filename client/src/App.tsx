@@ -9,6 +9,8 @@ import { Profile } from './pages/profile/Profile'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useAppSelector } from './hooks/hooks'
 import { PersistLogin } from './app/features/auth/persistLogin'
+import { Products } from './pages/products/Products'
+import { Container } from '@mantine/core'
 
 const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
@@ -34,44 +36,47 @@ export default function App() {
 
   return (
     <MainTheme>
-      <Router>
-        <MainNavBar links={navBarItems} />
-        <Routes>
+      <Container size="xl">
+        <Router>
+          <MainNavBar links={navBarItems} />
+          <Routes>
 
-          {/* landing page */}
-          <Route path="/" element={<Dashboard />} />
+            {/* landing page */}
+            <Route path="/" element={<Dashboard />} />
 
-          {/* public */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+            {/* public */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/products" element={<Products />} />
 
-          {/* private */}
-          <Route element={<PersistLogin />}>
+            {/* private */}
+            <Route element={<PersistLogin />}>
 
-            <Route
-              path="/order-summary"
-              element={(
-                <PrivateWrapper>
-                  <ShippingInfoOrderPage />
-                </PrivateWrapper>
-              )}
-            />
-            <Route
-              path="/profile"
-              element={(
-                <PrivateWrapper>
-                  <Profile />
-                </PrivateWrapper>
-              )}
-            />
+              <Route
+                path="/order-summary"
+                element={(
+                  <PrivateWrapper>
+                    <ShippingInfoOrderPage />
+                  </PrivateWrapper>
+                )}
+              />
+              <Route
+                path="/profile"
+                element={(
+                  <PrivateWrapper>
+                    <Profile />
+                  </PrivateWrapper>
+                )}
+              />
 
-          </Route>
+            </Route>
 
-        </Routes>
+          </Routes>
 
-        <Footer />
+          <Footer />
 
-      </Router>
+        </Router>
+      </Container>
     </MainTheme>
   )
 }

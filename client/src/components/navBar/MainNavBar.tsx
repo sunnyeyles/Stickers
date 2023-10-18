@@ -102,10 +102,9 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
       </Link>
       <Group className={classes.items} spacing={5}>
         <Group>
-          <Button variant="outline">Shop</Button>
-          <Button variant="outline">Contact</Button>
-          <Button variant="outline">Shop</Button>
-          <Button variant="outline">Contact</Button>
+          <Button variant="outline" component="a" href="/products">Products</Button>
+          <Button variant="outline" component="a" href="/contact">Contact</Button>
+          <Button variant="outline" component="a" href="/about">About</Button>
         </Group>
       </Group>
       <UserButtons />

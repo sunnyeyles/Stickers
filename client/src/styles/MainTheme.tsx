@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { Button } from './button'
 import { Input } from './input'
 import { ActionIcon } from './actionIcon'
+import { Container } from './container'
 interface IMainTheme {
   children: ReactNode
 }
@@ -94,6 +95,7 @@ export const MainTheme = ({ children }: IMainTheme) => {
           Button,
           Input,
           ActionIcon,
+          Container
         },
       }}
     >

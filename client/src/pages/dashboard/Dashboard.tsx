@@ -34,10 +34,7 @@ export function Dashboard() {
           </Button>
         </Container>
       </div>
-
-      <div>
-        <ItemsCollection />
-      </div>
+      <ItemsCollection />
     </>
   )
 }
