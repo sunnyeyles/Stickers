@@ -6,6 +6,7 @@ import { useGetItemByIdQuery } from "../../app/features/items/itemsApiSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Select } from "../../components/form/custom_input_fields/selectInput/SelectInput";
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../../hooks/hooks";
 
 type FormType = {
     amount: string

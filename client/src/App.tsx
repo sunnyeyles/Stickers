@@ -50,18 +50,10 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Products />} />
             <Route path="/item/:id" element={<Item />} />
-
+            <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
+            
             {/* private */}
             <Route element={<PersistLogin />}>
-
-              <Route
-                path="/order-summary"
-                element={(
-                  <PrivateWrapper>
-                    <ShippingInfoOrderPage />
-                  </PrivateWrapper>
-                )}
-              />
               <Route
                 path="/profile"
                 element={(

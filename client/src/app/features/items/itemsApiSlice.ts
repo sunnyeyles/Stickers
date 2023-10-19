@@ -6,13 +6,13 @@ export const itmesApiSlice = apiSlice.injectEndpoints({
         getAllItems: builder.query<IItemResponse[], void>({
             query: () => '/item/get-all-items'
         }),
-        getItemById: builder.query({
+        getItemById: builder.query<IItemResponse, string>({
             query: (id) => `/item/get-specific-item/${id}`,
         })
     }),
 });
 
 export const { 
-    useGetAllItemsQuery,
-    useGetItemByIdQuery
+   useGetAllItemsQuery,
+   useGetItemByIdQuery
 } = itmesApiSlice

@@ -28,10 +28,7 @@ export const getSpecificItem = async (req: Request, res: Response) => {
     // save info from item in db
     const imageUrl = item.imagePath
     const responseObj = {
-      success: true,
-      message: 'Item found',
-      item,
-      imageUrl,
+      item
     }
 
     // send item info back to client
