@@ -1,12 +1,17 @@
 import { Card, Image, AspectRatio, SimpleGrid, Text, Title, Stack, useMantineTheme } from '@mantine/core'
 import { useStyles } from './items_collection_styles';
 import { useGetAllItemsQuery } from '../../app/features/items/itemsApiSlice';
+import { useNavigate } from 'react-router-dom';
 
-export function ItemsCollection() {
-    const { classes } = useStyles();
-    const theme = useMantineTheme();
-
+export const ItemsCollection = () => {
+    const { classes } = useStyles()
+    const theme = useMantineTheme()
+    const navigate = useNavigate()
     const { data: items } = useGetAllItemsQuery()
+
+    const navigateToItem = (id: string) => {
+        navigate(`/item/${id}`)
+    }
 
     return (
         <>
@@ -32,10 +37,11 @@ export function ItemsCollection() {
                             key={item.itemName}
                             style={{ backgroundColor: index % 2 === 0 ? theme.colors.orange[1] : theme.colors.orange[2] }}
                         >
+
                             <Card.Section
+                                className={classes.linkToItem}
                                 component="a"
-                                href="#"
-                                target="_blank"
+                                onClick={() => navigateToItem(item._id)}
                             >
                                 <AspectRatio ratio={2000 / 1700}>
                                     <Image src={item.imagePath} />

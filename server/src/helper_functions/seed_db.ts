@@ -26,7 +26,7 @@ export const seedItems = (numOfEntries: number) => {
       itemName: faker.commerce.productName(),
       itemPrice: faker.commerce.price({ min: 100, max: 200 }),
       itemCategory: faker.commerce.department(),
-      itemDescription: "Three Froggos",
+      itemDescription: "Sees bird in air, breaks into cage and attacks creature. Kitty pounce, trip, faceplant you didn't see that no you didn't definitely didn't lick, lick, lick, and preen away the embarrassment use lap as chair dream about hunting birds or ask to be pet then attack owners hand blow up sofa in 3 seconds so i bet my nine lives on you-oooo-ooo-hooo, the dog smells bad.",
       imagePath:
         `${envConfig.developmentServer}/uploads/three-froggos.png`,
       numOfItems: faker.number.int(100),
