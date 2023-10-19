@@ -17,7 +17,7 @@ export interface IItemResponse {
   itemDescription: string
   imagePath: string
   itemCategory: string
-  itemsInStock: number
+  numOfItems: number
   reduced: boolean
   percentageReduced: number
   createdAt: string

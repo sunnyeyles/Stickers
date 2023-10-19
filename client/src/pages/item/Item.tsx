@@ -6,7 +6,6 @@ import { useGetItemByIdQuery } from "../../app/features/items/itemsApiSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Select } from "../../components/form/custom_input_fields/selectInput/SelectInput";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../hooks/hooks";
 
 type FormType = {
     amount: string
@@ -46,7 +45,7 @@ export const Item = () => {
     };
 
     const generateNumOfItems = (): void => {
-        const amountFromDB: number = parseInt(item.item.numOfItems)
+        const amountFromDB: number = item!.numOfItems
 
         const options: ISelectData[] = []
         for (let i: number = 0; i < amountFromDB; i++) {
@@ -77,15 +76,15 @@ export const Item = () => {
                     </Grid.Col>
                     <Grid.Col span={10}>
                         <Paper my={rem(60)}>
-                            <Title>{item?.item.itemName}</Title>
+                            <Title>{item?.itemName}</Title>
                             <Grid justify="space-between" align="center">
                                 <Grid.Col xs={10} sm={5}>
-                                    <img src={item.imageUrl} alt="frog waterfall" width="100%" height="auto"></img>
+                                    <img src={item?.imagePath} alt="frog waterfall" width="100%" height="auto"></img>
                                 </Grid.Col>
                                 <Grid.Col xs={10} sm={6}>
                                     <Text mt={rem(30)} fw="bold">€ 0,99</Text>
-                                    <Text fs="italic" mt={rem(10)}>{item?.item.itemCategory}</Text>
-                                    <Text mt={rem(20)} mb={rem(20)}>{item?.item.itemDescription}</Text>
+                                    <Text fs="italic" mt={rem(10)}>{item?.itemCategory}</Text>
+                                    <Text mt={rem(20)} mb={rem(20)}>{item?.itemDescription}</Text>
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <Select
                                             name="amount"

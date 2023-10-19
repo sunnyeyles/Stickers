@@ -27,12 +27,9 @@ export const getSpecificItem = async (req: Request, res: Response) => {
     // send responses
     // save info from item in db
     const imageUrl = item.imagePath
-    const responseObj = {
-      item
-    }
-
+  
     // send item info back to client
-    res.status(200).json(responseObj)
+    res.status(200).json(item)
 
     // catch errors
   } catch (error) {
