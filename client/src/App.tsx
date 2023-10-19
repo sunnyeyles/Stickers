@@ -49,7 +49,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/item" element={<Item />} />
+            <Route path="/item/:id" element={<Item />} />
 
             {/* private */}
             <Route element={<PersistLogin />}>

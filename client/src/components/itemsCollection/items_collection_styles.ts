@@ -18,4 +18,7 @@ export const useStyles = createStyles((theme) => ({
       lineHeight: 1.3,
     },
   },
+  linkToItem: {
+    cursor: "pointer"
+  }
 }))

@@ -1,4 +1,4 @@
-import { createStyles} from '@mantine/core'
+import { createStyles, rem } from '@mantine/core'
 
 export const itemStyles = createStyles((theme) => ({
     arrowBackText: {
@@ -6,4 +6,7 @@ export const itemStyles = createStyles((theme) => ({
         textOrientation: "upright",
         color: theme.colors.orange[6]
     },
+    selectAmount: {
+        width: rem(160)
+    }
 }))
