@@ -5,7 +5,7 @@ import {
 } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
 import frogWaterfall from '../../assets/frog_waterfall.png'
-import { shoppingTableStyles } from './shopping_styles'
+import { shoppingTableStyles } from './shopping_table_styles'
 
 export interface Item {
   itemId: string
