@@ -25,6 +25,7 @@ export interface IItemResponse {
 }
 
 export interface IUserAddressInfo {
+  [key: string]: string
   firstName: string
   lastName: string
   streetName: string
@@ -34,10 +35,6 @@ export interface IUserAddressInfo {
   country: string
 }
 
-export interface IPlacedOrderData extends IUserAddressInfo {
+export interface IPlacedOrderData extends IUserAddressInfo {}
 
-}
-
-export interface IShippingInfoFormData {
-
-}
+export interface IShippingInfoFormData {}

@@ -1,16 +1,10 @@
-import { useEffect } from 'react'
 import { Title, Button, Grid, Box, TextInput } from '@mantine/core'
-
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  userAddressInfoSlice,
-  setAddressInfoState,
-} from '../../app/features/users/userAddressInfoSlice'
+import { setAddressInfoState } from '../../app/features/users/userAddressInfoSlice'
 import { useUpdateUserAddressMutation } from '../../app/features/users/usersApiSlice'
-import { useAppSelector } from '../../hooks/hooks'
 
 const shippingInfoSchema = z.object({
   firstName: z
@@ -37,16 +31,7 @@ const shippingInfoSchema = z.object({
 type FormSchemaType = z.infer<typeof shippingInfoSchema>
 
 export function ShippingInfoForm() {
-
-  const address = useAppSelector(state => state.userAddress)
-  console.log("Address from store: ", address)
-
   const dispatch = useDispatch()
-  //   useEffect(() => {
-  //     const userInfo = useSelector((state) => {
-
-  // })
-  // },[])
 
   const {
     control,
@@ -66,8 +51,9 @@ export function ShippingInfoForm() {
   })
 
   const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
-    console.log(data)
     dispatch(setAddressInfoState(data))
+    // useUpdateUserAddressMutation(data)
+    console.log(data)
   }
 
   return (
