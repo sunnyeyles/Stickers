@@ -19,7 +19,7 @@ export function Profile() {
                     mb={50}
                 >Settings
                 </Title>
-                <Accordion defaultValue="Account">
+                <Accordion>
                     <Accordion.Item value="Account">
                         <Accordion.Control>Account</Accordion.Control>
                         <Accordion.Panel mt={rem(10)}>
