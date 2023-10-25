@@ -13,5 +13,9 @@ export const cartStyles = createStyles((theme) => ({
   },
   total: {
     fontWeight: "bold"
+  },
+  image: {
+    width: rem(120),
+    height: "auto"
   }
 }))

@@ -1,4 +1,4 @@
-import { Badge, Grid, Input, Table, Title } from "@mantine/core"
+import { Badge, Button, Flex, Grid, Input, Table, Title, rem } from "@mantine/core"
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
 import { Item } from "../../components/shoppingTableItem/ShoppingTableItem"
 import { cartStyles } from "./cart_styles"
@@ -18,7 +18,7 @@ export const Cart = () => {
     const rows = elements.map((element) => (
         <tr key={element.itemId}>
             <td>
-                <img src={element.itemImage} alt="frog waterfall" width="100%" height="auto" />
+                <img className={classes.image} src={element.itemImage} alt="frog waterfall" width="100%" height="auto" />
             </td>
             <td>{element.itemName}</td>
             <td className={classes.itemAmount}>
@@ -38,20 +38,25 @@ export const Cart = () => {
 
     return (
         <>
+            <Title mb={rem(50)} ml={rem(150)}>Shopping Cart</Title>
             <Grid>
-                <Grid.Col xs={2} sm={2}>
+                <Grid.Col xs={2} sm={2} md={1}>
                     <ArrowBack />
                 </Grid.Col>
-                <Grid.Col xs={8} sm={8} lg={5}>
-                    <Title>Shopping Cart</Title>
+                <Grid.Col xs={8} sm={8} md={5} lg={5}>
                     <Table>
                         <tbody>
                             {rows}
                         </tbody>
                     </Table>
                 </Grid.Col>
-                <Grid.Col xs={8} offsetXs={2} sm={8} offsetSm={2} lg={5} offsetLg={0}>
-                    <Table className={classes.table} striped highlightOnHover>
+                <Grid.Col xs={8} offsetXs={2} sm={8} offsetSm={2} md={5} offsetMd={1} lg={5} offsetLg={1}>
+                    <Table
+                        className={classes.table}
+                        striped
+                        highlightOnHover
+                        mt={rem(20)}
+                    >
                         <tbody>
                             <tr>
                                 <td>Shipping</td>
@@ -67,8 +72,12 @@ export const Cart = () => {
                             </tr>
                         </tbody>
                     </Table>
+                    <Flex justify="center" mt={rem(50)}>
+                        <Button size="md" type="submit">
+                            Checkout
+                        </Button>
+                    </Flex>
                 </Grid.Col>
-
             </Grid>
         </>
     )
