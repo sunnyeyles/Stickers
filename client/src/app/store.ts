@@ -4,12 +4,14 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query'
 //import userReducer from './features/users/usersSlice'
 import { apiSlice } from './api/apiSlice'
 import itemReducer from './features/items/itemSlice'
+import userAddressInfoReducer from './features/users/userAddressInfoSlice'
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
-    item: itemReducer
+    item: itemReducer,
+    userAddress: userAddressInfoReducer
     //userState: userReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
