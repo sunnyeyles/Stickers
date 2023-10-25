@@ -1,6 +1,6 @@
-import { Avatar, Button, Grid, Paper, Stack, Text, Title } from "@mantine/core";
+import { Avatar, Button, Container, Grid, Paper, Stack, Text, Title, rem } from "@mantine/core";
 import { useUploadMutation } from "../../app/features/upload/uploadApiSlice";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppSelector, useUser } from "../../hooks/hooks";
 import { object, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -17,8 +17,11 @@ export type UploadImageType = z.infer<typeof imageUploadSchema>;
 export function Profile() {
 
     const { classes } = useStyles();
-
-    const userEmail = useAppSelector(state => state.auth.user?.email)
+    
+    //we use our custom hook with loading 
+    const [user, loading] = useUser()
+    console.log("user",user)
+    console.log("loading",loading)
     
     const {
         control,
@@ -35,7 +38,7 @@ export function Profile() {
     const onSubmit: SubmitHandler<UploadImageType> = async (values: any) => {
         const formData = new FormData()
         formData.append('profileImage', values.profileImage);
-        values.userEmail = userEmail
+        values.userEmail = user.email
         formData.append('userEmail', values.userEmail)
         await upload(formData)
     };
@@ -49,14 +52,16 @@ export function Profile() {
                     ta="center"
                     mt="md"
                     mb={50}
-                >Profile Settings
+                >Settings
                 </Title>
+                <Paper withBorder p="xl">
+                <Title order={3}>Account</Title>
                 <Grid justify="space-around" align="center">
                     <Grid.Col sm={6}>
                         <Text size="md">Upload/Update your profile Image</Text>
                     </Grid.Col>
                     <Grid.Col sm={6}>
-                        <Avatar color="orange" radius="xl" />
+                        <Avatar w={rem(100)} h={rem(100)} color="orange" radius="xl" mb="lg" />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Stack>
                                 <FileInput
@@ -80,6 +85,8 @@ export function Profile() {
                         </form>
                     </Grid.Col>
                 </Grid>
+                </Paper>
+                
                 <Link to="/">Back to Dashboard</Link>
             </Paper>
         </>

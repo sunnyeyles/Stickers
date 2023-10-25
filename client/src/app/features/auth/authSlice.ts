@@ -5,6 +5,7 @@ export type AuthState = {
   user: any
   token: string | null
   isAuthenticated: boolean
+  loading?: boolean
 }
 
 //we expect to receive the token back after login
