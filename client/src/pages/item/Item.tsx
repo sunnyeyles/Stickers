@@ -1,11 +1,11 @@
-import { ActionIcon, Grid, Button, Stack, Text, Title, Paper, rem } from "@mantine/core";
-import { IconArrowBack } from "@tabler/icons-react"
+import { Grid, Button, Text, Title, Paper, rem } from "@mantine/core";
 import { itemStyles } from "./item_styles"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useGetItemByIdQuery } from "../../app/features/items/itemsApiSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Select } from "../../components/form/custom_input_fields/selectInput/SelectInput";
 import { useEffect, useState } from "react";
+import { ArrowBack } from "../../components/backToArrow/ArrowBack";
 
 type FormType = {
     amount: string
@@ -65,14 +65,7 @@ export const Item = () => {
             <>
                 <Grid>
                     <Grid.Col span={2}>
-                        <Stack pl="md">
-                            <Link to="/products">
-                                <ActionIcon aria-label="Shopping Cart Icon">
-                                    <IconArrowBack style={{ width: rem(25), height: rem(25) }} />
-                                </ActionIcon>
-                            </Link>
-                            <Text size="lg" fw="bold" className={classes.arrowBackText}>back to products</Text>
-                        </Stack>
+                        <ArrowBack />
                     </Grid.Col>
                     <Grid.Col span={10}>
                         <Paper my={rem(60)}>
