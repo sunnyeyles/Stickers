@@ -4,9 +4,20 @@ import { Item } from "../../components/shoppingTableItem/ShoppingTableItem"
 import { cartStyles } from "./cart_styles"
 import frogWaterfall from '../../assets/frog_waterfall.png'
 import { IconChevronDown } from '@tabler/icons-react'
+import { useAppSelector } from "../../hooks/hooks"
+import { getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
+import { useDispatch } from "react-redux"
 
 export const Cart = () => {
     const { classes } = cartStyles()
+
+    const cartItems = useAppSelector(getCartItems)
+    const totalPrice = useAppSelector(getTotalPrice)
+    const dispatch = useDispatch()
+
+    const removeFromCart = (itemId: string) => {
+        dispatch(removeItemFromCart(itemId))
+    }
 
     const elements: Item[] = [
         { itemId: "1", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
@@ -39,7 +50,15 @@ export const Cart = () => {
     return (
         <>
             <Title mb={rem(50)} ml={rem(150)}>Shopping Cart</Title>
-            <Grid>
+            <h5>{totalPrice}</h5>
+            {cartItems.map(item => (
+                <div key={item._id}>
+                    <span>{item.itemName}</span>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => removeFromCart(item._id)}>Remove item from cart</button>
+                </div>
+            ))}
+            {/*<Grid>
                 <Grid.Col xs={2} sm={2} md={1}>
                     <ArrowBack />
                 </Grid.Col>
@@ -78,7 +97,7 @@ export const Cart = () => {
                         </Button>
                     </Flex>
                 </Grid.Col>
-            </Grid>
+            </Grid> */}
         </>
     )
 }

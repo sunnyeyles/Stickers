@@ -6,8 +6,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Select } from "../../components/form/custom_input_fields/selectInput/SelectInput";
 import { useEffect, useState } from "react";
 import { ArrowBack } from "../../components/backToArrow/ArrowBack";
+import { useDispatch } from "react-redux";
+import { CartItem, addItemToCart } from "../../app/features/cart/cartSlice";
+import { IItemResponse } from "../../app/api/types";
 
-type FormType = {
+export type AmountType = {
     amount: string
 }
 
@@ -23,6 +26,8 @@ export const Item = () => {
     const idParam: string = id ?? ""
     const { data: item, isSuccess } = useGetItemByIdQuery(idParam)
     const [numOfItems, setNumOfItems] = useState<ISelectData[]>([])
+    const dispatch = useDispatch()
+
 
     useEffect(() => {
         if (item) {
@@ -40,8 +45,9 @@ export const Item = () => {
         }
     })
 
-    const onSubmit: SubmitHandler<FormType> = async (itemAmount: FormType) => {
+    const onSubmit: SubmitHandler<AmountType> = async (itemAmount: AmountType) => {
         console.log("itemAmount:", itemAmount)
+        dispatch(addItemToCart({ addedItem: item!, selectedAmount: itemAmount }))
     };
 
     const generateNumOfItems = (): void => {
