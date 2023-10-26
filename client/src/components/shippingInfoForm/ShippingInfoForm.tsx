@@ -1,13 +1,10 @@
 import { Title, Button, Grid, Box, TextInput } from '@mantine/core'
-
 import { useDispatch } from 'react-redux'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  userAddressInfoSlice,
-  setAddressInfoState,
-} from '../../app/features/users/userAddressInfoSlice'
+import { setAddressInfoState } from '../../app/features/users/userAddressInfoSlice'
+import { useUpdateUserAddressMutation } from '../../app/features/users/usersApiSlice'
 
 const shippingInfoSchema = z.object({
   firstName: z
@@ -28,13 +25,16 @@ const shippingInfoSchema = z.object({
     .min(3, 'Invalid Postcode')
     .max(5, { message: 'Invalid Postcode' }),
   city: z.string().min(2, { message: 'City is Required' }).toLowerCase(),
-  country: z.string().min(2, { message: 'Country is Required' }).toLowerCase()
+  country: z.string().min(2, { message: 'Country is Required' }).toLowerCase(),
 })
 
 type FormSchemaType = z.infer<typeof shippingInfoSchema>
 
 export function ShippingInfoForm() {
   const dispatch = useDispatch()
+
+  const updateUserAddressMutation = useUpdateUserAddressMutation()
+
   const {
     control,
     handleSubmit,
@@ -47,13 +47,17 @@ export function ShippingInfoForm() {
       houseNumber: '',
       postCode: '',
       city: '',
-      country: ''
+      country: '',
     },
     resolver: zodResolver(shippingInfoSchema),
   })
+
   const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
-    console.log(data)
     dispatch(setAddressInfoState(data))
+    // heeeeelp
+    // updateUserAddressMutation()
+
+    console.log(data)
   }
 
   return (
@@ -167,7 +171,7 @@ export function ShippingInfoForm() {
             />
           </Grid.Col>
           <Grid.Col>
-            <Button size="md" type="submit">
+            <Button size="sm" type="submit">
               Confirm Address
             </Button>
           </Grid.Col>

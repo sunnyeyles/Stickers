@@ -21,3 +21,5 @@ export const userAddressInfoSlice = createSlice({
   },
 })
 export const { setAddressInfoState } = userAddressInfoSlice.actions
+
+export default userAddressInfoSlice.reducer

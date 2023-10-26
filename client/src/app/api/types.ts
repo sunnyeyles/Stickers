@@ -34,10 +34,6 @@ export interface IUserAddressInfo {
   country: string
 }
 
-export interface IPlacedOrderData extends IUserAddressInfo {
+export interface IPlacedOrderData extends IUserAddressInfo {}
 
-}
-
-export interface IShippingInfoFormData {
-
-}
+export interface IShippingInfoFormData {}
