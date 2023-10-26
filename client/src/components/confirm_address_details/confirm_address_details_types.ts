@@ -2,8 +2,8 @@ export interface IShippingAddressInfo {
   firstName: string
   lastName: string
   streetName: string
-  houseNumber: number
-  postCode: number
+  houseNumber: string
+  postCode: string
   city: string
   country: string
 }

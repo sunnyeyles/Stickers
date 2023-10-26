@@ -1,5 +1,5 @@
-import { apiSlice } from '../../api/apiSlice';
-import { IUserResponse } from '../../api/types';
+import { apiSlice } from '../../api/apiSlice'
+import { IUserResponse } from '../../api/types'
 
 export const uploadApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,21 +9,19 @@ export const uploadApiSlice = apiSlice.injectEndpoints({
           url: '/user/upload-profile-image',
           method: 'POST',
           body: data,
-          formData: true
+          formData: true,
         }
       },
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          console.log("image data: ", data)
+          console.log('image data: ', data)
         } catch (err) {
           console.log(err)
         }
-      }
-    })
+      },
+    }),
   }),
-});
+})
 
-export const {
-  useUploadMutation
-} = uploadApiSlice
+export const { useUploadMutation } = uploadApiSlice

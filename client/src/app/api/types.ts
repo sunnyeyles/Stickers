@@ -25,7 +25,6 @@ export interface IItemResponse {
 }
 
 export interface IUserAddressInfo {
-  [key: string]: string
   firstName: string
   lastName: string
   streetName: string

@@ -33,6 +33,8 @@ type FormSchemaType = z.infer<typeof shippingInfoSchema>
 export function ShippingInfoForm() {
   const dispatch = useDispatch()
 
+  const updateUserAddressMutation = useUpdateUserAddressMutation()
+
   const {
     control,
     handleSubmit,
@@ -52,7 +54,9 @@ export function ShippingInfoForm() {
 
   const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
     dispatch(setAddressInfoState(data))
-    // useUpdateUserAddressMutation(data)
+    // heeeeelp
+    // updateUserAddressMutation()
+
     console.log(data)
   }
 

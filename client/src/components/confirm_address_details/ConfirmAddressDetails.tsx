@@ -1,11 +1,4 @@
-import {
-  Box,
-  Text,
-  Anchor,
-  Card,
-  Group,
-  Button,
-} from '@mantine/core'
+import { Box, Text, Anchor, Card, Group, Button } from '@mantine/core'
 import { useGetAllUsersQuery } from '../../app/features/users/usersApiSlice'
 import { IConfirmAddressProps } from './confirm_address_details_types'
 export const ConfirmAddressDetails = ({
@@ -18,9 +11,9 @@ export const ConfirmAddressDetails = ({
   country,
   handleAddressChange,
 }: IConfirmAddressProps) => {
+  // gotta talk about this
   const { data: allUsersData } = useGetAllUsersQuery()
   const data = allUsersData
-
   const handleGetAllUserData = () => {
     console.log(data)
   }
