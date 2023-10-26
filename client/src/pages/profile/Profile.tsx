@@ -1,86 +1,60 @@
-import { Avatar, Button, Grid, Paper, Stack, Text, Title } from "@mantine/core";
-import { useUploadMutation } from "../../app/features/upload/uploadApiSlice";
-import { useAppSelector } from "../../hooks/hooks";
-import { object, z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { FileInput } from "../../components/form/custom_input_fields/fileInput/FileInput";
+import { Accordion, Button, Divider, Grid, Paper, Text, Title, rem } from "@mantine/core";
 import { useStyles } from "./profile_styles";
-import { Link } from "react-router-dom";
-
-const imageUploadSchema = object({
-    profileImage: z.instanceof(File),
-});
-
-export type UploadImageType = z.infer<typeof imageUploadSchema>;
+import { UpdatePassword } from '../../components/form/updatePassword/UpdatePassword'
+import { ShippingInfoForm } from "../../components/shippingInfoForm/ShippingInfoForm";
+import { MyOrders } from "../../components/myOrders/MyOrders";
+import { UploadProfileImage } from "../../components/uploadProfileImage/UploadProfileImage";
 
 export function Profile() {
 
     const { classes } = useStyles();
-
-    const userEmail = useAppSelector(state => state.auth.user?.email)
-    
-    const {
-        control,
-        handleSubmit
-    } = useForm<UploadImageType>({
-        resolver: zodResolver(imageUploadSchema),
-    });
-
-    const [upload, { isLoading, isSuccess }] = useUploadMutation()
-    if (isLoading) {
-        return <p>Loading...</p>
-    }
-
-    const onSubmit: SubmitHandler<UploadImageType> = async (values: any) => {
-        const formData = new FormData()
-        formData.append('profileImage', values.profileImage);
-        values.userEmail = userEmail
-        formData.append('userEmail', values.userEmail)
-        await upload(formData)
-    };
-
     return (
         <>
-            <Paper className={classes.form} radius={0} p={30}>
+            <Paper className={classes.form} radius={0}>
                 <Title
                     order={2}
                     className={classes.title}
                     ta="center"
                     mt="md"
                     mb={50}
-                >Profile Settings
+                >Settings
                 </Title>
-                <Grid justify="space-around" align="center">
-                    <Grid.Col sm={6}>
-                        <Text size="md">Upload/Update your profile Image</Text>
-                    </Grid.Col>
-                    <Grid.Col sm={6}>
-                        <Avatar color="orange" radius="xl" />
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <Stack>
-                                <FileInput
-                                    control={control}
-                                    placeholder="Choose image"
-                                    size="md"
-                                    radius="md"
-                                    id="profileImage"
-                                    name="profileImage"
-                                    accept="image/*"
-                                />
-                                <Button type="submit" radius="xl">
-                                    Save
-                                </Button>
-                                {isSuccess &&
-                                    <p>
-                                        Image saved successfully
-                                    </p>
-                                }
-                            </Stack>
-                        </form>
-                    </Grid.Col>
-                </Grid>
-                <Link to="/">Back to Dashboard</Link>
+                <Accordion>
+                    <Accordion.Item value="Account">
+                        <Accordion.Control>Account</Accordion.Control>
+                        <Accordion.Panel mt={rem(10)}>
+                            <Paper p={rem(20)}>
+                                <Title mb="lg">Account</Title>
+                                <UploadProfileImage></UploadProfileImage>
+                                <Divider my="sm" />
+                                <UpdatePassword></UpdatePassword>
+                                <Divider my="sm" />
+                                <Grid justify="space-around" align="center">
+                                    <Grid.Col sm={6}>
+                                        <Text size="md">Danger Zone</Text>
+                                    </Grid.Col>
+                                    <Grid.Col sm={6}>
+                                        <Button radius="xl">Delete Account</Button>
+                                    </Grid.Col>
+                                </Grid>
+                            </Paper>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+
+                    <Accordion.Item value="Shipping Information">
+                        <Accordion.Control>Shipping Information</Accordion.Control>
+                        <Accordion.Panel mt={rem(10)}>
+                            <ShippingInfoForm></ShippingInfoForm>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+
+                    <Accordion.Item value="My Orders">
+                        <Accordion.Control>My Orders</Accordion.Control>
+                        <Accordion.Panel mt={rem(10)}>
+                            <MyOrders></MyOrders>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+                </Accordion>
             </Paper>
         </>
     )

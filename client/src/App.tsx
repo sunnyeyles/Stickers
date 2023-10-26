@@ -12,6 +12,8 @@ import { PersistLogin } from './app/features/auth/persistLogin'
 import { Products } from './pages/products/Products'
 import { Container } from '@mantine/core'
 import { Item } from './pages/item/Item'
+import { Cart } from './pages/cart/Cart'
+import { PaymentConfirmation } from './pages/paymentConfirmation/PaymentConfirmation'
 
 const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
@@ -51,6 +53,8 @@ export default function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/item/:id" element={<Item />} />
             <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
+            <Route path="/cart" element={<Cart/>} />
+            <Route path="/confirmation" element={<PaymentConfirmation />} />
             
             {/* private */}
             <Route element={<PersistLogin />}>

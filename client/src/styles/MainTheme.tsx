@@ -32,7 +32,19 @@ export const MainTheme = ({ children }: IMainTheme) => {
             '#c86a00',
             '#ae5a00',
           ],
-          'ocean-blue': [
+          green: [
+            '#EAF1F0',
+            '#C2D7D4',
+            '#ADCAC6',
+            '#85B0AA',
+            '#5C968E',
+            '#347c72',
+            '#29635B',
+            '#1F4A44',
+            '#14312D',
+            '#0F2522',
+          ],
+          oceanBlue: [
             '#7AD1DD',
             '#5FCCDB',
             '#44CADC',
@@ -45,33 +57,6 @@ export const MainTheme = ({ children }: IMainTheme) => {
             '#147885',
           ],
         },
-
-        // declare colors for consistency, colors will go from lightest to darkest
-        // primary: [
-        //   '#f7e3cb',
-        //   '#f5901c',
-        //   '#B14630',
-        //   '#347c72',
-        //   '#77bfb4',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        // ],
-        // secondary: [
-        //   '#94c7c0',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        //   '#FFF',
-        // ],
-        // },
 
         shadows: {
           md: '1px 1px 3px rgba(0, 0, 0, .25)',
