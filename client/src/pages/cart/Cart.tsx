@@ -1,17 +1,30 @@
-import { Badge, Button, Flex, Grid, Input, Table, Title, rem } from "@mantine/core"
+import { ActionIcon, Badge, Button, Flex, Grid, Table, Title, rem } from "@mantine/core"
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
-import { Item } from "../../components/shoppingTableItem/ShoppingTableItem"
 import { cartStyles } from "./cart_styles"
-import frogWaterfall from '../../assets/frog_waterfall.png'
-import { IconChevronDown } from '@tabler/icons-react'
+import { IconX } from '@tabler/icons-react'
 import { useAppSelector } from "../../hooks/hooks"
 import { getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
 import { useDispatch } from "react-redux"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { Select } from "../../components/form/custom_input_fields/selectInput/SelectInput"
+import { useEffect, useState } from "react"
+
+export type AmountType = {
+    amount: string | number
+}
+
+interface ISelectData {
+    value: string,
+    label: string
+}
 
 export const Cart = () => {
     const { classes } = cartStyles()
 
     const cartItems = useAppSelector(getCartItems)
+
+    console.log("Cart Items:", cartItems)
+    const [numOfAddedItems, setNumOfAddedItems] = useState<ISelectData[]>([])
     const totalPrice = useAppSelector(getTotalPrice)
     const dispatch = useDispatch()
 
@@ -19,46 +32,66 @@ export const Cart = () => {
         dispatch(removeItemFromCart(itemId))
     }
 
-    const elements: Item[] = [
-        { itemId: "1", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "2", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "3", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "4", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-    ];
+    useEffect(() => {
+       
+            
+            const options: ISelectData[] = []
+            for (let i: number = 0; i < cartItems[0]?.quantity; i++) {
+                const option: ISelectData = {
+                    value: `${i + 1}`,
+                    label: `${i + 1}`,
+                };
+                options.push(option);
+            }
 
-    const rows = elements.map((element) => (
-        <tr key={element.itemId}>
+            setNumOfAddedItems(options);
+        
+    }, [cartItems]);
+
+    const {
+        control,
+        handleSubmit,
+        formState: { isSubmitting },
+    } = useForm({
+        defaultValues: {
+            amount: ""
+        }
+    })
+
+    const onSubmit: SubmitHandler<AmountType> = async (selectedItemAmount: AmountType) => {
+        console.log("selectedItemAmount:", selectedItemAmount)
+    };
+
+    const rows = cartItems.map((item) => (
+        <tr key={item._id}>
             <td>
-                <img className={classes.image} src={element.itemImage} alt="frog waterfall" width="100%" height="auto" />
+                <img className={classes.image} src={item.imagePath} alt="frog waterfall" width="100%" height="auto" />
             </td>
-            <td>{element.itemName}</td>
+            <td>{item.itemName}</td>
             <td className={classes.itemAmount}>
-                <Input
-                    component="select"
-                    rightSection={<IconChevronDown size={14} stroke={1.5} />}
-                    pointer
-                    mt="md"
-                >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </Input>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Select
+                        name="amount"
+                        control={control}
+                        label="Quantity"
+                        data={[cartItems[0]?.quantity.toString()]}
+                    />
+                    <Button type="submit" mt={rem(40)}>Add to cart</Button>
+                </form>
             </td>
-            <td className={classes.itemPrice}>{element.itemPrice}</td>
+            <td className={classes.itemPrice}>{item.itemPrice}</td>
+            <td>
+                <ActionIcon aria-label="Remove Item from Cart">
+                    <IconX onClick={() => removeFromCart(item._id)} />
+                </ActionIcon>
+            </td>
         </tr>
     ))
 
     return (
         <>
             <Title mb={rem(50)} ml={rem(150)}>Shopping Cart</Title>
-            <h5>{totalPrice}</h5>
-            {cartItems.map(item => (
-                <div key={item._id}>
-                    <span>{item.itemName}</span>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => removeFromCart(item._id)}>Remove item from cart</button>
-                </div>
-            ))}
-            {/*<Grid>
+            <Grid>
                 <Grid.Col xs={2} sm={2} md={1}>
                     <ArrowBack />
                 </Grid.Col>
@@ -87,7 +120,7 @@ export const Cart = () => {
                                 <td>Total</td>
                                 <td></td>
                                 <td></td>
-                                <td className={classes.itemPrice}>$ 100</td>
+                                <td className={classes.itemPrice}>{totalPrice}</td>
                             </tr>
                         </tbody>
                     </Table>
@@ -97,7 +130,7 @@ export const Cart = () => {
                         </Button>
                     </Flex>
                 </Grid.Col>
-            </Grid> */}
+            </Grid>
         </>
     )
 }

@@ -7,8 +7,7 @@ import { Select } from "../../components/form/custom_input_fields/selectInput/Se
 import { useEffect, useState } from "react";
 import { ArrowBack } from "../../components/backToArrow/ArrowBack";
 import { useDispatch } from "react-redux";
-import { CartItem, addItemToCart } from "../../app/features/cart/cartSlice";
-import { IItemResponse } from "../../app/api/types";
+import { addItemToCart } from "../../app/features/cart/cartSlice";
 
 export type AmountType = {
     amount: string
@@ -25,13 +24,13 @@ export const Item = () => {
     const { id } = useParams<{ id: string }>()
     const idParam: string = id ?? ""
     const { data: item, isSuccess } = useGetItemByIdQuery(idParam)
-    const [numOfItems, setNumOfItems] = useState<ISelectData[]>([])
+    const [numOfItemsOptions, setNumOfItemsOptions] = useState<ISelectData[]>([])
     const dispatch = useDispatch()
 
 
     useEffect(() => {
         if (item) {
-            generateNumOfItems()
+            generateNumOfItems(numOfItemsOptions.length, true)
         }
     }, [item]);
 
@@ -45,13 +44,34 @@ export const Item = () => {
         }
     })
 
-    const onSubmit: SubmitHandler<AmountType> = async (itemAmount: AmountType) => {
-        console.log("itemAmount:", itemAmount)
-        dispatch(addItemToCart({ addedItem: item!, selectedAmount: itemAmount }))
+    const onSubmit: SubmitHandler<AmountType> = async (selectedItemAmount: AmountType) => {
+
+        console.log("selectedItemAmount:", selectedItemAmount) 
+        dispatch(addItemToCart({ addedItem: item!, selectedAmount: selectedItemAmount }))
+        // change numOfItems available (numOfItems from DB - itemAmount)
+        const availableAmount = parseInt(numOfItemsOptions[numOfItemsOptions.length-1].value) - parseInt(selectedItemAmount.amount)
+        console.log("availableAmount",availableAmount)
+        if(availableAmount === 0){
+            generateNumOfItems(availableAmount, false)
+        } else {
+            generateNumOfItems(availableAmount, true)
+        }
     };
 
-    const generateNumOfItems = (): void => {
-        const amountFromDB: number = item!.numOfItems
+    const generateNumOfItems = (availableAmount: number, itemsAreAvailable: boolean): void => {
+        let amountFromDB: number;
+        console.log("item!.numOfItems",item!.numOfItems)
+        
+        if(availableAmount === 0 && itemsAreAvailable){
+            amountFromDB = item!.numOfItems
+        }else if(availableAmount === 0 && !itemsAreAvailable){
+            amountFromDB = 0
+        }else{
+            amountFromDB = availableAmount
+        }
+        
+        console.log("availableAmount",availableAmount)
+        console.log("amountFromDB",amountFromDB)
 
         const options: ISelectData[] = []
         for (let i: number = 0; i < amountFromDB; i++) {
@@ -62,7 +82,7 @@ export const Item = () => {
             options.push(option);
         }
 
-        setNumOfItems(options);
+        setNumOfItemsOptions(options);
     }
 
     if (isSuccess) {
@@ -81,7 +101,7 @@ export const Item = () => {
                                     <img src={item?.imagePath} alt="frog waterfall" width="100%" height="auto"></img>
                                 </Grid.Col>
                                 <Grid.Col xs={10} sm={6}>
-                                    <Text mt={rem(30)} fw="bold">€ 0,99</Text>
+                                    <Text mt={rem(30)} fw="bold">€ {item?.itemPrice}</Text>
                                     <Text fs="italic" mt={rem(10)}>{item?.itemCategory}</Text>
                                     <Text mt={rem(20)} mb={rem(20)}>{item?.itemDescription}</Text>
                                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +110,7 @@ export const Item = () => {
                                             control={control}
                                             label="Quantity"
                                             placeholder="Choose amount"
-                                            data={numOfItems.length === 0 ? [{ value: "0", label: "No items available" }] : numOfItems}
+                                            data={numOfItemsOptions.length === 0 ? [{ value: "0", label: "No items available" }] : numOfItemsOptions}
                                             className={classes.selectAmount}
                                         />
                                         <Button type="submit" mt={rem(40)}>Add to cart</Button>
