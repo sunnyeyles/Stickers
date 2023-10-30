@@ -13,8 +13,6 @@ const cartSlice = createSlice({
     reducers: {
         addItemToCart: (state, action: PayloadAction<{ addedItem: IItemResponse, selectedAmount: AmountType }>) => {
             const { addedItem, selectedAmount } = action.payload
-            console.log("addedItem", addedItem)
-            console.log("selectedAmount", selectedAmount)
             // parse the string to a number
             const quantity: number = parseInt(selectedAmount.amount)
             // we need to check if item is already in the cart
@@ -28,16 +26,27 @@ const cartSlice = createSlice({
         },
         removeItemFromCart: (state, action: PayloadAction<string>) => {
             const itemIndex = state.findIndex(item => item._id === action.payload)
-            if (state[itemIndex].quantity > 1) {
-                state[itemIndex].quantity -= 1
+            if (itemIndex !== -1) {
+                state.splice(itemIndex)
+            }
+        },
+        changeQuantityItemFromCart: (state, action: PayloadAction<{ addedItem: IItemResponse, amount: number }>) => {
+            const {addedItem, amount} = action.payload
+            const itemIndex = state.findIndex(item => item._id === addedItem._id)
+            if (itemIndex !== -1) {
+                state[itemIndex].quantity = amount
             } else {
-                return state.filter(item => item._id !== action.payload)
+                state.push({ ...action.payload.addedItem, quantity: amount })
             }
         }
     },
 })
 
-export const { addItemToCart, removeItemFromCart } = cartSlice.actions
+export const { 
+    addItemToCart, 
+    removeItemFromCart, 
+    changeQuantityItemFromCart
+} = cartSlice.actions
 
 export const getCartItems = (state: RootState) => state.cart
 // we loop trough all cart products and multiply the amount with price

@@ -1,30 +1,18 @@
-import { ActionIcon, Badge, Button, Flex, Grid, Table, Title, rem } from "@mantine/core"
+import { ActionIcon, Badge, Button, Flex, Grid, NumberInput, Table, Title, rem } from "@mantine/core"
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
 import { cartStyles } from "./cart_styles"
 import { IconX } from '@tabler/icons-react'
 import { useAppSelector } from "../../hooks/hooks"
-import { getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
+import { changeQuantityItemFromCart, getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
 import { useDispatch } from "react-redux"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { Select } from "../../components/form/custom_input_fields/selectInput/SelectInput"
-import { useEffect, useState } from "react"
-
-export type AmountType = {
-    amount: string | number
-}
-
-interface ISelectData {
-    value: string,
-    label: string
-}
+import { useState } from "react"
 
 export const Cart = () => {
     const { classes } = cartStyles()
-
+    const [itemAmount, setItemAmount] = useState<number>(0);
     const cartItems = useAppSelector(getCartItems)
-
     console.log("Cart Items:", cartItems)
-    const [numOfAddedItems, setNumOfAddedItems] = useState<ISelectData[]>([])
+    
     const totalPrice = useAppSelector(getTotalPrice)
     const dispatch = useDispatch()
 
@@ -32,35 +20,11 @@ export const Cart = () => {
         dispatch(removeItemFromCart(itemId))
     }
 
-    useEffect(() => {
-       
-            
-            const options: ISelectData[] = []
-            for (let i: number = 0; i < cartItems[0]?.quantity; i++) {
-                const option: ISelectData = {
-                    value: `${i + 1}`,
-                    label: `${i + 1}`,
-                };
-                options.push(option);
-            }
+    const handleItemAmountChange = (item:any , selectedItemAmount: number) => {
+        setItemAmount(selectedItemAmount);
+        dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
+      };
 
-            setNumOfAddedItems(options);
-        
-    }, [cartItems]);
-
-    const {
-        control,
-        handleSubmit,
-        formState: { isSubmitting },
-    } = useForm({
-        defaultValues: {
-            amount: ""
-        }
-    })
-
-    const onSubmit: SubmitHandler<AmountType> = async (selectedItemAmount: AmountType) => {
-        console.log("selectedItemAmount:", selectedItemAmount)
-    };
 
     const rows = cartItems.map((item) => (
         <tr key={item._id}>
@@ -69,17 +33,14 @@ export const Cart = () => {
             </td>
             <td>{item.itemName}</td>
             <td className={classes.itemAmount}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Select
-                        name="amount"
-                        control={control}
-                        label="Quantity"
-                        data={[cartItems[0]?.quantity.toString()]}
-                    />
-                    <Button type="submit" mt={rem(40)}>Add to cart</Button>
-                </form>
+                <NumberInput 
+                    key={item._id}
+                    value={item?.quantity} 
+                    onChange={(amount) => handleItemAmountChange(item, Number(amount))}
+                />
             </td>
-            <td className={classes.itemPrice}>{item.itemPrice}</td>
+            <td className={classes.itemPrice}>Price of one item: {item.itemPrice}</td>
+            <td className={classes.itemPrice}>Total Price of {item?.quantity}:  {item?.quantity * Number(item?.itemPrice)}</td>
             <td>
                 <ActionIcon aria-label="Remove Item from Cart">
                     <IconX onClick={() => removeFromCart(item._id)} />
