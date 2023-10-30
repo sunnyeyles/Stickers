@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { Item, User } from '../models/model'
 
-import bcrypt from "bcrypt";
-import { envConfig } from '../config/env_config';
+import bcrypt from 'bcrypt'
+import { envConfig } from '../config/env_config'
 
 //// SEED THE ITEMS COLLECTION IN DB
 export const seedItems = (numOfEntries: number) => {
@@ -26,9 +26,9 @@ export const seedItems = (numOfEntries: number) => {
       itemName: faker.commerce.productName(),
       itemPrice: faker.commerce.price({ min: 100, max: 200 }),
       itemCategory: faker.commerce.department(),
-      itemDescription: "Sees bird in air, breaks into cage and attacks creature. Kitty pounce, trip, faceplant you didn't see that no you didn't definitely didn't lick, lick, lick, and preen away the embarrassment use lap as chair dream about hunting birds or ask to be pet then attack owners hand blow up sofa in 3 seconds so i bet my nine lives on you-oooo-ooo-hooo, the dog smells bad.",
-      imagePath:
-        `${envConfig.developmentServer}/uploads/three-froggos.png`,
+      itemDescription:
+        "Sees bird in air, breaks into cage and attacks creature. Kitty pounce, trip, faceplant you didn't see that no you didn't definitely didn't lick, lick, lick, and preen away the embarrassment use lap as chair dream about hunting birds or ask to be pet then attack owners hand blow up sofa in 3 seconds so i bet my nine lives on you-oooo-ooo-hooo, the dog smells bad.",
+      imagePath: `${envConfig.developmentServer}/uploads/three-froggos.png`,
       numOfItems: faker.number.int(100),
       reduced: isReduced,
       percentageReduced: ifReduced,
@@ -43,7 +43,7 @@ export const seedItems = (numOfEntries: number) => {
 export const seedUsers = async (
   numOfItemsInCart: number,
   numOfUsers: number
-  ) => {
+) => {
   const password = 'password'
   const saltRounds = 10
   const hashedPassword = await bcrypt.hash(password, saltRounds)
@@ -57,12 +57,15 @@ export const seedUsers = async (
       terms: true,
       shoppingCart: [],
       address: {
-        street: 'Fake',
-        streetNumber: 123,
-        city: 'Berlin',
+        firstName: 'Dieter',
+        lastName: 'Bohlen',
+        streetName: 'Fake',
+        houseNumber: 123,
         postCode: 13357,
+        city: 'Berlin',
+        country: 'Germany',
       },
-      profileImage: null
+      profileImage: null,
     }
 
     // Create a user and retrieve the generated user object
