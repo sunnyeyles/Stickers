@@ -47,7 +47,7 @@ Verify that the items in the users shopping cart are available in the inventory 
   { // user id
     "_id": "65168e24bc0132f",
     // array of items
-    "shoppingCart": [
+    "shoppingCart":
   shoppingCart: [{},{}]
   }
   ```

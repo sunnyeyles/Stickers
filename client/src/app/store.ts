@@ -12,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     item: itemReducer,
     userState: userReducer,
+    userAddress: userAddressInfoReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>

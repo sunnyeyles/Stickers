@@ -2,34 +2,24 @@ import { useState, useEffect } from 'react'
 import { Grid, Box } from '@mantine/core'
 import { OrderSummaryCard } from '../../components/orderSummaryCard/OrderSummaryCard'
 import { ShippingInfoForm } from '../../components/shippingInfoForm/ShippingInfoForm'
-import { ConfirmAddressDetails } from '../../components/confirm_address_details/ConfirmAddressDetails'
-import { useAppSelector } from '../../hooks/hooks'
-import { IUserAddressInfo } from '../../app/api/types'
+import { ConfirmAddressDetails } from '../../components/confirmAddressDetails/ConfirmAddressDetails'
 
-const addressDetails = {
-  firstName: 'Max',
-  lastName: 'Mustermann',
-  streetName: 'Fake street',
-  houseNumber: 123,
-  postCode: 13357,
-  city: 'Kabul',
-  country: 'Afgahnistan',
-}
+import { useUser } from '../../hooks/hooks'
 
 export const ShippingInfoOrderPage = () => {
-  const [addressExists, setAddressExists] = useState<boolean | undefined>()
-
-  const handleAddressChange = () => {
-    addressExists === true ? setAddressExists(false) : setAddressExists(true)
-  }
-  // get the state
-  const userAddressInfo = useAppSelector((state) => state.userAddress)
+  const [addressExists, setAddressExists] = useState<boolean>()
+  const [user] = useUser()
 
   useEffect(() => {
-    // check if state is empty
-    const hasData = Object.values(userAddressInfo).some((value) => value !== '')
-    setAddressExists(hasData)
-  }, [userAddressInfo])
+    user && user.hasOwnProperty('address')
+      ? setAddressExists(true)
+      : setAddressExists(false)
+  }, [user])
+
+  const handleAddressChange = () => {
+    setAddressExists(false)
+    // navigate to shipping address form
+  }
 
   return (
     <Grid justify="space-around" gutterSm={25} gutterMd={60}>
@@ -38,13 +28,13 @@ export const ShippingInfoOrderPage = () => {
           <ShippingInfoForm />
         ) : (
           <ConfirmAddressDetails
-            firstName={userAddressInfo.firstName}
-            lastName={userAddressInfo.lastName}
-            streetName={userAddressInfo.streetName}
-            houseNumber={userAddressInfo.houseNumber}
-            postCode={userAddressInfo.postCode}
-            city={userAddressInfo.city}
-            country={userAddressInfo.country}
+            firstName={user.address.firstName}
+            lastName={user.address.lastName}
+            streetName={user.address.streetName}
+            houseNumber={user.address.houseNumber}
+            postCode={user.address.postCode}
+            city={user.address.city}
+            country={user.address.country}
             handleAddressChange={handleAddressChange}
           />
         )}

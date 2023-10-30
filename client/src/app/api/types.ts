@@ -3,11 +3,12 @@ export interface IUser {
   email: string
   password?: string
   profileImage: string | null
+  address?: object
 }
 
 export interface IUserResponse {
   user: IUser
-  token: string
+  // token: string
 }
 
 export interface IItemResponse {
@@ -28,8 +29,8 @@ export interface IUserAddressInfo {
   firstName: string
   lastName: string
   streetName: string
-  houseNumber: string
-  postCode: string
+  houseNumber: number | null | undefined
+  postCode: number | null | undefined
   city: string
   country: string
 }

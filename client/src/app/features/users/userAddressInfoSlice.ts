@@ -5,8 +5,8 @@ const initialState: IUserAddressInfo = {
   firstName: '',
   lastName: '',
   streetName: '',
-  houseNumber: '',
-  postCode: '',
+  houseNumber: undefined,
+  postCode: undefined,
   city: '',
   country: '',
 }

@@ -1,5 +1,6 @@
 import { apiSlice } from '../../api/apiSlice'
 import { IUserResponse, IUserAddressInfo } from '../../api/types'
+import { FormSchemaType } from '../../../components/shippingInfoForm/ShippingInfoForm'
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,11 +25,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         data: arg,
       }),
     }),
-    updateUserAddress: builder.mutation<void, { address: IUserAddressInfo }>({
-      query: (arg) => ({
+    // check api docs for what is returned and replace void with it
+    updateUserAddress: builder.mutation<void, FormSchemaType>({
+      query: (data) => ({
         url: '/user/update-address',
         method: 'Put',
-        data: arg,
+        body: data,
+        // data: data,
       }),
     }),
   }),
