@@ -12,13 +12,12 @@ import { useAppSelector } from "../../hooks/hooks"
 export const Item = () => {
 
     const { classes } = itemStyles()
-
     const { id } = useParams<{ id: string }>()
     const idParam: string = id ?? ""
     const { data, isSuccess } = useGetItemByIdQuery(idParam)
 
     const cartItems = useAppSelector(getCartItems)
-    //console.log("Cart Items:", cartItems)
+    console.log("Cart Items:", cartItems)
 
     const [item, setItem] = useState<IItemResponse | null>(null);
     const [itemAmount, setItemAmount] = useState<number>(0)
@@ -45,7 +44,8 @@ export const Item = () => {
     const handleMaxAmountOfItems = (item: any) => {
         let restItems = 0
         const itemIndex = cartItems.findIndex(item => item._id === item._id)
-        if (itemIndex !== -1) {
+        //console.log("itemIndex", itemIndex)
+        if (itemIndex !== -1 && cartItems.length === 0) {
             restItems = maxAmountOfItems - itemAmount
             setMaxAmountOfItems(restItems)
         } else {
