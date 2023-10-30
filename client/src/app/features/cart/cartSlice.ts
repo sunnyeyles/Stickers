@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { IItemResponse } from '../../api/types'
 import { RootState } from '../../store'
-import { AmountType } from '../../../pages/item/Item';
 
 export interface CartItem extends IItemResponse {
     quantity: number;
@@ -11,10 +10,10 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: [] as CartItem[],
     reducers: {
-        addItemToCart: (state, action: PayloadAction<{ addedItem: IItemResponse, selectedAmount: AmountType }>) => {
+        addItemToCart: (state, action: PayloadAction<{addedItem:IItemResponse, selectedAmount: number}>) => {
             const { addedItem, selectedAmount } = action.payload
             // parse the string to a number
-            const quantity: number = parseInt(selectedAmount.amount)
+            const quantity: number = selectedAmount
             // we need to check if item is already in the cart
             const itemIndex = state.findIndex(item => item._id === addedItem._id)
             //if item exists, add the selected amount

@@ -2,12 +2,17 @@ import { Card, Image, AspectRatio, SimpleGrid, Text, Title, Stack, useMantineThe
 import { useStyles } from './items_collection_styles';
 import { useGetAllItemsQuery } from '../../app/features/items/itemsApiSlice';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/hooks';
+import { getItems } from '../../app/features/items/itemSlice';
 
 export const ItemsCollection = () => {
     const { classes } = useStyles()
     const theme = useMantineTheme()
     const navigate = useNavigate()
     const { data: items } = useGetAllItemsQuery()
+
+    const itemsFromStore = useAppSelector(getItems)
+    console.log("Items:", itemsFromStore)
 
     const navigateToItem = (id: string) => {
         navigate(`/item/${id}`)

@@ -9,10 +9,10 @@ import { useState } from "react"
 
 export const Cart = () => {
     const { classes } = cartStyles()
-    const [itemAmount, setItemAmount] = useState<number>(0);
+    const [itemAmount, setItemAmount] = useState<number>(0)
     const cartItems = useAppSelector(getCartItems)
     console.log("Cart Items:", cartItems)
-    
+
     const totalPrice = useAppSelector(getTotalPrice)
     const dispatch = useDispatch()
 
@@ -20,11 +20,10 @@ export const Cart = () => {
         dispatch(removeItemFromCart(itemId))
     }
 
-    const handleItemAmountChange = (item:any , selectedItemAmount: number) => {
+    const handleItemAmountChange = (item: any, selectedItemAmount: number) => {
         setItemAmount(selectedItemAmount);
         dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
-      };
-
+    }
 
     const rows = cartItems.map((item) => (
         <tr key={item._id}>
@@ -33,9 +32,9 @@ export const Cart = () => {
             </td>
             <td>{item.itemName}</td>
             <td className={classes.itemAmount}>
-                <NumberInput 
+                <NumberInput
                     key={item._id}
-                    value={item?.quantity} 
+                    value={item?.quantity}
                     onChange={(amount) => handleItemAmountChange(item, Number(amount))}
                 />
             </td>
