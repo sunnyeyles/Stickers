@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './features/auth/authSlice'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
-import userReducer from './features/users/usersSlice'
+import userReducer from './features/users/userSlice'
 import { apiSlice } from './api/apiSlice'
 import itemReducer from './features/items/itemSlice'
 import userAddressInfoReducer from './features/users/userAddressInfoSlice'

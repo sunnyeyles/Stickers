@@ -1,13 +1,11 @@
-import { Title, Button, Grid, Box, TextInput } from '@mantine/core'
-
+import { Title, Button, Grid, Box, TextInput, NumberInput } from '@mantine/core'
 import { useDispatch } from 'react-redux'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  userAddressInfoSlice,
-  setAddressInfoState,
-} from '../../../app/features/users/userAddressInfoSlice'
+import { setAddressInfoState } from '../../../app/features/users/userAddressInfoSlice'
+import { updateUserAddress } from '../../../app/features/users/userSlice'
+import { useUserDetails } from '../../../hooks/hooks'
 
 const shippingInfoSchema = z.object({
   firstName: z
@@ -22,14 +20,10 @@ const shippingInfoSchema = z.object({
     .string()
     .min(2, { message: 'Street Name is Required' })
     .toLowerCase(),
-  houseNumber: z.string().min(1, { message: 'Street Number is Required' }),
-  postCode: z
-    .string()
-    .min(3, 'Invalid Postcode')
-    .max(5, { message: 'Invalid Postcode' }),
+  houseNumber: z.number(),
+  postCode: z.number(),
   city: z.string().min(2, { message: 'City is Required' }).toLowerCase(),
   country: z.string().min(2, { message: 'Country is Required' }).toLowerCase(),
-  email: z.string().email().min(1, { message: 'Email is Required' }),
 })
 
 type FormSchemaType = z.infer<typeof shippingInfoSchema>
@@ -45,17 +39,19 @@ export function ShippingInfoForm() {
       firstName: '',
       lastName: '',
       streetName: '',
-      houseNumber: '',
-      postCode: '',
+      houseNumber: undefined,
+      postCode: undefined,
       city: '',
       country: '',
-      email: '',
     },
     resolver: zodResolver(shippingInfoSchema),
   })
+  const [userData] = useUserDetails()
+
   const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
+    // dispatch(updateUserAddress(data))
     console.log(data)
-    dispatch(setAddressInfoState(data))
+    console.log('oi')
   }
 
   return (
@@ -113,7 +109,7 @@ export function ShippingInfoForm() {
               name="houseNumber"
               control={control}
               render={({ field }) => (
-                <TextInput
+                <NumberInput
                   placeholder="house number"
                   size="md"
                   radius="md"
@@ -128,7 +124,7 @@ export function ShippingInfoForm() {
               name="postCode"
               control={control}
               render={({ field }) => (
-                <TextInput
+                <NumberInput
                   placeholder="post code"
                   size="md"
                   radius="md"
@@ -167,22 +163,6 @@ export function ShippingInfoForm() {
                 />
               )}
             />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  placeholder="email"
-                  size="md"
-                  radius="md"
-                  id="email"
-                  {...field}
-                />
-              )}
-            />
-            {/* {errors.email?.message && <p>{errors.email?.message}</p>} */}
           </Grid.Col>
           <Grid.Col>
             <Button size="md" type="submit">

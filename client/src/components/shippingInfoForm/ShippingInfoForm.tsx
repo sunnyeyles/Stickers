@@ -8,8 +8,9 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { setAddressInfoState } from '../../app/features/users/userAddressInfoSlice'
 import { useUser } from '../../hooks/hooks'
+import { setUser } from '../../app/features/users/userSlice'
 
-import { updateUserAddress } from '../../app/features/users/usersSlice'
+import { updateUserAddress } from '../../app/features/users/userSlice'
 
 const shippingInfoSchema = z.object({
   firstName: z
@@ -35,8 +36,6 @@ export type FormSchemaType = z.infer<typeof shippingInfoSchema>
 
 export function ShippingInfoForm() {
   const dispatch = useDispatch()
-  const [user] = useUser()
-  console.log(user)
 
   const {
     control,
@@ -64,7 +63,6 @@ export function ShippingInfoForm() {
     // updateUserAddressMutation(_id, data)
     // const addressState = useAppSelector((state) => state.userAddress)
   }
-  console.log(user)
 
   return (
     <Box m="xl">

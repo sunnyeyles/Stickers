@@ -1,3 +1,4 @@
+// user types
 export interface IUser {
   _id: string
   email: string
@@ -5,11 +6,17 @@ export interface IUser {
   profileImage: string | null
   address?: object
 }
-
-export interface IUserResponse {
-  user: IUser
-  // token: string
+export interface IUserAddressInfo {
+  firstName: string
+  lastName: string
+  streetName: string
+  houseNumber: number | null | undefined
+  postCode: number | null | undefined
+  city: string
+  country: string
 }
+
+// item types
 
 export interface IItemResponse {
   _id: string
@@ -23,16 +30,6 @@ export interface IItemResponse {
   percentageReduced: number
   createdAt: string
   updatedAt: string
-}
-
-export interface IUserAddressInfo {
-  firstName: string
-  lastName: string
-  streetName: string
-  houseNumber: number | null | undefined
-  postCode: number | null | undefined
-  city: string
-  country: string
 }
 
 export interface IPlacedOrderData extends IUserAddressInfo {}
