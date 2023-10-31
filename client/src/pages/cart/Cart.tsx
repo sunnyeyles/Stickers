@@ -12,7 +12,7 @@ export const Cart = () => {
     const [itemAmount, setItemAmount] = useState<number>(0)
     const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
     const cartItems = useAppSelector(getCartItems)
-    console.log("Cart Items:", cartItems)
+
 
     const totalPrice = useAppSelector(getTotalPrice)
     const dispatch = useDispatch()
@@ -32,7 +32,6 @@ export const Cart = () => {
     }
 
     const handleItemAmountChange = (item: any, selectedItemAmount: number) => {
-        console.log("selectedItemAmount", selectedItemAmount)
        setItemAmount(selectedItemAmount);
        dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
     }
@@ -41,28 +40,12 @@ export const Cart = () => {
         let restItems = 0
         const id = item._id
         const itemIndex = cartItems.findIndex(item => item._id === id)
-        console.log("itemIndex", itemIndex)
         if ((itemIndex !== -1 && cartItems.length === 0)) {
-            console.log("maxAmountOfItems",maxAmountOfItems)
-            console.log("itemAmount",itemAmount)
             restItems = maxAmountOfItems - itemAmount
             setMaxAmountOfItems(restItems)
-            console.log("rest Imtems:", restItems)
-            // if(restItems <= 0){
-            //     setDisabled(true)
-            //     setItemAmount(0)
-            // }
         } 
         else if(itemIndex !== -1 && cartItems.length !== 0 ) {
-            console.log("item!.numOfItems",item!.numOfItems)
-            console.log("itemAmount",itemAmount)
-            // restItems = item!.numOfItems - itemAmount
-            console.log("rest Imtems:", restItems)
             setMaxAmountOfItems(item!.numOfItems)
-            // if(restItems <= 0){
-            //     setDisabled(true)
-            //     setItemAmount(0)
-            // }
         }
     }
 
@@ -75,8 +58,8 @@ export const Cart = () => {
             <td className={classes.itemAmount}>
                 <NumberInput
                     key={item._id}
-                    value={0 ? item.quantity : itemAmount}
-                    max={maxAmountOfItems}
+                    value={item.quantity}
+                    max={item.numOfItems}
                     min={0}
                     onChange={(amount) => handleItemAmountChange(item, Number(amount))}
                 />
