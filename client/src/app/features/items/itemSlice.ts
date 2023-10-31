@@ -1,24 +1,23 @@
 import { IItemResponse } from '../../api/types';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from '../../store';
 
-interface IItemState {
-    item: IItemResponse | null
-}
-
-const initialState: IItemState = {
-    item: null
+export type ItemState = {
+    items: IItemResponse[]
 }
 
 export const itemSlice = createSlice({
     name: 'item',
-    initialState,
+    initialState: { items: [] } as ItemState,
     reducers: {
-        itemState: (state, action: PayloadAction<IItemResponse>) => {
-            state.item = action.payload
-        },
+        setItems: (state, action: PayloadAction<IItemResponse[]>) => {
+            state.items = action.payload
+        }
     },
 })
 
 export default itemSlice.reducer
 
-export const { itemState } = itemSlice.actions
+export const getItems = (state: RootState) => state.item.items
+
+export const { setItems } = itemSlice.actions

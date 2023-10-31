@@ -1,38 +1,76 @@
-import { Badge, Button, Flex, Grid, Input, Table, Title, rem } from "@mantine/core"
+import { ActionIcon, Badge, Button, Flex, Grid, NumberInput, Table, Title, rem } from "@mantine/core"
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
-import { Item } from "../../components/shoppingTableItem/ShoppingTableItem"
 import { cartStyles } from "./cart_styles"
-import frogWaterfall from '../../assets/frog_waterfall.png'
-import { IconChevronDown } from '@tabler/icons-react'
+import { IconX } from '@tabler/icons-react'
+import { useAppSelector } from "../../hooks/hooks"
+import { changeQuantityItemFromCart, getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
+import { useDispatch } from "react-redux"
+import { useEffect, useState } from "react"
 
 export const Cart = () => {
     const { classes } = cartStyles()
+    const [itemAmount, setItemAmount] = useState<number>(0)
+    const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
+    const cartItems = useAppSelector(getCartItems)
 
-    const elements: Item[] = [
-        { itemId: "1", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "2", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "3", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "4", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-    ];
 
-    const rows = elements.map((element) => (
-        <tr key={element.itemId}>
+    const totalPrice = useAppSelector(getTotalPrice)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        //sets the quantity from item single page
+        if (cartItems.length > 0) {
+            cartItems.forEach(element => {
+                setItemAmount(element.quantity)
+                handleMaxAmountOfItems(element)
+            })
+        }
+    }, [cartItems])
+
+    const removeFromCart = (itemId: string) => {
+        dispatch(removeItemFromCart(itemId))
+    }
+
+    const handleItemAmountChange = (item: any, selectedItemAmount: number) => {
+        setItemAmount(selectedItemAmount);
+        dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
+    }
+
+    const handleMaxAmountOfItems = (item: any) => {
+        let restItems = 0
+        const id = item._id
+        const itemIndex = cartItems.findIndex(item => item._id === id)
+        if (itemIndex !== -1 && cartItems.length === 0) {
+            restItems = maxAmountOfItems - itemAmount
+            setMaxAmountOfItems(restItems)
+        }
+        if (itemIndex !== -1 && cartItems.length !== 0) {
+            setMaxAmountOfItems(item!.numOfItems)
+        }
+    }
+
+    const rows = cartItems.map((item) => (
+        <tr key={item._id}>
             <td>
-                <img className={classes.image} src={element.itemImage} alt="frog waterfall" width="100%" height="auto" />
+                <img className={classes.image} src={item.imagePath} alt="frog waterfall" width="100%" height="auto" />
             </td>
-            <td>{element.itemName}</td>
+            <td>{item.itemName}</td>
             <td className={classes.itemAmount}>
-                <Input
-                    component="select"
-                    rightSection={<IconChevronDown size={14} stroke={1.5} />}
-                    pointer
-                    mt="md"
-                >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </Input>
+                <NumberInput
+                    key={item._id}
+                    value={item.quantity}
+                    max={item.numOfItems}
+                    min={0}
+                    onChange={(amount) => handleItemAmountChange(item, Number(amount))}
+                />
             </td>
-            <td className={classes.itemPrice}>{element.itemPrice}</td>
+            <td className={classes.itemPrice}>Price of one item: {item.itemPrice}</td>
+            <td className={classes.itemPrice}>Total Price of {item?.quantity}:  {item?.quantity * Number(item?.itemPrice)}</td>
+            <td>
+                <ActionIcon aria-label="Remove Item from Cart">
+                    <IconX onClick={() => removeFromCart(item._id)} />
+                </ActionIcon>
+            </td>
         </tr>
     ))
 
@@ -68,7 +106,7 @@ export const Cart = () => {
                                 <td>Total</td>
                                 <td></td>
                                 <td></td>
-                                <td className={classes.itemPrice}>$ 100</td>
+                                <td className={classes.itemPrice}>{totalPrice}</td>
                             </tr>
                         </tbody>
                     </Table>
