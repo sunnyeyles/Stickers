@@ -6,10 +6,13 @@ export interface IUser extends Document {
   email: string
   password: string
   address: {
-    street: string
-    streetNumber: number
-    city: string
+    firstName: string
+    lastName: string
+    streetName: string
+    houseNumber: number
     postCode: number
+    city: string
+    country: string
   } | null
   shoppingCart: object[] | null
   orders: object[] | null

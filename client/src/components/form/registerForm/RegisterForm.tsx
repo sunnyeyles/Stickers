@@ -73,6 +73,7 @@ export function RegisterForm() {
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
     await register(data)
+    // should this maybe update the user state?
     navigateToLogin()
   }
 

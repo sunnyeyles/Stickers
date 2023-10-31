@@ -13,20 +13,20 @@ import { useDisclosure } from "@mantine/hooks";
 import { navBarStyles } from "./nav_bar_styles";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
 import { Link, useNavigate } from 'react-router-dom'
-import { useSendLogoutMutation } from "../../app/features/auth/authApiSlice";
-import { useAppSelector } from "../../hooks/hooks";
+import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
+import { useAppSelector } from '../../hooks/hooks'
 import { IconShoppingCartFilled } from '@tabler/icons-react'
 import { IHeaderMiddleProps } from './main_nav_bar_types'
 import { DogHappy } from '../../assets/DogHappy'
+import { MenuItem } from '@mantine/core/lib/Menu/MenuItem/MenuItem'
 //import { useGetUserByIdMutation, useGetUserByIdQuery } from "../../app/features/users/usersApiSlice";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
-
-  const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
-  const { classes } = navBarStyles();
-  const navigate = useNavigate();
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
+  const [opened, { toggle }] = useDisclosure(false)
+  const [active, setActive] = useState(links[0].link)
+  const { classes } = navBarStyles()
+  const navigate = useNavigate()
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   //  TO DO  show profile image from user
   //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
   //const userId = useAppSelector(state => state.auth.user?._id) as string
@@ -34,10 +34,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   //const { data } = useGetUserByIdMutation(userId)
   //console.log(data)
 
-  const [logout, {
-    isLoading,
-    isSuccess
-  }] = useSendLogoutMutation()
+  const [logout, { isLoading, isSuccess }] = useSendLogoutMutation()
 
   useEffect(() => {
     if (isSuccess) navigate('/')
@@ -60,6 +57,10 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
           <Button component={Link} to="/register" radius="xl">
             Signup
           </Button>
+
+          <Link to="/order-summary">
+            <Button>CLICK FOR ORDER SUMMARY</Button>
+          </Link>
           {/* <LightDarkToggleButton /> */}
         </Group>
       )
@@ -72,14 +73,19 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
                 <IconShoppingCartFilled />
               </ActionIcon>
             </Link>
+            <Link to="/order-summary">
+              <Button>CLICK FOR ORDER SUMMARY</Button>
+            </Link>
             <Menu.Target>
               <Avatar radius="xl" />
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item>
                 <Link to="/profile">
-                  <IconSettings style={{ width: rem(14), height: rem(14) }} />Your Profile
+                  <IconSettings style={{ width: rem(14), height: rem(14) }} />
+                  Your Profile
                 </Link>
+                <Menu.Item></Menu.Item>
               </Menu.Item>
             </Menu.Dropdown>
             <ActionIcon aria-label="Logout Icon">

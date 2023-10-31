@@ -5,8 +5,8 @@ const initialState: IUserAddressInfo = {
   firstName: '',
   lastName: '',
   streetName: '',
-  houseNumber: '',
-  postCode: '',
+  houseNumber: undefined,
+  postCode: undefined,
   city: '',
   country: '',
 }
@@ -21,3 +21,5 @@ export const userAddressInfoSlice = createSlice({
   },
 })
 export const { setAddressInfoState } = userAddressInfoSlice.actions
+
+export default userAddressInfoSlice.reducer

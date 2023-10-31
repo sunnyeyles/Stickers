@@ -7,48 +7,47 @@ import {
   Anchor,
   Stack,
   Grid,
-} from "@mantine/core";
-import { TextInput } from "../custom_input_fields/textInput/TextInput";
-import { PasswordInput } from "../custom_input_fields/passwordInput/PasswordInput";
-import { GoogleButton } from "../../buttons/socialButtons/SocialButtons";
-import Duck from "../../../assets/duck_big.png";
-//import { ButtonTheme } from "../../styles/ButtonTheme";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../../app/features/auth/authApiSlice";
-import { setCredentials } from "../../../app/features/auth/authSlice";
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
-import { useStyles } from './login_form_styles';
-import { usePersistentState } from "../../../hooks/usePersistentState";
+} from '@mantine/core'
+import { TextInput } from '../custom_input_fields/textInput/TextInput'
+import { PasswordInput } from '../custom_input_fields/passwordInput/PasswordInput'
+import { GoogleButton } from '../../buttons/socialButtons/SocialButtons'
+import Duck from '../../../assets/duck_big.png'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useLoginMutation } from '../../../app/features/auth/authApiSlice'
+import { setCredentials } from '../../../app/features/auth/authSlice'
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react'
+import { useStyles } from './login_form_styles'
+import { usePersistentState } from '../../../hooks/usePersistentState'
 import { Checkbox } from '../custom_input_fields/checkboxInput/CheckboxInput'
+import { setUser } from '../../../app/features/users/usersSlice'
 
 const formSchema = z.object({
   email: z.string().email('Invalid email').min(1, 'Email is required'),
   password: z
     .string()
-    .min(1, "Password is required")
-    .min(8, "Password must have more than 8 characters"),
-  persist: z.any()
-});
+    .min(1, 'Password is required')
+    .min(8, 'Password must have more than 8 characters'),
+  persist: z.any(),
+})
 
 export type FormSchemaType = z.infer<typeof formSchema>
 
 export function LoginForm() {
-
   const [persist, setPersist] = usePersistentState()
-  const { classes } = useStyles();
+  const { classes } = useStyles()
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<FormSchemaType>({
     defaultValues: {
-      email: "",
-      password: "",
-      persist: persist
+      email: '',
+      password: '',
+      persist: persist,
     },
     resolver: zodResolver(formSchema),
   })
@@ -64,18 +63,18 @@ export function LoginForm() {
   if (isLoading) {
     return <p>Loading...</p>
   }
-  
+
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
-    const userData = await login(loginData).unwrap();
-    console.log('userData:', userData)
+    const userData = await login(loginData).unwrap()
     dispatch(setCredentials({ ...userData }))
-    navigate("/profile")
-  };
-  
+    dispatch(setUser({...userData }))
+    navigate('/profile')
+  }
+
   const handleToggle = () => {
     setPersist((prev: boolean) => !prev)
   }
-  
+
   return (
     <>
       <Grid justify="space-around" align="center">

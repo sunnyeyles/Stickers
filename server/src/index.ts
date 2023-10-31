@@ -18,16 +18,16 @@ const port = process.env.PORT || 3001
 
 connectToDatabase()
 
-//dropCollections()
-//seedUsers(2,2)
-//seedItems(10)
+// dropCollections()
+// seedUsers(2, 2)
+// seedItems(10)
 
 app.use(cors(corsOptions))
 
 app.use(express.json())
 
 // built in - middleware: Serve static files from the "uploads" directory
-const _dirname = path.resolve();
+const _dirname = path.resolve()
 //console.log(_dirname)
 app.use('/uploads', express.static(path.join(_dirname, 'uploads')))
 
@@ -49,7 +49,6 @@ app.use(
 app.use(passport.session())
 // Routes
 app.use(router)
-
 
 // START SERVER
 app.listen(port, () => {
