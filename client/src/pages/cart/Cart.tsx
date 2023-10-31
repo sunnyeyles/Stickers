@@ -18,7 +18,7 @@ export const Cart = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        //sets the selected amount
+        //sets the quantity from item single page
         if (cartItems.length > 0) {
             cartItems.forEach(element => {
                 setItemAmount(element.quantity)
@@ -32,19 +32,19 @@ export const Cart = () => {
     }
 
     const handleItemAmountChange = (item: any, selectedItemAmount: number) => {
-       setItemAmount(selectedItemAmount);
-       dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
+        setItemAmount(selectedItemAmount);
+        dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
     }
 
     const handleMaxAmountOfItems = (item: any) => {
         let restItems = 0
         const id = item._id
         const itemIndex = cartItems.findIndex(item => item._id === id)
-        if ((itemIndex !== -1 && cartItems.length === 0)) {
+        if (itemIndex !== -1 && cartItems.length === 0) {
             restItems = maxAmountOfItems - itemAmount
             setMaxAmountOfItems(restItems)
-        } 
-        else if(itemIndex !== -1 && cartItems.length !== 0 ) {
+        }
+        if (itemIndex !== -1 && cartItems.length !== 0) {
             setMaxAmountOfItems(item!.numOfItems)
         }
     }

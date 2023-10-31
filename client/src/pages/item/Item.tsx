@@ -27,7 +27,6 @@ export const Item = () => {
 
     useEffect(() => {
         if (data?._id) {
-           //console.log("item", data)
             setItem(data)
             handleMaxAmountOfItems(data)
             setDisabled(false)
@@ -44,32 +43,23 @@ export const Item = () => {
     }
 
     const handleMaxAmountOfItems = (item: any) => {
-        //console.log("itemID", item._id )
-        const id = item._id
         let restItems = 0
+        const id = item._id
         //find item in cart
         const itemIndex = cartItems.findIndex(item => item._id === id)
-        //console.log("itemIndex", itemIndex)
-        
-        if ((itemIndex !== -1 && cartItems.length === 0) || (itemIndex !== -1 && cartItems.length !== 0 )) {
-            // console.log("maxAmountOfItems",maxAmountOfItems)
-            // console.log("itemAmount",itemAmount)
+        if (itemIndex !== -1) {
             restItems = maxAmountOfItems - itemAmount
             setMaxAmountOfItems(restItems)
-            //console.log("rest Imtems:", restItems)
-            if(restItems <= 0){
+            if (restItems <= 0) {
                 setDisabled(true)
                 setItemAmount(0)
             }
-        } 
-        else{
+        }
+        else {
             //itemMaxAmount gets initialized when item is not in cart
-            // console.log("item!.numOfItems",item!.numOfItems)
-            // console.log("itemAmount",itemAmount)
             restItems = item!.numOfItems - itemAmount
-            //console.log("rest Imtems:", restItems)
             setMaxAmountOfItems(restItems)
-            if(restItems <= 0){
+            if (restItems <= 0) {
                 setDisabled(true)
                 setItemAmount(0)
             }
@@ -102,8 +92,8 @@ export const Item = () => {
                                         min={0}
                                         onChange={(amount) => handleItemAmountChange(Number(amount))}
                                         className={classes.itemAmount}
-                                        />
-                                    {disabled ? 
+                                    />
+                                    {disabled ?
                                         <p className={classes.error}>No items left in stock</p>
                                         :
                                         ""

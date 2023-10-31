@@ -32,11 +32,8 @@ const cartSlice = createSlice({
         },
         changeQuantityItemFromCart: (state, action: PayloadAction<{ addedItem: IItemResponse, amount: number }>) => {
             const {addedItem, amount} = action.payload
-            console.log("addedItem", addedItem)
-            console.log("amount", amount)
             const itemIndex = state.findIndex(item => item._id === addedItem._id)
             if (itemIndex !== -1) {
-                console.log("itemIndex", itemIndex)
                 state[itemIndex].quantity = amount
             } else {
                 state.push({ ...action.payload.addedItem, quantity: amount })
