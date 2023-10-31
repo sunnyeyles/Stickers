@@ -5,24 +5,65 @@ import { IconX } from '@tabler/icons-react'
 import { useAppSelector } from "../../hooks/hooks"
 import { changeQuantityItemFromCart, getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
 import { useDispatch } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const Cart = () => {
     const { classes } = cartStyles()
     const [itemAmount, setItemAmount] = useState<number>(0)
+    const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
     const cartItems = useAppSelector(getCartItems)
     console.log("Cart Items:", cartItems)
 
     const totalPrice = useAppSelector(getTotalPrice)
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        //sets the selected amount
+        if (cartItems.length > 0) {
+            cartItems.forEach(element => {
+                setItemAmount(element.quantity)
+                handleMaxAmountOfItems(element)
+            })
+        }
+    }, [cartItems])
+
     const removeFromCart = (itemId: string) => {
         dispatch(removeItemFromCart(itemId))
     }
 
     const handleItemAmountChange = (item: any, selectedItemAmount: number) => {
-        setItemAmount(selectedItemAmount);
-        dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
+        console.log("selectedItemAmount", selectedItemAmount)
+       setItemAmount(selectedItemAmount);
+       dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
+    }
+
+    const handleMaxAmountOfItems = (item: any) => {
+        let restItems = 0
+        const id = item._id
+        const itemIndex = cartItems.findIndex(item => item._id === id)
+        console.log("itemIndex", itemIndex)
+        if ((itemIndex !== -1 && cartItems.length === 0)) {
+            console.log("maxAmountOfItems",maxAmountOfItems)
+            console.log("itemAmount",itemAmount)
+            restItems = maxAmountOfItems - itemAmount
+            setMaxAmountOfItems(restItems)
+            console.log("rest Imtems:", restItems)
+            // if(restItems <= 0){
+            //     setDisabled(true)
+            //     setItemAmount(0)
+            // }
+        } 
+        else if(itemIndex !== -1 && cartItems.length !== 0 ) {
+            console.log("item!.numOfItems",item!.numOfItems)
+            console.log("itemAmount",itemAmount)
+            // restItems = item!.numOfItems - itemAmount
+            console.log("rest Imtems:", restItems)
+            setMaxAmountOfItems(item!.numOfItems)
+            // if(restItems <= 0){
+            //     setDisabled(true)
+            //     setItemAmount(0)
+            // }
+        }
     }
 
     const rows = cartItems.map((item) => (
@@ -34,7 +75,9 @@ export const Cart = () => {
             <td className={classes.itemAmount}>
                 <NumberInput
                     key={item._id}
-                    value={item?.quantity}
+                    value={0 ? item.quantity : itemAmount}
+                    max={maxAmountOfItems}
+                    min={0}
                     onChange={(amount) => handleItemAmountChange(item, Number(amount))}
                 />
             </td>

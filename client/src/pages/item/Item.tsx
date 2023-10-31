@@ -17,18 +17,20 @@ export const Item = () => {
     const { data, isSuccess } = useGetItemByIdQuery(idParam)
 
     const cartItems = useAppSelector(getCartItems)
-    console.log("Cart Items:", cartItems)
+    //console.log("Cart Items:", cartItems)
 
     const [item, setItem] = useState<IItemResponse | null>(null);
     const [itemAmount, setItemAmount] = useState<number>(0)
     const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
+    const [disabled, setDisabled] = useState<boolean>(false)
     const dispatch = useDispatch()
 
     useEffect(() => {
         if (data?._id) {
-            console.log(data._id)
+           //console.log("item", data)
             setItem(data)
             handleMaxAmountOfItems(data)
+            setDisabled(false)
         }
     }, [data]);
 
@@ -37,20 +39,40 @@ export const Item = () => {
     }
 
     const handleAddItemToCart = (item: IItemResponse, amount: number) => {
-        handleMaxAmountOfItems(item)
         dispatch(addItemToCart({ addedItem: item!, selectedAmount: amount }))
+        handleMaxAmountOfItems(item)
     }
 
     const handleMaxAmountOfItems = (item: any) => {
+        //console.log("itemID", item._id )
+        const id = item._id
         let restItems = 0
-        const itemIndex = cartItems.findIndex(item => item._id === item._id)
+        //find item in cart
+        const itemIndex = cartItems.findIndex(item => item._id === id)
         //console.log("itemIndex", itemIndex)
-        if (itemIndex !== -1 && cartItems.length === 0) {
+        
+        if ((itemIndex !== -1 && cartItems.length === 0) || (itemIndex !== -1 && cartItems.length !== 0 )) {
+            // console.log("maxAmountOfItems",maxAmountOfItems)
+            // console.log("itemAmount",itemAmount)
             restItems = maxAmountOfItems - itemAmount
             setMaxAmountOfItems(restItems)
-        } else {
+            //console.log("rest Imtems:", restItems)
+            if(restItems <= 0){
+                setDisabled(true)
+                setItemAmount(0)
+            }
+        } 
+        else{
+            //itemMaxAmount gets initialized when item is not in cart
+            // console.log("item!.numOfItems",item!.numOfItems)
+            // console.log("itemAmount",itemAmount)
             restItems = item!.numOfItems - itemAmount
+            //console.log("rest Imtems:", restItems)
             setMaxAmountOfItems(restItems)
+            if(restItems <= 0){
+                setDisabled(true)
+                setItemAmount(0)
+            }
         }
     }
 
@@ -77,14 +99,20 @@ export const Item = () => {
                                         key={item?._id}
                                         value={itemAmount}
                                         max={maxAmountOfItems}
+                                        min={0}
                                         onChange={(amount) => handleItemAmountChange(Number(amount))}
                                         className={classes.itemAmount}
-                                    />
+                                        />
+                                    {disabled ? 
+                                        <p className={classes.error}>No items left in stock</p>
+                                        :
+                                        ""
+                                    }
                                     <Button
                                         onClick={() => handleAddItemToCart(item!, itemAmount)}
                                         type="button"
                                         mt={rem(40)}
-                                        disabled={false}
+                                        disabled={disabled}
                                     >Add to cart</Button>
                                 </Grid.Col>
                             </Grid>
