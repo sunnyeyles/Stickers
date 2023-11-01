@@ -11,7 +11,7 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: [] as CartItem[],
     reducers: {
-        addItemToCart: (state, action: PayloadAction<{addedItem:IItemResponse, selectedAmount: number}>) => {
+        addItemToCart: (state, action: PayloadAction<{ addedItem: IItemResponse, selectedAmount: number }>) => {
             const { addedItem, selectedAmount } = action.payload
             // parse the string to a number
             const quantity: number = selectedAmount
@@ -31,7 +31,7 @@ const cartSlice = createSlice({
             }
         },
         changeQuantityItemFromCart: (state, action: PayloadAction<{ addedItem: IItemResponse, amount: number }>) => {
-            const {addedItem, amount} = action.payload
+            const { addedItem, amount } = action.payload
             const itemIndex = state.findIndex(item => item._id === addedItem._id)
             if (itemIndex !== -1) {
                 state[itemIndex].quantity = amount
@@ -42,9 +42,9 @@ const cartSlice = createSlice({
     },
 })
 
-export const { 
-    addItemToCart, 
-    removeItemFromCart, 
+export const {
+    addItemToCart,
+    removeItemFromCart,
     changeQuantityItemFromCart
 } = cartSlice.actions
 
@@ -52,5 +52,6 @@ export const getCartItems = (state: RootState) => state.cart
 // we loop trough all cart products and multiply the amount with price
 export const getTotalPrice = (state: RootState) =>
     state.cart.reduce((acc, next) => acc += (next.quantity * parseInt(next.itemPrice)), 0)
+export const getTotalAmountOfItems = (state: RootState) => state.cart.reduce((acc, next) => acc += (next.quantity), 0)
 
 export default cartSlice.reducer

@@ -11,7 +11,6 @@ export const navBarStyles = createStyles((theme) => ({
       justifyContent: 'space-between',
     },
   },
-
   items: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -37,4 +36,14 @@ export const navBarStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
+  itemAmount: {
+    position: 'relative',
+    right: '1rem',
+    borderRadius: '50%',
+    padding: '5px',
+    background: theme.colors.orange[5],
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '14px',
+  }
 }))
