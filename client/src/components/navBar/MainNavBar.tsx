@@ -8,6 +8,7 @@ import {
   Avatar,
   ActionIcon,
   rem,
+  Text
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { navBarStyles } from "./nav_bar_styles";
@@ -19,6 +20,7 @@ import { IconShoppingCartFilled } from '@tabler/icons-react'
 import { IHeaderMiddleProps } from './main_nav_bar_types'
 import { DogHappy } from '../../assets/DogHappy'
 import { MenuItem } from '@mantine/core/lib/Menu/MenuItem/MenuItem'
+import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice';
 //import { useGetUserByIdMutation, useGetUserByIdQuery } from "../../app/features/users/usersApiSlice";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
@@ -27,6 +29,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   const { classes } = navBarStyles()
   const navigate = useNavigate()
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
+  const totalAmount = useAppSelector(getTotalAmountOfItems)
   //  TO DO  show profile image from user
   //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
   //const userId = useAppSelector(state => state.auth.user?._id) as string
@@ -51,6 +54,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
               <IconShoppingCartFilled />
             </ActionIcon>
           </Link>
+          {totalAmount > 0 ? <Text className={classes.itemAmount}>{totalAmount}</Text> : null}
           <Button component={Link} to="/login" radius="xl">
             Login
           </Button>
@@ -73,6 +77,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
                 <IconShoppingCartFilled />
               </ActionIcon>
             </Link>
+            {totalAmount > 0 ? <Text className={classes.itemAmount}>{totalAmount}</Text> : null}
             <Link to="/order-summary">
               <Button>CLICK FOR ORDER SUMMARY</Button>
             </Link>
