@@ -8,6 +8,8 @@ interface IItem {
 // VERIFY ITEMS ARE AVAILABLE
 export const verifyCheckout = async (req: Request, res: Response) => {
   const { _id, shoppingCart } = req.body
+  console.log("ID:",_id)
+  console.log("Shopping CART:", shoppingCart)
   try {
     // make sure user exists
     const user = await User.findById(_id)

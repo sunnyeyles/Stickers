@@ -1,11 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { IItemResponse } from '../../api/types'
+import { CartItem, IItemResponse } from '../../api/types'
 import { RootState } from '../../store'
-
-export interface CartItem extends IItemResponse {
-    quantity: number
-    restItems?: number
-}
 
 const cartSlice = createSlice({
     name: 'cart',

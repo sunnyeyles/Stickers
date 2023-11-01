@@ -158,7 +158,7 @@ export function LoginForm() {
 
         <Grid.Col xs={12} sm={6} lg={4}>
           <Paper p={30}>
-            <img src={Duck} alt="Your Image" width="100%" height="auto" />
+            <img src={Duck} alt="Duck" width="100%" height="auto" />
           </Paper>
         </Grid.Col>
       </Grid>
