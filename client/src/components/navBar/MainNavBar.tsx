@@ -30,7 +30,6 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   const navigate = useNavigate()
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   const totalAmount = useAppSelector(getTotalAmountOfItems)
-  console.log("totalAmount", totalAmount)
   //  TO DO  show profile image from user
   //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
   //const userId = useAppSelector(state => state.auth.user?._id) as string
