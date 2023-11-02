@@ -11,6 +11,7 @@ import { CartItem, IItemResponse } from "../../app/api/types"
 import { notifications } from '@mantine/notifications'
 import { Link } from "react-router-dom"
 import dogSleeping from '../../assets/dog_sleeping.png'
+import { useNavigate } from 'react-router-dom'
 
 export const Cart = () => {
     const dispatch = useDispatch()
@@ -21,6 +22,7 @@ export const Cart = () => {
     const cartItems = useAppSelector(getCartItems)
     const totalPrice = useAppSelector(getTotalPrice)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         //sets the quantity from item single page
@@ -50,6 +52,7 @@ export const Cart = () => {
                 })
             } else {
                 await verifyCheckout({ userId: user._id, shoppingCart: modifiedCartItems })
+                navigate('/order-summary')
             }
         } else {
             openModal()
