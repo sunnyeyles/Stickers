@@ -5,8 +5,11 @@ export const shoppingTableStyles = createStyles((theme) => ({
     tableLayout: "fixed",
     width: "100%"
   },
+  itemName: {
+    textAlign: "center",
+  },
   itemAmount: {
-    width: rem(100)
+    textAlign: "right",
   },
   itemPrice: {
     textAlign: "right",
