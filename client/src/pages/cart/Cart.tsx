@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Flex, Grid, Group, Modal, NumberInput, Portal, Table, Title, rem } from "@mantine/core"
+import { ActionIcon, Anchor, Badge, Button, Flex, Grid, Group, Stack, Modal, NumberInput, Portal, Table, Title, rem } from "@mantine/core"
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
 import { cartStyles } from "./cart_styles"
 import { IconX } from '@tabler/icons-react'
@@ -89,12 +89,17 @@ export const Cart = () => {
         setIsModalOpen(false)
     }
 
+    const navigateToProducts = () => {
+        navigate('/products')
+    }
+
     const rows = cartItems.map((item) => (
         <tr key={item._id}>
             <td>
                 <img className={classes.image} src={item.imagePath} alt="frog waterfall" width="100%" height="auto" />
             </td>
             <td>{item.itemName}</td>
+            <td className={classes.itemPrice}>{item.itemPrice}</td>
             <td className={classes.itemAmount}>
                 <NumberInput
                     key={item._id}
@@ -104,8 +109,7 @@ export const Cart = () => {
                     onChange={(amount) => handleItemAmountChange(item, Number(amount))}
                 />
             </td>
-            <td className={classes.itemPrice}>Price of one item: {item.itemPrice}</td>
-            <td className={classes.itemPrice}>Total Price of {item?.quantity}:  {item?.quantity * Number(item?.itemPrice)}</td>
+            <td className={classes.itemPrice}>{(item?.quantity * Number(item?.itemPrice)).toFixed(2)}</td>
             <td>
                 <ActionIcon aria-label="Remove Item from Cart">
                     <IconX onClick={() => removeFromCart(item._id)} />
@@ -138,6 +142,15 @@ export const Cart = () => {
                 </Grid.Col>
                 <Grid.Col xs={8} sm={8} md={5} lg={5}>
                     <Table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th></th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {rows}
                         </tbody>
@@ -158,22 +171,32 @@ export const Cart = () => {
                                 <td className={classes.itemPrice}><Badge size="lg">FREE</Badge></td>
                             </tr>
                             <tr className={classes.total}>
-                                <td>Total</td>
+                                <td>Subtotal</td>
                                 <td></td>
                                 <td></td>
                                 <td className={classes.itemPrice}>{totalPrice}</td>
                             </tr>
                         </tbody>
                     </Table>
-                    <Flex justify="center" mt={rem(50)}>
-                        <Button
-                            onClick={() => checkOut(cartItems)}
-                            size="md"
+                    <Stack>
+                        <Flex justify="center" mt={rem(50)}>
+                            <Button
+                                onClick={() => checkOut(cartItems)}
+                                size="md"
+                                type="button"
+                            >
+                                Checkout
+                            </Button>
+                        </Flex>
+                        <Anchor
+                            component="button"
                             type="button"
-                        >
-                            Checkout
-                        </Button>
-                    </Flex>
+                            color="dimmed"
+                            onClick={() => navigateToProducts()}
+                            size="sm">
+                            &#8592; Continue Shopping
+                        </Anchor>
+                    </Stack>
                 </Grid.Col>
             </Grid>
         </>

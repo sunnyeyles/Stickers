@@ -45,8 +45,15 @@ export const {
 
 export const getCartItems = (state: RootState) => state.cart
 // we loop trough all cart products and multiply the amount with price
-export const getTotalPrice = (state: RootState) =>
-    state.cart.reduce((acc, next) => acc += (next.quantity * parseInt(next.itemPrice)), 0)
+export const getTotalPrice = (state: RootState) => {
+    const totalPrice = state.cart.reduce((acc, next) => {
+        const itemPrice = parseFloat(next.itemPrice);
+        const itemTotal = next.quantity * itemPrice;
+        return acc + itemTotal
+    }, 0)
+    return totalPrice.toFixed(2)
+}
+
 export const getTotalAmountOfItems = (state: RootState) => state.cart.reduce((acc, next) => acc += (next.quantity), 0)
 
 export default cartSlice.reducer

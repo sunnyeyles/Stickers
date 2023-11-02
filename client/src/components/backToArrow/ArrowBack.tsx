@@ -14,7 +14,7 @@ export const ArrowBack: FunctionComponent = () => {
                     <IconArrowBack style={{ width: rem(25), height: rem(25) }} />
                 </ActionIcon>
             </Link>
-            <Text size="lg" fw="bold" className={classes.arrowBackText}>back to products</Text>
+            <Text size="lg" fw="bold" className={classes.arrowBackText}>Continue Shopping</Text>
         </Stack>
     )
 }
