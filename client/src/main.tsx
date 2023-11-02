@@ -3,10 +3,12 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { Provider } from "react-redux/es/exports";
 import { store } from "./app/store.ts";
+import { Notifications } from '@mantine/notifications'
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
       <Provider store={store}>
+        <Notifications />
         <App />
       </Provider>
   </React.StrictMode>

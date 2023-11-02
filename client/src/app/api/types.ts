@@ -35,6 +35,11 @@ export interface IUserAddressInfo {
   country: string
 }
 
+export interface CartItem extends IItemResponse {
+  quantity: number
+  restItems?: number
+}
+
 export interface IPlacedOrderData extends IUserAddressInfo {}
 
 export interface IShippingInfoFormData {}

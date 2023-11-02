@@ -1,31 +1,60 @@
-import { ActionIcon, Badge, Button, Flex, Grid, NumberInput, Table, Title, rem } from "@mantine/core"
+import { ActionIcon, Badge, Button, Flex, Grid, Group, Modal, NumberInput, Portal, Table, Title, rem } from "@mantine/core"
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
 import { cartStyles } from "./cart_styles"
 import { IconX } from '@tabler/icons-react'
-import { useAppSelector } from "../../hooks/hooks"
+import { useAppSelector, useUser } from "../../hooks/hooks"
 import { changeQuantityItemFromCart, getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
 import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
+import { useVerifyCheckoutMutation } from "../../app/features/placeOrder/placeOrderApi"
+import { CartItem, IItemResponse } from "../../app/api/types"
+import { notifications } from '@mantine/notifications'
+import { Link } from "react-router-dom"
+import dogSleeping from '../../assets/dog_sleeping.png'
 
 export const Cart = () => {
+    const dispatch = useDispatch()
     const { classes } = cartStyles()
+    const [user, loading] = useUser()
     const [itemAmount, setItemAmount] = useState<number>(0)
     const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
     const cartItems = useAppSelector(getCartItems)
-
-
     const totalPrice = useAppSelector(getTotalPrice)
-    const dispatch = useDispatch()
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
         //sets the quantity from item single page
-        if (cartItems.length > 0) {
+        if (getCartItems.length > 0) {
             cartItems.forEach(element => {
                 setItemAmount(element.quantity)
                 handleMaxAmountOfItems(element)
             })
         }
     }, [cartItems])
+
+    const [verifyCheckout, { isLoading, isSuccess }] = useVerifyCheckoutMutation()
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
+
+    const checkOut = async (cartItems: CartItem[]) => {
+        const modifiedCartItems: IItemResponse[] = cartItems.map((item) => ({
+            ...item,
+            numOfItems: item.quantity,
+        }))
+        if (user?._id !== undefined) {
+            if (cartItems.length === 0) {
+                notifications.show({
+                    title: 'Sorry',
+                    message: 'Your cart is empty'
+                })
+            } else {
+                await verifyCheckout({ userId: user._id, shoppingCart: modifiedCartItems })
+            }
+        } else {
+            openModal()
+        }
+    }
 
     const removeFromCart = (itemId: string) => {
         dispatch(removeItemFromCart(itemId))
@@ -47,6 +76,14 @@ export const Cart = () => {
         if (itemIndex !== -1 && cartItems.length !== 0) {
             setMaxAmountOfItems(item!.numOfItems)
         }
+    }
+
+    const openModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false)
     }
 
     const rows = cartItems.map((item) => (
@@ -76,6 +113,21 @@ export const Cart = () => {
 
     return (
         <>
+            <Portal>
+                {isModalOpen && (
+                    <Modal
+                        opened={isModalOpen}
+                        onClose={closeModal}
+                        title="log in to proceed to checkout">
+                        <Group position="center">
+                            <img src={dogSleeping} alt="dog-sleeping" width="50%" height="auto" />
+                            <Button component={Link} to="/login" radius="xl">
+                                Login
+                            </Button>
+                        </Group>
+                    </Modal>
+                )}
+            </Portal>
             <Title mb={rem(50)} ml={rem(150)}>Shopping Cart</Title>
             <Grid>
                 <Grid.Col xs={2} sm={2} md={1}>
@@ -111,7 +163,11 @@ export const Cart = () => {
                         </tbody>
                     </Table>
                     <Flex justify="center" mt={rem(50)}>
-                        <Button size="md" type="submit">
+                        <Button
+                            onClick={() => checkOut(cartItems)}
+                            size="md"
+                            type="button"
+                        >
                             Checkout
                         </Button>
                     </Flex>

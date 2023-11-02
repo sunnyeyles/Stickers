@@ -1,13 +1,19 @@
-import { IShippingInfoFormData } from '../../api/types'
 import { apiSlice } from '../../api/apiSlice'
+import { IItemResponse } from '../../api/types'
 
-export const userApi = apiSlice.injectEndpoints({
+export const placeOrderApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllItems: builder.query<IShippingInfoFormData, void>({
-      // need to work out what the best enpoint would be, user could either use this data only for this order OR update their shipping info
-      query: () => '/user',
-    }),
+    verifyCheckout: builder.mutation<any,{userId: string, shoppingCart: IItemResponse[]}>({
+      query: (data) => {
+        console.log("DATA:", data)
+        return {
+          url: '/item/verify-checkout',
+          method: 'POST',
+          body: data
+        }
+      }
+    })
   }),
 })
 
-export const { useGetAllItemsQuery } = userApi
+export const { useVerifyCheckoutMutation }  = placeOrderApi
