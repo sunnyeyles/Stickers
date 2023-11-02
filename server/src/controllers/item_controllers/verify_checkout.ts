@@ -7,12 +7,10 @@ interface IItem {
 }
 // VERIFY ITEMS ARE AVAILABLE
 export const verifyCheckout = async (req: Request, res: Response) => {
-  const { _id, shoppingCart } = req.body
-  console.log("ID:",_id)
-  console.log("Shopping CART:", shoppingCart)
+  const { userId, shoppingCart } = req.body
   try {
     // make sure user exists
-    const user = await User.findById(_id)
+    const user = await User.findById(userId)
     if (!user) {
       res.status(404).json({ success: false, message: 'User not found' })
     }
@@ -23,6 +21,7 @@ export const verifyCheckout = async (req: Request, res: Response) => {
       // this will return an array of all missing items in db(if any)
       const outOfStockItems = await Promise.all(
         user.shoppingCart.map(async (item: IItem) => {
+          console.log("ITEM", item)
           const foundItem = await Item.findById(item._id)
           // log results to console
           console.log(`${foundItem.numOfItems} items in stock`)
