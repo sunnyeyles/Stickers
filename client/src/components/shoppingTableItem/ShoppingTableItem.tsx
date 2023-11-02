@@ -1,11 +1,11 @@
 import {
-  Input,
+  Text,
   Table,
   Badge
 } from '@mantine/core'
-import { IconChevronDown } from '@tabler/icons-react'
-import frogWaterfall from '../../assets/frog_waterfall.png'
 import { shoppingTableStyles } from './shopping_table_styles'
+import { getCartItems, getTotalPrice } from '../../app/features/cart/cartSlice'
+import { useAppSelector } from '../../hooks/hooks'
 
 export interface Item {
   itemId: string
@@ -18,34 +18,21 @@ export interface Item {
 export const ShoppingTableItem = () => {
 
   const { classes } = shoppingTableStyles()
+  const cartItems = useAppSelector(getCartItems)
+  const totalPrice = useAppSelector(getTotalPrice)
 
-  const elements: Item[] = [
-    { itemId: "1", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-    { itemId: "2", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-    { itemId: "3", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-    { itemId: "4", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-  ];
-
-  const rows = elements.map((element) => (
-    <tr key={element.itemId}>
+  const rows = cartItems.map((item) => (
+    <tr key={item._id}>
       <td>
-        <img src={element.itemImage} alt="frog waterfall" width="100%" height="auto" />
+        <img src={item.imagePath} alt="item image" width="100%" height="auto" />
       </td>
-      <td>{element.itemName}</td>
+      <td className={classes.itemName}>{item.itemName}</td>
       <td className={classes.itemAmount}>
-        <Input
-          component="select"
-          rightSection={<IconChevronDown size={14} stroke={1.5} />}
-          pointer
-          mt="md"
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </Input>
+        <Text>Quantity: {item.quantity}</Text>
       </td>
-      <td className={classes.itemPrice}>{element.itemPrice}</td>
+      <td className={classes.itemPrice}>{item.itemPrice}</td>
     </tr>
-  ));
+  ))
 
   return (
     <Table className={classes.table} striped highlightOnHover>
@@ -61,7 +48,7 @@ export const ShoppingTableItem = () => {
           <td>Total</td>
           <td></td>
           <td></td>
-          <td className={classes.itemPrice}>$ 100</td>
+          <td className={classes.itemPrice}>{totalPrice}</td>
         </tr>
       </tbody>
     </Table>
