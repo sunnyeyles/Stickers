@@ -36,6 +36,7 @@ const baseQueryWithReauth = async (
   // console.log(extraOptions) //custom like {shout: true}
 
   let result = await baseQuery(args, api, extraOptions)
+  console.log("RESULT", result.error)
 
   // If you want, handle other status codes, too
   //backend sends 403 if access token is expired

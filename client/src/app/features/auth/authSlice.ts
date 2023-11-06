@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
+import Cookies from 'js-cookie';
 
 export type AuthState = {
   user: any
@@ -11,16 +12,16 @@ export type AuthState = {
 //we expect to receive the token back after login
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: { user: null, token: null, isAuthenticated: false } as AuthState,
+  initialState: { user: null, token: Cookies.get('jwt'), isAuthenticated: false } as AuthState,
   reducers: {
-    setCredentials: (state, action) => {
-      const { user, accessToken } = action.payload
-      //console.log("action.payload from setCredentials",action.payload)
-      state.user = user
-      //console.log("accessToken", accessToken)
-      state.token = accessToken
+    setCredentials: (state:AuthState, action) => {
+      const { data } = action.payload
+      console.log("action.payload from setCredentials",action.payload)
+      state.user = data.user
+      console.log("state.user", state.user)
+      state.token = data.accessToken
       state.isAuthenticated = true
-      //console.log("user from auth login", user)
+      //console.log("user from setCredentials", user)
     },
     logOut: (state) => {
       state.user = null

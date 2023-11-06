@@ -25,6 +25,7 @@ import { verifyJWT } from '../middleware/verifyJWT'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
 import { updateAddress } from '../controllers/user_controllers/updateAddress'
+import { createCheckoutSession } from '../controllers/item_controllers/create_stripe_checkout'
 
 const router: Router = express.Router()
 
@@ -61,6 +62,7 @@ router.get('/item/get-specific-item/:itemId', getSpecificItem)
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
 router.post('/item/move-cart-to-orders', moveCartToOrders)
+router.post('/item/create-checkout-session', createCheckoutSession)
 
 // google Authentication Routes
 // initialize Google authentication

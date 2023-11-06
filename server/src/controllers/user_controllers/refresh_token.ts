@@ -27,23 +27,24 @@ export const refreshToken = async (req: Request, res: Response) => {
     //console.log('decoded token: ', decoded)
 
     const { _id } = decoded._id;
-    const foundUser = await User.findOne(_id).exec()
+    const user = await User.findOne(_id).exec()
 
-    if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
+    if (!user) return res.status(401).json({ message: 'Unauthorized' })
 
+    console.log("foundUser", user)
     //issue a new accessToken if the refreshToken is valid
     const accessToken = jwt.sign(
       {
         "UserInfo": {
-          "_id": foundUser._id,
-          "email": foundUser.email
+          "_id": user._id,
+          "email": user.email
         }
       },
       `${process.env.ACCESS_TOKEN_SECRET}`,
       { expiresIn: "7min" }
     )
 
-    res.json({ accessToken })
+    res.json({ accessToken, user })
 
   } catch (error) {
     console.error("Error refresh Token:", error);
