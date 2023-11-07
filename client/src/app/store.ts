@@ -4,6 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import userReducer from './features/users/userSlice'
 import { apiSlice } from './api/apiSlice'
 import itemReducer from './features/items/itemSlice'
+import cartReducer from './features/cart/cartSlice'
 import userAddressInfoReducer from './features/users/userAddressInfoSlice'
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     auth: authReducer,
     item: itemReducer,
     userState: userReducer,
+    cart: cartReducer,
     userAddress: userAddressInfoReducer,
   },
   devTools: process.env.NODE_ENV === 'development',

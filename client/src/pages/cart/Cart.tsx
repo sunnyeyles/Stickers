@@ -1,43 +1,140 @@
-import { Badge, Button, Flex, Grid, Input, Table, Title, rem } from "@mantine/core"
+import { ActionIcon, Anchor, Badge, Button, Flex, Grid, Group, Stack, Modal, NumberInput, Portal, Table, Title, rem } from "@mantine/core"
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
-import { Item } from "../../components/shoppingTableItem/ShoppingTableItem"
 import { cartStyles } from "./cart_styles"
-import frogWaterfall from '../../assets/frog_waterfall.png'
-import { IconChevronDown } from '@tabler/icons-react'
+import { IconX } from '@tabler/icons-react'
+import { useAppSelector, useUser } from "../../hooks/hooks"
+import { changeQuantityItemFromCart, getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
+import { useDispatch } from "react-redux"
+import { useEffect, useState } from "react"
+import { useVerifyCheckoutMutation } from "../../app/features/placeOrder/placeOrderApi"
+import { CartItem, IItemResponse } from "../../app/api/types"
+import { notifications } from '@mantine/notifications'
+import { Link } from "react-router-dom"
+import dogSleeping from '../../assets/dog_sleeping.png'
+import { useNavigate } from 'react-router-dom'
 
 export const Cart = () => {
+    const dispatch = useDispatch()
     const { classes } = cartStyles()
+    const [user, loading] = useUser()
+    const [itemAmount, setItemAmount] = useState<number>(0)
+    const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
+    const cartItems = useAppSelector(getCartItems)
+    const totalPrice = useAppSelector(getTotalPrice)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const navigate = useNavigate()
 
-    const elements: Item[] = [
-        { itemId: "1", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "2", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "3", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-        { itemId: "4", itemImage: frogWaterfall, itemName: "Frog Waterfall", itemAmount: '', itemPrice: "$13.95" },
-    ];
+    useEffect(() => {
+        //sets the quantity from item single page
+        if (getCartItems.length > 0) {
+            cartItems.forEach(element => {
+                setItemAmount(element.quantity)
+                handleMaxAmountOfItems(element)
+            })
+        }
+    }, [cartItems])
 
-    const rows = elements.map((element) => (
-        <tr key={element.itemId}>
+    const [verifyCheckout, { isLoading, isSuccess }] = useVerifyCheckoutMutation()
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
+
+    const checkOut = async (cartItems: CartItem[]) => {
+        const modifiedCartItems: IItemResponse[] = cartItems.map((item) => ({
+            ...item,
+            numOfItems: item.quantity,
+        }))
+        if (user?._id !== undefined) {
+            if (cartItems.length === 0) {
+                notifications.show({
+                    title: 'Sorry',
+                    message: 'Your cart is empty'
+                })
+            } else {
+                await verifyCheckout({ userId: user._id, shoppingCart: modifiedCartItems })
+                navigate('/order-summary')
+            }
+        } else {
+            openModal()
+        }
+    }
+
+    const removeFromCart = (itemId: string) => {
+        dispatch(removeItemFromCart(itemId))
+    }
+
+    const handleItemAmountChange = (item: any, selectedItemAmount: number) => {
+        setItemAmount(selectedItemAmount);
+        dispatch(changeQuantityItemFromCart({ addedItem: item!, amount: selectedItemAmount }))
+    }
+
+    const handleMaxAmountOfItems = (item: any) => {
+        let restItems = 0
+        const id = item._id
+        const itemIndex = cartItems.findIndex(item => item._id === id)
+        if (itemIndex !== -1 && cartItems.length === 0) {
+            restItems = maxAmountOfItems - itemAmount
+            setMaxAmountOfItems(restItems)
+        }
+        if (itemIndex !== -1 && cartItems.length !== 0) {
+            setMaxAmountOfItems(item!.numOfItems)
+        }
+    }
+
+    const openModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false)
+    }
+
+    const navigateToProducts = () => {
+        navigate('/products')
+    }
+
+    const rows = cartItems.map((item) => (
+        <tr key={item._id}>
             <td>
-                <img className={classes.image} src={element.itemImage} alt="frog waterfall" width="100%" height="auto" />
+                <img className={classes.image} src={item.imagePath} alt="frog waterfall" width="100%" height="auto" />
             </td>
-            <td>{element.itemName}</td>
+            <td>{item.itemName}</td>
+            <td className={classes.itemPrice}>{item.itemPrice}</td>
             <td className={classes.itemAmount}>
-                <Input
-                    component="select"
-                    rightSection={<IconChevronDown size={14} stroke={1.5} />}
-                    pointer
-                    mt="md"
-                >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </Input>
+                <NumberInput
+                    key={item._id}
+                    value={item.quantity}
+                    max={item.numOfItems}
+                    min={0}
+                    onChange={(amount) => handleItemAmountChange(item, Number(amount))}
+                />
             </td>
-            <td className={classes.itemPrice}>{element.itemPrice}</td>
+            <td className={classes.itemPrice}>{(item?.quantity * Number(item?.itemPrice)).toFixed(2)}</td>
+            <td>
+                <ActionIcon aria-label="Remove Item from Cart">
+                    <IconX onClick={() => removeFromCart(item._id)} />
+                </ActionIcon>
+            </td>
         </tr>
     ))
 
     return (
         <>
+            <Portal>
+                {isModalOpen && (
+                    <Modal
+                        opened={isModalOpen}
+                        onClose={closeModal}
+                        title="log in to proceed to checkout">
+                        <Group position="center">
+                            <img src={dogSleeping} alt="dog-sleeping" width="50%" height="auto" />
+                            <Button component={Link} to="/login" radius="xl">
+                                Login
+                            </Button>
+                        </Group>
+                    </Modal>
+                )}
+            </Portal>
             <Title mb={rem(50)} ml={rem(150)}>Shopping Cart</Title>
             <Grid>
                 <Grid.Col xs={2} sm={2} md={1}>
@@ -45,6 +142,15 @@ export const Cart = () => {
                 </Grid.Col>
                 <Grid.Col xs={8} sm={8} md={5} lg={5}>
                     <Table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th></th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {rows}
                         </tbody>
@@ -65,18 +171,32 @@ export const Cart = () => {
                                 <td className={classes.itemPrice}><Badge size="lg">FREE</Badge></td>
                             </tr>
                             <tr className={classes.total}>
-                                <td>Total</td>
+                                <td>Subtotal</td>
                                 <td></td>
                                 <td></td>
-                                <td className={classes.itemPrice}>$ 100</td>
+                                <td className={classes.itemPrice}>{totalPrice}</td>
                             </tr>
                         </tbody>
                     </Table>
-                    <Flex justify="center" mt={rem(50)}>
-                        <Button size="md" type="submit">
-                            Checkout
-                        </Button>
-                    </Flex>
+                    <Stack>
+                        <Flex justify="center" mt={rem(50)}>
+                            <Button
+                                onClick={() => checkOut(cartItems)}
+                                size="md"
+                                type="button"
+                            >
+                                Checkout
+                            </Button>
+                        </Flex>
+                        <Anchor
+                            component="button"
+                            type="button"
+                            color="dimmed"
+                            onClick={() => navigateToProducts()}
+                            size="sm">
+                            &#8592; Continue Shopping
+                        </Anchor>
+                    </Stack>
                 </Grid.Col>
             </Grid>
         </>

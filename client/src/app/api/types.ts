@@ -39,6 +39,21 @@ export interface IItemResponse {
   updatedAt: string
 }
 
+export interface IUserAddressInfo {
+  firstName: string
+  lastName: string
+  streetName: string
+  houseNumber: number | null | undefined
+  postCode: number | null | undefined
+  city: string
+  country: string
+}
+
+export interface CartItem extends IItemResponse {
+  quantity: number
+  restItems?: number
+}
+
 export interface IPlacedOrderData extends IUserAddressInfo {}
 
 export interface IShippingInfoFormData {}

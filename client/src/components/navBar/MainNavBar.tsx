@@ -4,24 +4,23 @@ import {
   Group,
   Burger,
   Button,
-  Box,
   Menu,
   Avatar,
   ActionIcon,
   rem,
-} from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { navBarStyles } from './nav_bar_styles'
-import { IconBong, IconLogout, IconSettings } from '@tabler/icons-react'
+  Text
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { navBarStyles } from "./nav_bar_styles";
+import { IconLogout, IconSettings } from "@tabler/icons-react";
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
 import { useAppSelector } from '../../hooks/hooks'
 import { IconShoppingCartFilled } from '@tabler/icons-react'
 import { IHeaderMiddleProps } from './main_nav_bar_types'
-import dogHappy from './../../assets/dog_happy.svg'
-import { LightDarkToggleButton } from '../lightDarkToggleButton/LightDarkToggleButton'
 import { DogHappy } from '../../assets/DogHappy'
 import { MenuItem } from '@mantine/core/lib/Menu/MenuItem/MenuItem'
+import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice';
 //import { useGetUserByIdMutation, useGetUserByIdQuery } from "../../app/features/users/usersApiSlice";
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
@@ -30,6 +29,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   const { classes } = navBarStyles()
   const navigate = useNavigate()
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
+  const totalAmount = useAppSelector(getTotalAmountOfItems)
   //  TO DO  show profile image from user
   //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
   //const userId = useAppSelector(state => state.auth.user?._id) as string
@@ -54,6 +54,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
               <IconShoppingCartFilled />
             </ActionIcon>
           </Link>
+          {totalAmount > 0 ? <Text className={classes.itemAmount}>{totalAmount}</Text> : null}
           <Button component={Link} to="/login" radius="xl">
             Login
           </Button>
@@ -76,6 +77,7 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
                 <IconShoppingCartFilled />
               </ActionIcon>
             </Link>
+            {totalAmount > 0 ? <Text className={classes.itemAmount}>{totalAmount}</Text> : null}
             <Link to="/order-summary">
               <Button>CLICK FOR ORDER SUMMARY</Button>
             </Link>
@@ -115,15 +117,9 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
       </Link>
       <Group className={classes.items} spacing={5}>
         <Group>
-          <Button variant="outline" component="a" href="/products">
-            Products
-          </Button>
-          <Button variant="outline" component="a" href="/contact">
-            Contact
-          </Button>
-          <Button variant="outline" component="a" href="/about">
-            About
-          </Button>
+          <Button variant="outline" component={Link} to="/products">Products</Button>
+          <Button variant="outline" component={Link} to="/contact">Contact</Button>
+          <Button variant="outline" component={Link} to="/about">About</Button>
         </Group>
       </Group>
       <UserButtons />
