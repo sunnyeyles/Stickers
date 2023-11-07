@@ -3,8 +3,8 @@ import { Request, Response } from 'express'
 import {
   getUserDetailsByEmail,
   getAllUsers,
-  getUserById,
 } from '../controllers/user_controllers/users_controller'
+import { getUserById } from '../controllers/user_controllers/get_user_by_id'
 import { createNewUser } from '../controllers/user_controllers/create_user'
 import { changeUserPassword } from '../controllers/user_controllers/change_password'
 import { userAuth } from '../controllers/user_controllers/user_auth'
@@ -25,7 +25,7 @@ import { verifyJWT } from '../middleware/verifyJWT'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
 import { updateAddress } from '../controllers/user_controllers/updateAddress'
-
+import { updateUserAddress } from '../controllers/user_controllers/update_user_address'
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
@@ -39,7 +39,7 @@ router.get('/user/get-user-details-by-email', getUserDetailsByEmail)
 router.get('/user/get-all-users', getAllUsers)
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 router.put('/user/update-address', updateAddress)
-
+router.put('/user/update-user-address', updateUserAddress)
 //// ITEM ENDPOINTS
 router.get('/item/get-all-items', getAllItemsFromDb)
 router.get('/item/get-items-by-category', getItemsByCategory)

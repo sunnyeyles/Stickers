@@ -26,6 +26,8 @@ app.use(cors(corsOptions))
 
 app.use(express.json())
 
+app.use(express.urlencoded({ extended: true }))
+
 // built in - middleware: Serve static files from the "uploads" directory
 const _dirname = path.resolve()
 //console.log(_dirname)
