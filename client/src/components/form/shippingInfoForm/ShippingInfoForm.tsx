@@ -3,9 +3,17 @@ import { useDispatch } from 'react-redux'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { setAddressInfoState } from '../../../app/features/users/userAddressInfoSlice'
-import { updateUserAddress } from '../../../app/features/users/userSlice'
+import {
+  updateUserAddress,
+  setUser,
+} from '../../../app/features/users/userSlice'
 import { useUserDetails } from '../../../hooks/hooks'
+import { useUpdateUserAddressMutation } from '../../../app/features/users/usersApiSlice'
+import { useGetUserByIdQuery } from '../../../app/features/users/usersApiSlice'
+import {
+  IUserAddressInfo,
+  IUserAddressInfoWithId,
+} from '../../../app/api/types'
 
 const shippingInfoSchema = z.object({
   firstName: z
@@ -28,8 +36,24 @@ const shippingInfoSchema = z.object({
 
 type FormSchemaType = z.infer<typeof shippingInfoSchema>
 
-export function ShippingInfoForm() {
+interface IAddressProps {
+  onAddressUpdate: (state: boolean) => void
+}
+
+export function ShippingInfoForm({ onAddressUpdate }: IAddressProps) {
   const dispatch = useDispatch()
+  // current user signed in
+  const [user] = useUserDetails()
+  // extract the users id for use when form is submitted
+  const userId = user.user._id
+
+  const [setAddressData] = useUpdateUserAddressMutation()
+
+  const setAddressHasChanged = (hasChanged: boolean) => {
+    // setAddressData()
+    onAddressUpdate(hasChanged)
+  }
+
   const {
     control,
     handleSubmit,
@@ -46,12 +70,21 @@ export function ShippingInfoForm() {
     },
     resolver: zodResolver(shippingInfoSchema),
   })
-  const [userData] = useUserDetails()
 
-  const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
-    // dispatch(updateUserAddress(data))
-    console.log(data)
-    console.log('oi')
+  const onSubmit: SubmitHandler<FormSchemaType> = async (addressInfo) => {
+    try {
+      const payload: IUserAddressInfoWithId = {
+        _id: userId,
+        address: addressInfo,
+      }
+      const newAddress = await setAddressData(payload)
+
+      dispatch(updateUserAddress(newAddress))
+      console.log('Address Updated')
+      setAddressHasChanged(true)
+    } catch (error) {
+      console.error('Error updating address:', error)
+    }
   }
 
   return (
@@ -114,6 +147,7 @@ export function ShippingInfoForm() {
                   size="md"
                   radius="md"
                   id="houseNumber"
+                  hideControls
                   {...field}
                 />
               )}
@@ -129,6 +163,7 @@ export function ShippingInfoForm() {
                   size="md"
                   radius="md"
                   id="postCode"
+                  hideControls
                   {...field}
                 />
               )}

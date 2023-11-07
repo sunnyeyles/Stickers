@@ -25,7 +25,6 @@ export const userSlice = createSlice({
       console.log('User state', user)
     },
     updateUserAddress: (state, action) => {
-      // return { ...state.user, ...action.payload }
       return {
         ...state,
         user: {

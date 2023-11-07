@@ -10,7 +10,6 @@ import {
 import { TextInput } from '../custom_input_fields/textInput/TextInput'
 import { PasswordInput } from '../custom_input_fields/passwordInput/PasswordInput'
 import { Checkbox } from '../custom_input_fields/checkboxInput/CheckboxInput'
-// import { ButtonTheme } from '../../styles/ButtonTheme'
 import { GoogleButton } from '../../buttons/socialButtons/SocialButtons'
 import { useStyles } from '../loginForm/login_form_styles'
 import { useForm, SubmitHandler } from 'react-hook-form'

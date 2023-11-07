@@ -15,6 +15,13 @@ export interface IUserAddressInfo {
   city: string
   country: string
 }
+export interface IUserAddressInfoWithId {
+  _id: string
+  address: IUserAddressInfo
+}
+export interface IUserAddressInfoWithId {
+  _id: string
+}
 
 // item types
 
