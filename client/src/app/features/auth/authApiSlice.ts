@@ -1,16 +1,16 @@
-import { IUser, IUserResponse } from '../../api/types';
+import { IUser } from '../../api/types'
 import { FormSchemaType } from '../../../components/form/loginForm/LoginForm'
-import { logOut, setCredentials } from './authSlice';
-import { apiSlice } from '../../api/apiSlice';
+import { logOut, setCredentials } from './authSlice'
+import { apiSlice } from '../../api/apiSlice'
 
 export const authApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     login: builder.mutation<IUser, FormSchemaType>({
-      query: credentials => ({
+      query: (credentials) => ({
         url: '/user/authenticate-user',
         method: 'POST',
-        body: { ...credentials }
-      })
+        body: { ...credentials },
+      }),
     }),
     sendLogout: builder.mutation({
       query: () => ({
@@ -30,12 +30,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
         } catch (err) {
           console.log(err)
         }
-      }
+      },
     }),
     refresh: builder.mutation<any, void>({
       query: () => ({
         url: '/user/refresh-token',
-        method: 'GET'
+        method: 'GET',
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
@@ -46,14 +46,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
         } catch (err) {
           console.log(err)
         }
-      }
+      },
     }),
     register: builder.mutation({
       query: (userData) => ({
         url: '/user/create-user',
         method: 'POST',
-        body: { ...userData }
-      })
+        body: { ...userData },
+      }),
     }),
   }),
 })
@@ -62,5 +62,5 @@ export const {
   useLoginMutation,
   useSendLogoutMutation,
   useRefreshMutation,
-  useRegisterMutation
-} = authApiSlice 
+  useRegisterMutation,
+} = authApiSlice

@@ -23,7 +23,8 @@ import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react'
 import { useStyles } from './login_form_styles'
 import { usePersistentState } from '../../../hooks/usePersistentState'
 import { Checkbox } from '../custom_input_fields/checkboxInput/CheckboxInput'
-import { setUser } from '../../../app/features/users/usersSlice'
+import { setUser } from '../../../app/features/users/userSlice'
+import { useUserDetails } from '../../../hooks/hooks'
 
 const formSchema = z.object({
   email: z.string().email('Invalid email').min(1, 'Email is required'),
@@ -54,6 +55,7 @@ export function LoginForm() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [user] = useUserDetails()
 
   const navigateToRegister = () => {
     navigate('/register')
@@ -67,7 +69,7 @@ export function LoginForm() {
   const onSubmit: SubmitHandler<FormSchemaType> = async (loginData) => {
     const userData = await login(loginData).unwrap()
     dispatch(setCredentials({ ...userData }))
-    dispatch(setUser({...userData }))
+    dispatch(setUser({ ...userData }))
     navigate('/profile')
   }
 

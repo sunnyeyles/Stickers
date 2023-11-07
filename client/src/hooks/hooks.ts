@@ -6,7 +6,6 @@ import { useMemo } from 'react'
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 // dispatch, when you want to change something in the app
 export const useAppDispatch = () => useDispatch<AppDispatch>()
-
 export const useUser = () => {
   const user = useAppSelector((state) => state.auth.user)
   //!! make sure your resulting value is either true or false, not undefined or [] or {}.
@@ -19,8 +18,7 @@ export const useUser = () => {
   //The useMemo Hook only runs when one of its dependencies update.This can improve performance.
   return useMemo(() => [user, loading] as const, [user, loading])
 }
-
 export const useUserDetails = () => {
-  const user = useAppSelector((state) => state.userState.user)
+  const user = useAppSelector((state) => state.userState)
   return useMemo(() => [user] as const, [user])
 }

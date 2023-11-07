@@ -1,21 +1,21 @@
 import { apiSlice } from '../../api/apiSlice'
-import { IUserResponse, IUserAddressInfo } from '../../api/types'
-import { FormSchemaType } from '../../../components/shippingInfoForm/ShippingInfoForm'
-import { setProfileImage } from '../users/usersSlice'
+import { IUserAddressInfo, IUserAddressInfoWithId } from '../../api/types'
+import { IUser } from '../../api/types'
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllUsers: builder.query<IUserResponse[], void>({
+    getAllUsers: builder.query<IUser[], void>({
       query: (arg) => ({
         url: '/user/get-all-users',
         method: 'GET',
         data: arg,
       }),
     }),
-    getUserById: builder.query<IUserResponse, string>({
-      query: (id) => ({
-        url: `/user/get-user-by-id/${id}`,
-        method: 'GET'
+    getUserById: builder.query<IUser, { id: string }>({
+      query: (arg) => ({
+        url: '/user/get-user-by-id',
+        method: 'GET',
+        data: arg,
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
@@ -30,17 +30,18 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUserAddress: builder.query<IUserAddressInfo, { id: string }>({
       query: (arg) => ({
         url: '/user/get-user-address',
-        method: 'Get',
+        method: 'GET',
         data: arg,
       }),
     }),
-    // check api docs for what is returned and replace void with it
-    updateUserAddress: builder.mutation<void, FormSchemaType>({
-      query: (data) => ({
-        url: '/user/update-address',
-        method: 'Put',
-        body: data,
-        // data: data,
+    updateUserAddress: builder.mutation<
+      IUserAddressInfo,
+      IUserAddressInfoWithId
+    >({
+      query: (addressInfoAndId) => ({
+        url: '/user/update-user-address',
+        method: 'PUT',
+        body: addressInfoAndId,
       }),
     }),
   }),
