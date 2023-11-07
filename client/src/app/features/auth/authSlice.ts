@@ -17,11 +17,11 @@ export const authSlice = createSlice({
     setCredentials: (state:AuthState, action) => {
       const { data } = action.payload
       console.log("action.payload from setCredentials",action.payload)
-      state.user = data.user
-      console.log("state.user", state.user)
-      state.token = data.accessToken
+      state.user = action.payload.user
+      //console.log("state.user", state.user)
+      state.token = action.payload.accessToken
       state.isAuthenticated = true
-      //console.log("user from setCredentials", user)
+      console.log("state.token", state.token)
     },
     logOut: (state) => {
       state.user = null

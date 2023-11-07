@@ -1,11 +1,13 @@
 import { Avatar, Button, Grid, Text, rem } from '@mantine/core'
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { object, z } from 'zod';
-import { useUploadMutation } from '../../app/features/upload/uploadApiSlice';
-import { useUser } from '../../hooks/hooks';
-import { FileInput } from "../../components/form/custom_input_fields/fileInput/FileInput";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useState, useEffect } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { object, z } from 'zod'
+import { useUploadMutation } from '../../app/features/upload/uploadApiSlice'
+import { useAppDispatch, useAppSelector, useUser } from '../../hooks/hooks'
+import { FileInput } from "../../components/form/custom_input_fields/fileInput/FileInput"
+import { selectProfileImage, uploadImage } from '../../app/features/upload/uploadSlice'
+import { uploadProfileImageStyles } from './upload_profile_image_styles'
 
 const imageUploadSchema = object({
     profileImage: z.instanceof(File),
@@ -14,16 +16,16 @@ const imageUploadSchema = object({
 export type UploadImageType = z.infer<typeof imageUploadSchema>;
 
 export function UploadProfileImage() {
-
-    //we use our custom hook with loading 
+    const { classes } = uploadProfileImageStyles()
     const [user, loading] = useUser()
-    //console.log("image",user.profileImage)
-
-    const [profileImage, setProfileImage] = useState()
+    const [profileImage, setProfileImage] = useState<string | null>(user.profileImage)
+    const profileImg: any = useAppSelector(selectProfileImage)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        setProfileImage(user?.profileImage)
-    }, [user]);
+        setProfileImage(profileImg.profileImagePath)
+        dispatch(uploadImage(profileImg))
+    }, [profileImg]);
 
     const {
         control,
@@ -43,7 +45,8 @@ export function UploadProfileImage() {
         values.userEmail = user.email
         formData.append('userEmail', values.userEmail)
         await upload(formData)
-    };
+    }
+
     return (
         <>
             <Grid justify="space-around" align="center">
@@ -51,7 +54,7 @@ export function UploadProfileImage() {
                     <Text size="md">Upload/Update your profile Image</Text>
                 </Grid.Col>
                 <Grid.Col sm={6}>
-                    <Avatar src={profileImage} w={rem(100)} h={rem(100)} color="orange" radius="xl" mb="lg" />
+                    <Avatar className={classes.avatar} src={profileImage} w={rem(300)} h={rem(300)} color="orange" radius="xl" mb="lg" />
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <FileInput
                             control={control}

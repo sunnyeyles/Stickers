@@ -15,13 +15,12 @@ import { navBarStyles } from "./nav_bar_styles";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
-import { useAppSelector } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector, useUser } from '../../hooks/hooks'
 import { IconShoppingCartFilled } from '@tabler/icons-react'
 import { IHeaderMiddleProps } from './main_nav_bar_types'
 import { DogHappy } from '../../assets/DogHappy'
-import { MenuItem } from '@mantine/core/lib/Menu/MenuItem/MenuItem'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice';
-//import { useGetUserByIdMutation, useGetUserByIdQuery } from "../../app/features/users/usersApiSlice";
+import { selectProfileImage, uploadImage } from '../../app/features/upload/uploadSlice';
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
   const [opened, { toggle }] = useDisclosure(false)
@@ -30,16 +29,16 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
   const navigate = useNavigate()
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   const totalAmount = useAppSelector(getTotalAmountOfItems)
-  //  TO DO  show profile image from user
-  //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
-  //const userId = useAppSelector(state => state.auth.user?._id) as string
-  //console.log(userId)
-  //const { data } = useGetUserByIdMutation(userId)
-  //console.log(data)
-
+  const [user] = useUser()
   const [logout, { isLoading, isSuccess }] = useSendLogoutMutation()
+  //shows profile img
+  const [profileImage, setProfileImage] = useState<string | null>(user?.profileImage)
+  const profileImg: any = useAppSelector(selectProfileImage)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
+    setProfileImage(profileImg.profileImagePath)
+    dispatch(uploadImage(profileImg))
     if (isSuccess) navigate('/')
   }, [isSuccess, navigate])
 
@@ -82,13 +81,17 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
               <Button>CLICK FOR ORDER SUMMARY</Button>
             </Link>
             <Menu.Target>
-              <Avatar radius="xl" />
+              {user?.profileImage !== "" || user?.profileImage !== null
+                ? <Avatar className={classes.avatar} src={profileImage} radius="xl" />
+                : <Avatar radius="xl">{user?.email.substring(0, 1)}</Avatar>
+              }
             </Menu.Target>
+
             <Menu.Dropdown>
               <Menu.Item>
                 <Link to="/profile">
                   <IconSettings style={{ width: rem(14), height: rem(14) }} />
-                  Your Profile
+                  Settings
                 </Link>
                 <Menu.Item></Menu.Item>
               </Menu.Item>

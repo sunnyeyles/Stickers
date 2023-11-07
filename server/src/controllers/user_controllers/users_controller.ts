@@ -5,11 +5,10 @@ import { User } from '../../models/model'
 
 ///// GET USER DETAILS by id
 export const getUserById = async (req: Request, res: Response) => {
-  const { _id } = req.body
-  console.log(req.body)
+  const userId = req.params.userId
   try {
-    const user = await User.findOne({ _id })
-    console.log(user)
+    const user = await User.findOne({ _id: userId })
+    console.log("USER:", user)
     if (!user) {
       return res.status(404).json({ success: false, message: 'No User found' })
     }

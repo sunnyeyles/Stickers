@@ -30,10 +30,15 @@ export const usersSlice = createSlice({
     updateUserAddress: (state, action: PayloadAction<IUserAddressInfo>) => {
       return { ...state, ...action.payload }
     },
+    setProfileImage: (state:UserState, action) => {
+      // const { data } = action.payload
+      // console.log("action.payload from setProfileImage",action.payload, data)
+      //state.user?.user.profileImage = 
+    }
   },
 })
 
-export const { setUser, updateUserAddress } = usersSlice.actions
+export const { setUser, updateUserAddress, setProfileImage } = usersSlice.actions
 // export const getUserId = (state: RootState) => state.userState.user?.user._id
 export const getUserId = (state: RootState) => state.userState.user
 

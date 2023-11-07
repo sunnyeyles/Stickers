@@ -20,13 +20,9 @@ export const Cart = () => {
     const [itemAmount, setItemAmount] = useState<number>(0)
     const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
     const cartItems = useAppSelector(getCartItems)
-    console.log("CART", cartItems)
     const totalPrice = useAppSelector(getTotalPrice)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const navigate = useNavigate()
-    
-
-    const token = useAppSelector((state => state.auth.token))
 
     useEffect(() => {
         //sets the quantity from item single page
@@ -37,12 +33,6 @@ export const Cart = () => {
             })
         }
     }, [cartItems])
-
-
-
-    console.log("user", user)
-    console.log("token", token)
-
 
     const [verifyCheckout, { isLoading, isSuccess }] = useVerifyCheckoutMutation()
     if (isLoading) {

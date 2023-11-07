@@ -53,11 +53,11 @@ export default function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/item/:id" element={<Item />} />
             <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
-
             <Route path="/confirmation" element={<PaymentConfirmation />} />
 
             {/* private */}
             <Route element={<PersistLogin />}>
+              
               <Route path="/cart" element={<Cart />} />
 
               <Route

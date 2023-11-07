@@ -30,7 +30,7 @@ import { createCheckoutSession } from '../controllers/item_controllers/create_st
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
-router.get('/user/get-user-by-id', getUserById)
+router.get('/user/get-user-by-id/:userId', getUserById)
 router.post('/user/create-user', createNewUser) //register
 router.post('/user/authenticate-user', userAuth) //login
 router.get('/user/refresh-token', refreshToken)
