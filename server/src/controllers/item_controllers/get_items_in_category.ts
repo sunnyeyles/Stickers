@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import { Response } from 'express'
 import { Item } from '../../models/model'
 
 ////// GET ITEMS BY CATEGORY

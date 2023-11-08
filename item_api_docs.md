@@ -1,8 +1,12 @@
 # item api docs
 
-## get
+## get requests
 
-## Get Items by Category
+## Get Reduced Items
+
+Returns all items where reduced === true
+
+## Get Items in Category
 
 Retrieve a list of items based on their category.
 
@@ -13,6 +17,16 @@ Retrieve a list of items based on their category.
 - `itemCategory` (string, required): The category of items to retrieve.
 
 ### Response
+
+#### GET `/item/reduced`
+
+- request body:
+
+```
+
+{ "reduced": "true" }
+
+```
 
 - response body:
 
@@ -33,13 +47,37 @@ Retrieve a list of items based on their category.
   ]
   ```
 
-## post
+## post requests
+
+### Get specific item
+
+Get a specific item, the item will be found with the item id
+
+### GET `/item/get-specific-item/:itemId`
+
+- request body:
+
+  ```
+  {
+    "_id": "65168e24bc0132f"
+  }
+  ```
+
+- response body:
+  ```
+  {
+      "_id": "item_id_1",
+      "itemName": "Item 1",
+      "itemCategory": "Category A",
+      "date": "2023-09-21T12:00:00Z"
+    }
+  ```
 
 ## Check Inventory
 
 Verify that the items in the users shopping cart are available in the inventory when they proceed to checkout
 
-### POST
+### POST `/item/verify-checkout`
 
 - request body:
 
@@ -56,12 +94,12 @@ Verify that the items in the users shopping cart are available in the inventory 
 
 Move the users shopping cart to orders once the order is completed and paid for
 
-### POST
+### POST `/item/move-cart-to-orders`
 
 - request body:
 
   ```
-  { // user id
+  {
     "_id": "65168e24bc0132f",
   }
   ```
