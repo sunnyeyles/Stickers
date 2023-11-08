@@ -1,5 +1,5 @@
-import express, { Express, Request, Response } from 'express'
-import { User, Item } from '../../models/model'
+import { Request, Response } from 'express'
+import { User } from '../../models/model'
 
 export const getUserCart = async (req: Request, res: Response) => {
   const { email, items, _id } = req.body
