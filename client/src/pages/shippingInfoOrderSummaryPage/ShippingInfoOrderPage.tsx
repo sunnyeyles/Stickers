@@ -1,36 +1,31 @@
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { Grid, Box } from '@mantine/core'
 import { OrderSummaryCard } from '../../components/orderSummaryCard/OrderSummaryCard'
 import { ShippingInfoForm } from '../../components/form/shippingInfoForm/ShippingInfoForm'
 import { ConfirmAddressDetails } from '../../components/confirmAddressDetails/ConfirmAddressDetails'
-import { useGetUserByIdQuery } from '../../app/features/users/usersApiSlice'
-import { updateUserAddress } from '../../app/features/users/userSlice'
-import { useUser } from '../../hooks/hooks'
+import { useUserDetails, useUser } from '../../hooks/hooks'
 import { useDispatch } from 'react-redux'
+import { updateUserAddress } from '../../app/features/users/userSlice'
 
 export const ShippingInfoOrderPage = () => {
   const [addressExists, setAddressExists] = useState<boolean>()
 
-  const dispatch = useDispatch()
-  const [user] = useUser()
-  // const userDetails = useGetUserByIdQuery(user._id)
-  // console.log(userDetails)
+  const [user] = useUserDetails()
+  console.log('user:', user)
 
   useEffect(() => {
-    // dispatch(updateUserAddress(newAddress))
-
     // check for address on initial render, depending on if the user has an address, it will render either the ShippingInfoForm or the ConfirmAddresDetails
-    user && user.hasOwnProperty('address')
+    user && user.user.hasOwnProperty('address')
       ? setAddressExists(true)
       : setAddressExists(false)
-  }, [])
+  }, [user])
   // when this is called it will set the addressExists state to false, this will render the ShippingInfoForm
   const handleAddressChange = () => {
     setAddressExists(false)
   }
   // this will be triggered when the user submits the form in the ShippingInfoForm, this will set the addressExists state to true in turn rendering the ConfirmAddressInfo component
   const handleAddessUpdated = (hasChanged: boolean) => {
-    // dispatch(updateUserAddress(userDetails))
     setAddressExists(hasChanged)
   }
 
@@ -41,13 +36,13 @@ export const ShippingInfoOrderPage = () => {
           <ShippingInfoForm onAddressUpdate={handleAddessUpdated} />
         ) : (
           <ConfirmAddressDetails
-            firstName={user.address.firstName}
-            lastName={user.address.lastName}
-            streetName={user.address.streetName}
-            houseNumber={user.address.houseNumber}
-            postCode={user.address.postCode}
-            city={user.address.city}
-            country={user.address.country}
+            firstName={user.user.address.firstName}
+            lastName={user.user.address.lastName}
+            streetName={user.user.address.streetName}
+            houseNumber={user.user.address.houseNumber}
+            postCode={user.user.address.postCode}
+            city={user.user.address.city}
+            country={user.user.address.country}
             handleAddressChange={handleAddressChange}
           />
         )}

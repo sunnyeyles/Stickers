@@ -30,6 +30,15 @@ export interface IUserAddressInfoWithId {
   _id: string
 }
 
+export interface IUserAddressInfo {
+  firstName: string
+  lastName: string
+  streetName: string
+  houseNumber: number | null | undefined
+  postCode: number | null | undefined
+  city: string
+  country: string
+}
 // item types
 export interface IItemResponse {
   _id: string
@@ -45,17 +54,6 @@ export interface IItemResponse {
   updatedAt: string
 }
 
-export interface IUserAddressInfo {
-  firstName: string
-  lastName: string
-  streetName: string
-  houseNumber: number | null | undefined
-  postCode: number | null | undefined
-  city: string
-  country: string
-}
-
-// cart types
 export interface CartItem extends IItemResponse {
   quantity: number
   restItems?: number
