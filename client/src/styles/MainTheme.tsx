@@ -16,7 +16,7 @@ export const MainTheme = ({ children }: IMainTheme) => {
       inherit
       theme={{
         fontFamily: 'Noto Sans',
-        colorScheme: 'dark',
+        colorScheme: 'light',
         primaryColor: 'orange',
 
         colors: {

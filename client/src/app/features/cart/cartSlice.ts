@@ -2,36 +2,40 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { CartItem, IItemResponse } from '../../api/types'
 import { RootState } from '../../store'
 
+export type CartState = {
+    cartItems : CartItem[]
+}
+
 const cartSlice = createSlice({
     name: 'cart',
-    initialState: [] as CartItem[],
+    initialState: {cartItems: []} as CartState,
     reducers: {
         addItemToCart: (state, action: PayloadAction<{ addedItem: IItemResponse, selectedAmount: number }>) => {
             const { addedItem, selectedAmount } = action.payload
             // parse the string to a number
             const quantity: number = selectedAmount
             // we need to check if item is already in the cart
-            const itemIndex = state.findIndex(item => item._id === addedItem._id)
+            const itemIndex = state.cartItems.findIndex(item => item._id === addedItem._id)
             //if item exists, add the selected amount
             if (itemIndex !== -1) {
-                state[itemIndex].quantity += quantity
+                state.cartItems[itemIndex].quantity += quantity
             } else {
-                state.push({ ...action.payload.addedItem, quantity: quantity })
+                state.cartItems.push({ ...action.payload.addedItem, quantity: quantity })
             }
         },
         removeItemFromCart: (state, action: PayloadAction<string>) => {
-            const itemIndex = state.findIndex(item => item._id === action.payload)
+            const itemIndex = state.cartItems.findIndex(item => item._id === action.payload)
             if (itemIndex !== -1) {
-                state.splice(itemIndex)
+                state.cartItems.splice(itemIndex)
             }
         },
         changeQuantityItemFromCart: (state, action: PayloadAction<{ addedItem: IItemResponse, amount: number }>) => {
             const { addedItem, amount } = action.payload
-            const itemIndex = state.findIndex(item => item._id === addedItem._id)
+            const itemIndex = state.cartItems.findIndex(item => item._id === addedItem._id)
             if (itemIndex !== -1) {
-                state[itemIndex].quantity = amount
+                state.cartItems[itemIndex].quantity = amount
             } else {
-                state.push({ ...action.payload.addedItem, quantity: amount })
+                state.cartItems.push({ ...action.payload.addedItem, quantity: amount })
             }
         }
     },
@@ -43,10 +47,10 @@ export const {
     changeQuantityItemFromCart
 } = cartSlice.actions
 
-export const getCartItems = (state: RootState) => state.cart
+export const getCartItems = (state: RootState) => state.cart.cartItems
 // we loop trough all cart products and multiply the amount with price
 export const getTotalPrice = (state: RootState) => {
-    const totalPrice = state.cart.reduce((acc, next) => {
+    const totalPrice = state.cart.cartItems.reduce((acc, next) => {
         const itemPrice = parseFloat(next.itemPrice);
         const itemTotal = next.quantity * itemPrice;
         return acc + itemTotal
@@ -54,6 +58,11 @@ export const getTotalPrice = (state: RootState) => {
     return totalPrice.toFixed(2)
 }
 
-export const getTotalAmountOfItems = (state: RootState) => state.cart.reduce((acc, next) => acc += (next.quantity), 0)
+export const getTotalAmountOfItems = (state: RootState) => {
+    const totalAmountOfItems = state.cart.cartItems.reduce((acc, next) => {
+        return acc += (next.quantity)
+    }, 0)
+    return totalAmountOfItems
+}
 
 export default cartSlice.reducer

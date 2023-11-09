@@ -9,5 +9,6 @@ export const envConfig = {
   dbUsername: process.env.DB_USERNAME,
   dbPassword: process.env.DB_PASSWORD,
   imagePath: '/uploads',
-  developmentServer: 'http://localhost:3000'
+  developmentServer: 'http://localhost:3000',
+  clientUrl: 'http://localhost:5173'
 }

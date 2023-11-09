@@ -7,7 +7,8 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 // dispatch, when you want to change something in the app
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useUser = () => {
-  const user = useAppSelector((state) => state.auth.user)
+  const user = useAppSelector((state) => state.auth)
+  //console.log("user from HOOK: ", user)
   //!! make sure your resulting value is either true or false, not undefined or [] or {}.
   //For example, you're passing the resulting value to something that expects a boolean and nothing else.
   //This is how you coerce to a boolean type.

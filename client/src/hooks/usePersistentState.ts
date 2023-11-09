@@ -21,7 +21,7 @@ export const usePersistentState = (): [boolean, Dispatch<SetStateAction<boolean>
   // update local storage when value changes
   useEffect(() => {
     localStorage.setItem("persist", JSON.stringify(value));
-    console.log("persist", value)
+    //console.log("persist", value)
   }, [value])
 
   return [value, setValue]
