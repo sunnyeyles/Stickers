@@ -22,7 +22,6 @@ export const userSlice = createSlice({
       state.user = user
       state.token = accessToken
       state.isAuthenticated = true
-      console.log('User state', user)
     },
     updateUserAddress: (state, action) => {
       return {
