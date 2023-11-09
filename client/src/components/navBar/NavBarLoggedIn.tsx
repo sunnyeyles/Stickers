@@ -5,6 +5,7 @@ import {
   Avatar,
   ActionIcon,
   Text,
+  Button,
 } from '@mantine/core'
 import { navBarStyles } from './nav_bar_styles'
 import { IconLogout } from '@tabler/icons-react'

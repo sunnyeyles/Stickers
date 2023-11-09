@@ -13,7 +13,6 @@ export function MainNavBar() {
   const [userAuth] = useUser()
 
   const UserButtons = () => {
-
     if (userAuth?.isAuthenticated === false) {
       return <NavBarLoggedOut />
     } else {
