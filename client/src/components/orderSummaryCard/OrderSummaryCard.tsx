@@ -1,13 +1,13 @@
 import { Card, Button, Box } from '@mantine/core'
 import { ShoppingTableItem } from '../shoppingTableItem/ShoppingTableItem'
 import { getCartItems } from '../../app/features/cart/cartSlice'
-import { useAppSelector, useUser } from '../../hooks/hooks'
+import { useAppSelector, useUserDetails} from '../../hooks/hooks'
 import { useStripeCheckoutMutation } from '../../app/features/placeOrder/placeOrderApi'
 
 export function OrderSummaryCard() {
 
   const cartItems = useAppSelector(getCartItems)
-  const [user, loading] = useUser()
+  const [user] = useUserDetails()
   const token = useAppSelector((state) => state.auth.token)
 
   const [stripeCheckout, { isLoading, isSuccess }] = useStripeCheckoutMutation()
@@ -17,7 +17,7 @@ export function OrderSummaryCard() {
 
   const handlePayment = async () => {
     console.log("cartItems", cartItems)
-    await stripeCheckout({userId: user._id, token: token!, shoppingCart: cartItems})
+    await stripeCheckout({userId: user.user._id, token: token!, shoppingCart: cartItems})
   }
 
   return (

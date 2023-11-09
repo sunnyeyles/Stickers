@@ -69,7 +69,7 @@ export const userAuth = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry match refreshToken
     })
 
-    //we sending back accessToken containing userId and email
+    //we sending back accessToken and user
     res.json({ accessToken , user })
   } catch (error) {
     console.error('Error during authentication:', error)

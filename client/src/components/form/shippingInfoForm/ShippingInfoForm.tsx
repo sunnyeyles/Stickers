@@ -45,7 +45,7 @@ export function ShippingInfoForm({ onAddressUpdate }: IAddressProps) {
   // current user signed in
   const [user] = useUserDetails()
   // extract the users id for use when form is submitted
-  const userId = user.user._id
+  const userId = user.user?._id
 
   const [setAddressData] = useUpdateUserAddressMutation()
 

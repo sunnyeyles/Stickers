@@ -15,7 +15,7 @@ export const uploadApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          console.log('image data: ', data)
+          //console.log('image data: ', data)
           dispatch(uploadImage(data))
         } catch (err) {
           console.log(err)

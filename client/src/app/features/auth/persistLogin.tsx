@@ -25,7 +25,7 @@ export const PersistLogin = () => {
         if (effectRan.current === true || process.env.NODE_ENV !== 'development') { // React 18 Strict Mode only works in development
 
             const verifyRefreshToken = async () => {
-                console.log('verifying refresh token')
+                //console.log('verifying refresh token')
                 try {
                     await refresh()
                     //we got data and Credentials got set

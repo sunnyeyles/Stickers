@@ -1,11 +1,16 @@
 // user types
 export interface IUser {
   _id: string
+  userName: string
   email: string
   password?: string
-  profileImage: string | null
+  shoppingCart: object
+  orders: object
+  terms: boolean
+  profileImage: string
   address?: object
 }
+
 export interface IUserAddressInfo {
   firstName: string
   lastName: string
@@ -15,16 +20,17 @@ export interface IUserAddressInfo {
   city: string
   country: string
 }
+
 export interface IUserAddressInfoWithId {
   _id: string
   address: IUserAddressInfo
 }
+
 export interface IUserAddressInfoWithId {
   _id: string
 }
 
 // item types
-
 export interface IItemResponse {
   _id: string
   itemName: string
@@ -49,11 +55,12 @@ export interface IUserAddressInfo {
   country: string
 }
 
+// cart types
 export interface CartItem extends IItemResponse {
   quantity: number
   restItems?: number
 }
 
-export interface IPlacedOrderData extends IUserAddressInfo {}
+export interface IPlacedOrderData extends IUserAddressInfo { }
 
-export interface IShippingInfoFormData {}
+export interface IShippingInfoFormData { }

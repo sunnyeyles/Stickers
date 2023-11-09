@@ -1,12 +1,12 @@
 import { Avatar, Button, Grid, Text, rem } from '@mantine/core'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { object, z } from 'zod'
 import { useUploadMutation } from '../../app/features/upload/uploadApiSlice'
-import { useAppDispatch, useAppSelector, useUser } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector, useUserDetails } from '../../hooks/hooks'
 import { FileInput } from "../../components/form/custom_input_fields/fileInput/FileInput"
-import { selectProfileImage, uploadImage } from '../../app/features/upload/uploadSlice'
+import { selectProfileImage, updateProfileImage } from '../../app/features/users/userSlice'
 import { uploadProfileImageStyles } from './upload_profile_image_styles'
 
 const imageUploadSchema = object({
@@ -17,15 +17,11 @@ export type UploadImageType = z.infer<typeof imageUploadSchema>;
 
 export function UploadProfileImage() {
     const { classes } = uploadProfileImageStyles()
-    const [user, loading] = useUser()
-    const [profileImage, setProfileImage] = useState<string | null>(user.profileImage)
+    const [userDetails] = useUserDetails()
+    //initialize state with image from user state
     const profileImg: any = useAppSelector(selectProfileImage)
+    const [profileImage, setProfileImage] = useState(profileImg?.profileImage)
     const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        setProfileImage(profileImg.profileImagePath)
-        dispatch(uploadImage(profileImg))
-    }, [profileImg]);
 
     const {
         control,
@@ -42,9 +38,12 @@ export function UploadProfileImage() {
     const onSubmit: SubmitHandler<UploadImageType> = async (values: any) => {
         const formData = new FormData()
         formData.append('profileImage', values.profileImage);
-        values.userEmail = user.email
+        values.userEmail = userDetails.user?.email
         formData.append('userEmail', values.userEmail)
-        await upload(formData)
+        const user = await upload(formData)
+        const { data }: any = user
+        setProfileImage(data.profileImagePath)
+        dispatch(updateProfileImage(data))
     }
 
     return (

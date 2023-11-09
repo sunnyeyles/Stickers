@@ -15,37 +15,42 @@ import { navBarStyles } from "./nav_bar_styles";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
-import { useAppDispatch, useAppSelector, useUser } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector, useUser, useUserDetails } from '../../hooks/hooks'
 import { IconShoppingCartFilled } from '@tabler/icons-react'
 import { IHeaderMiddleProps } from './main_nav_bar_types'
 import { DogHappy } from '../../assets/DogHappy'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice';
-import { selectProfileImage, uploadImage } from '../../app/features/upload/uploadSlice';
+import { selectProfileImage } from '../../app/features/users/userSlice';
+import { unsetUser } from '../../app/features/users/userSlice';
 
 export function MainNavBar({ links }: IHeaderMiddleProps) {
   const [opened, { toggle }] = useDisclosure(false)
   const [active, setActive] = useState(links[0].link)
   const { classes } = navBarStyles()
   const navigate = useNavigate()
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   const totalAmount = useAppSelector(getTotalAmountOfItems)
-  const [user] = useUser()
+  const [userAuth] = useUser()
+  const [userDetails] = useUserDetails()
   const [logout, { isLoading, isSuccess }] = useSendLogoutMutation()
-  //shows profile img
-  const [profileImage, setProfileImage] = useState<string | null>(user?.profileImage)
+  //initialize state with image from user state
   const profileImg: any = useAppSelector(selectProfileImage)
+  const [profileImage, setProfileImage] = useState(profileImg?.profileImage)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    setProfileImage(profileImg.profileImagePath)
-    dispatch(uploadImage(profileImg))
+    setProfileImage(profileImg?.profileImagePath)
     if (isSuccess) navigate('/')
   }, [isSuccess, navigate])
 
   if (isLoading) return <p>Logging Out...</p>
 
+  const logOut = async () => {
+    await logout({})
+    dispatch(unsetUser())
+  }
+
   const UserButtons = () => {
-    if (isAuthenticated === false) {
+    if (userAuth?.isAuthenticated === false) {
       return (
         <Group>
           <Link to="/cart">
@@ -78,12 +83,15 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
             </Link>
             {totalAmount > 0 ? <Text className={classes.itemAmount}>{totalAmount}</Text> : null}
             <Link to="/order-summary">
-              <Button>CLICK FOR ORDER SUMMARY</Button>
+              <div>
+                CLICK FOR ORDER SUMMARY
+              </div>
             </Link>
             <Menu.Target>
-              {user?.profileImage !== "" || user?.profileImage !== null
-                ? <Avatar className={classes.avatar} src={profileImage} radius="xl" />
-                : <Avatar radius="xl">{user?.email.substring(0, 1)}</Avatar>
+
+              {userDetails.user?.profileImage !== "" || userDetails.user?.profileImage !== null
+                ? <Avatar className={classes.avatar} src={profileImg?.profileImage} radius="xl" />
+                : <Avatar radius="xl">{userDetails.user?.email.substring(0, 1)}</Avatar>
               }
             </Menu.Target>
 
@@ -93,11 +101,10 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
                   <IconSettings style={{ width: rem(14), height: rem(14) }} />
                   Settings
                 </Link>
-                <Menu.Item></Menu.Item>
               </Menu.Item>
             </Menu.Dropdown>
             <ActionIcon aria-label="Logout Icon">
-              <IconLogout onClick={logout} />
+              <IconLogout onClick={logOut} />
             </ActionIcon>
             <ActionIcon>{/* <LightDarkToggleButton /> */}</ActionIcon>
           </Menu>

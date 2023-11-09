@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { RootState } from '../../store'
 
 export type UploadState = {
   email: string | null
@@ -18,7 +17,5 @@ export const uploadSlice = createSlice({
 })
 
 export const { uploadImage } = uploadSlice.actions
-
-export const selectProfileImage = (state: RootState) => state.upload.imagePath
 
 export default uploadSlice.reducer
