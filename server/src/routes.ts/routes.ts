@@ -17,12 +17,17 @@ import { moveCartToOrders } from '../controllers/item_controllers/move_user_shop
 import passport from 'passport'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
+import { createCheckoutSession } from '../controllers/item_controllers/create_stripe_checkout'
 import { updateUserAddress } from '../controllers/user_controllers/update_user_address'
 import { getUserByEmail } from '../controllers/user_controllers/get_user_by_email'
 
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
+router.get('/user/get-user-by-id/:userId', getUserById)
+router.post('/user/create-user', createNewUser) //register
+router.post('/user/authenticate-user', userAuth) //login
+router.get('/user/refresh-token', refreshToken)
 router.post('/user/user-log-out', userLogOut)
 router.post('/user/create-user', createNewUser)
 router.post('/user/authenticate-user', userAuth)
@@ -54,6 +59,7 @@ router.get('/item/get-specific-item/:itemId', getSpecificItem)
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
 router.post('/item/move-cart-to-orders', moveCartToOrders)
+router.post('/item/create-checkout-session', createCheckoutSession)
 
 // google Authentication Routes
 // initialize Google authentication

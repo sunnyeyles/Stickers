@@ -2,7 +2,7 @@ import { ActionIcon, Anchor, Badge, Button, Flex, Grid, Group, Stack, Modal, Num
 import { ArrowBack } from "../../components/backToArrow/ArrowBack"
 import { cartStyles } from "./cart_styles"
 import { IconX } from '@tabler/icons-react'
-import { useAppSelector, useUser } from "../../hooks/hooks"
+import { useAppSelector, useUserDetails } from "../../hooks/hooks"
 import { changeQuantityItemFromCart, getCartItems, getTotalPrice, removeItemFromCart } from "../../app/features/cart/cartSlice"
 import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom'
 export const Cart = () => {
     const dispatch = useDispatch()
     const { classes } = cartStyles()
-    const [user, loading] = useUser()
+    const [user] = useUserDetails()
     const [itemAmount, setItemAmount] = useState<number>(0)
     const [maxAmountOfItems, setMaxAmountOfItems] = useState<number>(0)
     const cartItems = useAppSelector(getCartItems)
@@ -44,14 +44,14 @@ export const Cart = () => {
             ...item,
             numOfItems: item.quantity,
         }))
-        if (user?._id !== undefined) {
+        if (user.user?._id !== undefined) {
             if (cartItems.length === 0) {
                 notifications.show({
                     title: 'Sorry',
                     message: 'Your cart is empty'
                 })
             } else {
-                await verifyCheckout({ userId: user._id, shoppingCart: modifiedCartItems })
+                await verifyCheckout({ userId: user.user._id, shoppingCart: modifiedCartItems })
                 navigate('/order-summary')
             }
         } else {

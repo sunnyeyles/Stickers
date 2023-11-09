@@ -17,6 +17,15 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
         data: arg,
       }),
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          console.log("image from userApiSlice ", data)
+          //dispatch(setProfileImage({ data }))
+        } catch (err) {
+          console.log(err)
+        }
+      }
     }),
     getUserAddress: builder.query<IUserAddressInfo, { id: string }>({
       query: (arg) => ({

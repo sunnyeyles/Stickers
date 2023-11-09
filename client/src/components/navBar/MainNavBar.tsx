@@ -1,10 +1,8 @@
-import { useEffect } from 'react'
-import { Header, Group, Burger, Button, Box, List } from '@mantine/core'
+import { Header, Group, Burger, Button, Box, List} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { navBarStyles } from './nav_bar_styles'
-import { Link, useNavigate } from 'react-router-dom'
-import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
-import { useAppSelector } from '../../hooks/hooks'
+import { Link } from 'react-router-dom'
+import { useUser } from '../../hooks/hooks'
 import { DogHappy } from '../../assets/DogHappy'
 import { NavBarLoggedOut } from './NavBarLoggedOut'
 import { NavBarLoggedIn } from './NavBarLoggedIn'
@@ -12,23 +10,10 @@ import { NavBarLoggedIn } from './NavBarLoggedIn'
 export function MainNavBar() {
   const [opened, { toggle }] = useDisclosure(false)
   const { classes } = navBarStyles()
-  const navigate = useNavigate()
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
-  //  TO DO  show profile image from user
-  //const profileImage = useAppSelector(state => state.auth.user?.profileImage)
-  //const userId = useAppSelector(state => state.auth.user?._id) as string
-  //const { data } = useGetUserByIdMutation(userId)
-
-  const [logout, { isLoading, isSuccess }] = useSendLogoutMutation()
-
-  useEffect(() => {
-    if (isSuccess) navigate('/')
-  }, [isSuccess, navigate])
-
-  if (isLoading) return <p>Logging Out...</p>
+  const [userAuth] = useUser()
 
   const UserButtons = () => {
-    if (isAuthenticated === false) {
+    if (userAuth?.isAuthenticated === false) {
       return <NavBarLoggedOut />
     } else {
       return <NavBarLoggedIn />

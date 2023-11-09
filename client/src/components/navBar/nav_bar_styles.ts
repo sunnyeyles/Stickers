@@ -45,5 +45,8 @@ export const navBarStyles = createStyles((theme) => ({
     color: 'white',
     fontWeight: 'bold',
     fontSize: '14px',
+  },
+  avatar:{
+    border: `1px solid ${theme.colors.orange[5]}`
   }
 }))

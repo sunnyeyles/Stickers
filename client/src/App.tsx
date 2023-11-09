@@ -50,22 +50,16 @@ export default function App() {
             {/* public */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/item/:id" element={<Item />} />
-            <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
-            <Route path="/cart" element={<Cart/>} />
-            <Route path="/confirmation" element={<PaymentConfirmation />} />
-            
-            {/* private */}
             <Route element={<PersistLogin />}>
-              <Route
-                path="/profile"
-                element={(
-                  <PrivateWrapper>
-                    <Profile />
-                  </PrivateWrapper>
-                )}
-              />
+              <Route path="/products" element={<Products />} />
+              <Route path="/item/:id" element={<Item />} />
+              <Route path="/cart" element={<Cart />} />
+
+              {/* private */}
+
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
+              <Route path="/confirmation" element={<PaymentConfirmation />} />
 
             </Route>
 

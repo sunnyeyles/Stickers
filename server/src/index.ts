@@ -44,6 +44,9 @@ app.use(
     secret: 'secret-key',
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      secure: true, // Set to true for HTTPS
+    },
   })
 )
 

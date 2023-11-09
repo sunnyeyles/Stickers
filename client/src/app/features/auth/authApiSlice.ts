@@ -6,7 +6,7 @@ import { apiSlice } from '../../api/apiSlice'
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<IUser, FormSchemaType>({
-      query: (credentials) => ({
+      query: (credentials: any) => ({
         url: '/user/authenticate-user',
         method: 'POST',
         body: { ...credentials },
@@ -41,8 +41,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled
           //console.log("accessToken from refresh endpoint ", data)
-          const { accessToken } = data
-          dispatch(setCredentials({ accessToken }))
+          dispatch(setCredentials({ data }))
         } catch (err) {
           console.log(err)
         }
