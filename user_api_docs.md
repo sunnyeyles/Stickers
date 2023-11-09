@@ -1,8 +1,8 @@
 # user api docs
 
-## post
+## post requests
 
-### create new user
+### Create New User
 
 #### POST `/create-user`
 
@@ -36,7 +36,23 @@ Authenticate user with, a jwt will be sent back to the client.
 }
 ```
 
-## get
+### User Logout
+
+Logs the user out of their account and clears the users auth cookie
+
+#### POST `/user/user-log-out`
+
+Authenticate user with, a jwt will be sent back to the client.
+
+- request body:
+
+```
+{
+  "message": "Cookie cleared - User logged out"
+}
+```
+
+## get requests
 
 ### authenticate user with google
 
@@ -83,14 +99,112 @@ process.env.GOOGLE_CLIENT_SECRET
 
 ```
 
-## put
+### Get User by Id
 
-#### PUT `/user/change-user-password`
+Retrieve a user's information by their id
 
-Change users password.
+#### GET `/user/get-user-by-id`
+
+Authenticate user with, a jwt will be sent back to the client.
 
 - request body:
 
 ```
-{_id: "sdafiu23hu4i72183y872d", password: "pasword123", newPassword: "newpass123}
+{
+  "_id": "asdfsd7687adsf3y4g43f4ds"
+}
+```
+
+- response body:
+
+```
+{
+  "_id": "653bec8ac89832077",
+  "userName": "Kamren",
+  "email": "Elinore.Ritchie61@gmail.com",
+  "password": "$2b$10$dHc3tHDflU2OyLF6e",
+  "shoppingCart": [
+  ],
+  "orders": [],
+  "terms": true,
+  "profileImage": "http://localhost:3000/uploads/1699374834371-duck_lady_walking.png",
+  "createdAt": "2023-03-06T15:46:34.458Z",
+  "updatedAt": "2023-03-06T15:47:14.420Z",
+  "__v": 42,
+  "address": {
+    "firstName": "Maja",
+    "lastName": "Maah",
+    "streetName": "Mah Street",
+    "houseNumber": 3,
+    "postCode": 1234,
+    "city": "Berlin",
+    "country": "Germany"
+  }
+}
+
+```
+
+### Get User by Email
+
+gets the users details by their email
+
+#### POST `/user/get-user-by-email`
+
+- request body:
+
+```
+{
+  "email": "dieter123@gmail.com"
+}
+```
+
+- response body:
+
+```
+{
+  same response like above, just the users details
+}
+```
+
+## put requests
+
+#### PUT `/user/change-user-password`
+
+Change Users Password.
+
+- request body:
+
+```
+
+{\_id: "sdafiu23hu4i72183y872d", password: "password123", newPassword: "newpass123"}
+
+```
+
+### Update Users Address
+
+Updates the users password if it exists or creates one if they haven't yet given one
+
+#### PUT `/user/update-user-address`
+
+- request body:
+
+```
+
+{\_id: "asdfsdfds8h43h3f4h84husid"}
+
+```
+
+- response body
+
+```
+{
+  "firstName": "Dieter",
+  "lastName": "Bohlen",
+  "streetName": "fake street",
+  "houseNumber": 8,
+  "postCode": 13357,
+  "city": "Berlin",
+  "country": "Germany"
+}
+
 ```

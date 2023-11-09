@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import express, { Express, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
+import { Request, Response } from 'express'
 import { User } from '../../models/model'
 import bcrypt from 'bcrypt'
 import { envConfig } from '../../config/env_config'
@@ -47,24 +47,24 @@ export const userAuth = async (req: Request, res: Response) => {
       //google auth
       //clientSecret,
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "7min" },
+      { expiresIn: '7min' }
     )
 
-    console.log("accessToken", accessToken)
+    console.log('accessToken', accessToken)
 
     // create refreshToken
     const refreshToken = jwt.sign(
       payloadToken,
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: "15min"
+        expiresIn: '15min',
       }
     )
-    console.log("refreshToken", refreshToken)
+    console.log('refreshToken', refreshToken)
 
     // create secure cookie with refreshToken
     res.cookie('jwt', refreshToken, {
-      httpOnly: true, // accessible only by web server 
+      httpOnly: true, // accessible only by web server
       secure: true, //https
       maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry match refreshToken
     })
@@ -78,5 +78,3 @@ export const userAuth = async (req: Request, res: Response) => {
       .json({ success: false, message: 'Internal server error' })
   }
 }
-
-

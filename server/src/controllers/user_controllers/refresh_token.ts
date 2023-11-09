@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
-import express, { Express, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
+import { Request, Response } from 'express'
 import { User } from '../../models/model'
 import dotenv from 'dotenv'
-import jwt_decode from "jwt-decode";
-import { ITokenData } from '../../types';
+import jwt_decode from 'jwt-decode'
+import { ITokenData } from '../../types'
 
 dotenv.config()
 
@@ -41,13 +41,13 @@ export const refreshToken = async (req: Request, res: Response) => {
         }
       },
       `${process.env.ACCESS_TOKEN_SECRET}`,
-      { expiresIn: "7min" }
+      { expiresIn: '7min' }
     )
 
     res.json({ accessToken, user })
 
   } catch (error) {
-    console.error("Error refresh Token:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error('Error refresh Token:', error)
+    res.status(500).json({ error: 'Internal server error' })
   }
 }

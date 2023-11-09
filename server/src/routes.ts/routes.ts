@@ -1,9 +1,5 @@
 import express, { Router } from 'express'
 import { Request, Response } from 'express'
-import {
-  getUserDetailsByEmail,
-  getAllUsers,
-} from '../controllers/user_controllers/users_controller'
 import { getUserById } from '../controllers/user_controllers/get_user_by_id'
 import { createNewUser } from '../controllers/user_controllers/create_user'
 import { changeUserPassword } from '../controllers/user_controllers/change_password'
@@ -13,20 +9,19 @@ import { userLogOut } from '../controllers/user_controllers/user_log_out'
 import { getItemsInCategory } from '../controllers/item_controllers/get_items_in_category'
 import { getSpecificItem } from '../controllers/item_controllers/get_specific_item'
 import { getReducedItems } from '../controllers/item_controllers/get_reduced_items'
-import {
-  getAllItemsFromDb,
-  getItemsByCategory,
-} from '../controllers/user_controllers/items_controller'
+import { getAllItemsFromDb } from '../controllers/item_controllers/get_all_items_from_db'
+import { getItemsByCategory } from '../controllers/item_controllers/get_items_by_category'
 import { verifyCheckout } from '../controllers/item_controllers/verify_checkout'
 import { handleGoogleAuthCallback } from '../middleware/google_auth'
 import { moveCartToOrders } from '../controllers/item_controllers/move_user_shopping_cart_to_orders'
 import passport from 'passport'
-import { verifyJWT } from '../middleware/verifyJWT'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
 import { updateAddress } from '../controllers/user_controllers/updateAddress'
 import { createCheckoutSession } from '../controllers/item_controllers/create_stripe_checkout'
 import { updateUserAddress } from '../controllers/user_controllers/update_user_address'
+import { getUserByEmail } from '../controllers/user_controllers/get_user_by_email'
+
 const router: Router = express.Router()
 
 //// USER ENDPOINTS
@@ -35,12 +30,15 @@ router.post('/user/create-user', createNewUser) //register
 router.post('/user/authenticate-user', userAuth) //login
 router.get('/user/refresh-token', refreshToken)
 router.post('/user/user-log-out', userLogOut)
-router.put('/user/change-user-password', changeUserPassword)
-router.get('/user/get-user-details-by-email', getUserDetailsByEmail)
-router.get('/user/get-all-users', getAllUsers)
+router.post('/user/create-user', createNewUser)
+router.post('/user/authenticate-user', userAuth)
+router.get('/user/get-user-by-id', getUserById)
+router.get('/user/get-user-by-email', getUserByEmail)
+router.get('/user/refresh-token', refreshToken)
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
-router.put('/user/update-address', updateAddress)
+router.put('/user/change-user-password', changeUserPassword)
 router.put('/user/update-user-address', updateUserAddress)
+
 //// ITEM ENDPOINTS
 router.get('/item/get-all-items', getAllItemsFromDb)
 router.get('/item/get-items-by-category', getItemsByCategory)

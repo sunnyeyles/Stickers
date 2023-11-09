@@ -1,5 +1,5 @@
 import { User } from './../../models/model'
-import express, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 export const getUserById = async (req: Request, res: Response) => {
   const { _id } = req.body

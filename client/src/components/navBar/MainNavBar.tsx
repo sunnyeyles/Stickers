@@ -1,31 +1,21 @@
 import { useEffect, useState } from 'react'
-import {
-  Header,
-  Group,
-  Burger,
-  Button,
-  Menu,
-  Avatar,
-  ActionIcon,
-  rem,
-  Text
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { navBarStyles } from "./nav_bar_styles";
-import { IconLogout, IconSettings } from "@tabler/icons-react";
+import { Header, Group, Burger, Button, Box, List, ActionIcon } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { navBarStyles } from './nav_bar_styles'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
 import { useAppDispatch, useAppSelector, useUser, useUserDetails } from '../../hooks/hooks'
 import { IconShoppingCartFilled } from '@tabler/icons-react'
 import { IHeaderMiddleProps } from './main_nav_bar_types'
-import { DogHappy } from '../../assets/DogHappy'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice';
 import { selectProfileImage } from '../../app/features/users/userSlice';
 import { unsetUser } from '../../app/features/users/userSlice';
+import { DogHappy } from '../../assets/DogHappy'
+import { NavBarLoggedOut } from './NavBarLoggedOut'
+import { NavBarLoggedIn } from './NavBarLoggedIn'
 
-export function MainNavBar({ links }: IHeaderMiddleProps) {
+export function MainNavBar() {
   const [opened, { toggle }] = useDisclosure(false)
-  const [active, setActive] = useState(links[0].link)
   const { classes } = navBarStyles()
   const navigate = useNavigate()
   const totalAmount = useAppSelector(getTotalAmountOfItems)
@@ -110,29 +100,53 @@ export function MainNavBar({ links }: IHeaderMiddleProps) {
           </Menu>
         </Group>
       )
+    if (isAuthenticated === false) {
+      return <NavBarLoggedOut />
+    } else {
+      return <NavBarLoggedIn />
     }
   }
 
   return (
-    <Header height={56} m="1rem" className={classes.inner}>
-      <Burger
-        opened={opened}
-        onClick={toggle}
-        size="sm"
-        className={classes.burger}
-      ></Burger>
-      {/* <Image height="3.5rem" width="3.5rem" src={dogHappy} alt="Happy Dog" /> */}
-      <Link to="/">
-        <DogHappy />
-      </Link>
-      <Group className={classes.items} spacing={5}>
-        <Group>
-          <Button variant="outline" component={Link} to="/products">Products</Button>
-          <Button variant="outline" component={Link} to="/contact">Contact</Button>
-          <Button variant="outline" component={Link} to="/about">About</Button>
+    <Box>
+      <Header height={56} m="1rem" className={classes.inner}>
+        <Burger
+          opened={opened}
+          onClick={toggle}
+          size="sm"
+          className={classes.burger}
+        />
+        <Link to="/">
+          <DogHappy />
+        </Link>
+        <Group className={classes.items} spacing={5}>
+          <Group>
+            <Button variant="outline" component={Link} to="/products">
+              Products
+            </Button>
+            <Button variant="outline" component={Link} to="/contact">
+              Contact
+            </Button>
+            <Button variant="outline" component={Link} to="/about">
+              About
+            </Button>
+          </Group>
         </Group>
-      </Group>
-      <UserButtons />
-    </Header>
+        <UserButtons />
+      </Header>
+      {opened ? (
+        <List size="md" withPadding sx={{}}>
+          <Link to="/">
+            <List.Item>Products</List.Item>
+          </Link>
+          <Link to="/">
+            <List.Item>Contacts</List.Item>
+          </Link>
+          <Link to="/">
+            <List.Item>About</List.Item>
+          </Link>
+        </List>
+      ) : null}
+    </Box>
   )
 }
