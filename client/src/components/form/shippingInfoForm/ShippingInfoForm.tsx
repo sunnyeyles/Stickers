@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Title, Button, Grid, Box, TextInput, NumberInput } from '@mantine/core'
 import { useDispatch } from 'react-redux'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
@@ -9,7 +10,6 @@ import {
 } from '../../../app/features/users/userSlice'
 import { useUserDetails } from '../../../hooks/hooks'
 import { useUpdateUserAddressMutation } from '../../../app/features/users/usersApiSlice'
-import { useGetUserByIdQuery } from '../../../app/features/users/usersApiSlice'
 import {
   IUserAddressInfo,
   IUserAddressInfoWithId,
@@ -41,16 +41,14 @@ interface IAddressProps {
 }
 
 export function ShippingInfoForm({ onAddressUpdate }: IAddressProps) {
-  const dispatch = useDispatch()
-  // current user signed in
   const [user] = useUserDetails()
-  // extract the users id for use when form is submitted
+  const dispatch = useDispatch()
+
   const userId = user.user._id
 
   const [setAddressData] = useUpdateUserAddressMutation()
 
   const setAddressHasChanged = (hasChanged: boolean) => {
-    // setAddressData()
     onAddressUpdate(hasChanged)
   }
 
@@ -77,10 +75,8 @@ export function ShippingInfoForm({ onAddressUpdate }: IAddressProps) {
         _id: userId,
         address: addressInfo,
       }
-      const newAddress = await setAddressData(payload)
-
-      dispatch(updateUserAddress(newAddress))
-      console.log('Address Updated')
+      setAddressData(payload)
+      dispatch(updateUserAddress(payload.address))
       setAddressHasChanged(true)
     } catch (error) {
       console.error('Error updating address:', error)

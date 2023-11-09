@@ -1,7 +1,5 @@
-import { Box, Text, Anchor, Card, Group, Button } from '@mantine/core'
-import { useGetAllUsersQuery } from '../../app/features/users/usersApiSlice'
+import { Box, Text, Anchor, Card, Group } from '@mantine/core'
 import { IConfirmAddressProps } from './confirm_address_details_types'
-import { useUser } from '../../hooks/hooks'
 export const ConfirmAddressDetails = ({
   firstName,
   lastName,
@@ -12,14 +10,6 @@ export const ConfirmAddressDetails = ({
   country,
   handleAddressChange,
 }: IConfirmAddressProps) => {
-  // gotta talk about this
-  const { data: allUsersData } = useGetAllUsersQuery()
-  const data = allUsersData
-  const [user] = useUser()
-  // console.log(user)
-  const handleGetAllUserData = () => {
-    console.log(data)
-  }
   return (
     <Box>
       <Card shadow="sm" padding="lg" radius="md">
@@ -45,7 +35,6 @@ export const ConfirmAddressDetails = ({
           >
             Not your Address? Update Address details
           </Anchor>
-          <Button onClick={handleGetAllUserData}>Get Address Data</Button>
         </Group>
       </Card>
     </Box>
