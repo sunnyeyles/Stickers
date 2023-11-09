@@ -7,7 +7,6 @@ import { IconShoppingCartFilled } from '@tabler/icons-react'
 
 export function NavBarLoggedOut() {
   const totalAmount = useAppSelector(getTotalAmountOfItems)
-
   const { classes } = navBarStyles()
 
   return (
@@ -26,7 +25,6 @@ export function NavBarLoggedOut() {
       <Button component={Link} to="/register" radius="xl">
         Signup
       </Button>
-
       {/* <Link to="/order-summary">
         <Button>CLICK FOR ORDER SUMMARY</Button>
       </Link> */}

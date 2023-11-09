@@ -17,7 +17,6 @@ import { moveCartToOrders } from '../controllers/item_controllers/move_user_shop
 import passport from 'passport'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
-import { updateAddress } from '../controllers/user_controllers/updateAddress'
 import { createCheckoutSession } from '../controllers/item_controllers/create_stripe_checkout'
 import { updateUserAddress } from '../controllers/user_controllers/update_user_address'
 import { getUserByEmail } from '../controllers/user_controllers/get_user_by_email'
