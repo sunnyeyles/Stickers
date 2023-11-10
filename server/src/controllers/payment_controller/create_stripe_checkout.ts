@@ -8,7 +8,7 @@ const stripeKey = new Stripe(process.env.STRIPE_KEY)
 dotenv.config()
 
 export const createCheckoutSession = async (req: Request, res: Response) => {
-  const { userId, token, shoppingCart } = req.body
+  const { userId, shoppingCart } = req.body
   console.log("shopping cart", shoppingCart)
 
   const customer = await stripeKey.customers.create({

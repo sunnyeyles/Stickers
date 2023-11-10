@@ -12,11 +12,11 @@ export const placeOrderApi = apiSlice.injectEndpoints({
         }
       }
     }),
-    stripeCheckout: builder.mutation<any, {userId: string, token: string, shoppingCart: IItemResponse[]}>({
+    stripeCheckout: builder.mutation<any, {userId: string, shoppingCart: IItemResponse[]}>({
       query: (data) => {
         //console.log("DATA STRIPE CHECKOUT:", data) 
         return {
-          url: '/item/create-checkout-session',
+          url: '/payment/create-checkout-session',
           method: 'POST',
           body: data
         }

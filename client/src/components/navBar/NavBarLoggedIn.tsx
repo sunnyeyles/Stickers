@@ -4,15 +4,14 @@ import {
   Menu,
   Avatar,
   ActionIcon,
-  Text,
-  Button,
+  Text
 } from '@mantine/core'
 import { navBarStyles } from './nav_bar_styles'
 import { IconLogout } from '@tabler/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
 import { useAppDispatch, useAppSelector, useUserDetails } from '../../hooks/hooks'
-import { IconShoppingCartFilled } from '@tabler/icons-react'
+import { IconShoppingCartFilled, IconSettings } from '@tabler/icons-react'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice'
 import { selectProfileImage, unsetUser } from '../../app/features/users/userSlice'
 
@@ -41,7 +40,7 @@ export function NavBarLoggedIn() {
 
   return (
     <Group>
-      <Menu shadow="md" width={200}>
+      <Menu shadow="md" width={150}>
         <Link to="/cart">
           <ActionIcon aria-label="Shopping Cart Icon">
             <IconShoppingCartFilled />
@@ -57,6 +56,13 @@ export function NavBarLoggedIn() {
             : <Avatar radius="xl">{userDetails.user?.email.substring(0, 1)}</Avatar>
           }
         </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item color='orange' icon={<IconSettings></IconSettings>}>
+            <Link to="/profile">
+              <Text size="md">Settings</Text>
+            </Link>
+          </Menu.Item>
+        </Menu.Dropdown>
         <ActionIcon aria-label="Logout Icon">
           <IconLogout onClick={logOut} />
         </ActionIcon>

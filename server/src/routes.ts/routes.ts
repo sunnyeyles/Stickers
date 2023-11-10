@@ -60,17 +60,19 @@ router.get('/item/get-specific-item/:itemId', getSpecificItem)
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
 router.post('/item/move-cart-to-orders', moveCartToOrders)
+
+//// PAYMENT ENDPOINTS
 //stripe for credit card payment
-router.post('/item/create-checkout-session', createCheckoutSession)
+router.post('/payment/create-checkout-session', createCheckoutSession)
 //router.post('/stripe/webhook', express.raw({type: 'application/json'}))
-router.post('/stripe/webhook', async (req: Request, res: Response) => {
+router.post('/payment/stripe/webhook', async (req: Request, res: Response) => {
   try {
-    await triggerStripeWebhook(req, res);
+    await triggerStripeWebhook(req, res)
   } catch (err) {
-    console.error('Error in handling Stripe webhook:', err.message);
-    res.status(500).send('Internal Server Error');
+    console.error('Error in handling Stripe webhook:', err.message)
+    res.status(500).send('Internal Server Error')
   }
-});
+})
 
 // google Authentication Routes
 // initialize Google authentication

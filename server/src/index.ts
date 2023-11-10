@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // Middleware to parse raw JSON payloads for this specific route
-app.use('/stripe/webhook', express.raw({ type: 'application/json' }));
+app.use('/payment/stripe/webhook', express.raw({ type: 'application/json' }));
 
 
 

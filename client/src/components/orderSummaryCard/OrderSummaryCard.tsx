@@ -8,7 +8,6 @@ export function OrderSummaryCard() {
 
   const cartItems = useAppSelector(getCartItems)
   const [user] = useUserDetails()
-  const token = useAppSelector((state) => state.auth.token)
 
   const [stripeCheckout, { isLoading, isSuccess }] = useStripeCheckoutMutation()
     if (isLoading) {
@@ -16,8 +15,7 @@ export function OrderSummaryCard() {
     }
 
   const handlePayment = async () => {
-    console.log("cartItems", cartItems)
-    await stripeCheckout({userId: user.user._id, token: token!, shoppingCart: cartItems})
+    await stripeCheckout({userId: user.user._id, shoppingCart: cartItems})
   }
 
   return (
