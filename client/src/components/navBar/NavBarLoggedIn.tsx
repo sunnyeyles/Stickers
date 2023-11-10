@@ -50,9 +50,6 @@ export function NavBarLoggedIn() {
         {totalAmount > 0 ? (
           <Text className={classes.itemAmount}>{totalAmount}</Text>
         ) : null}
-        <Link to="/order-summary">
-          <Button>CLICK FOR ORDER SUMMARY</Button>
-        </Link>
         <Menu.Target>
           {/* <Avatar radius="xl" /> */}
           {userDetails.user?.profileImage !== "" || userDetails.user?.profileImage !== null

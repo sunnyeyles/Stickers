@@ -14,7 +14,7 @@ export const placeOrderApi = apiSlice.injectEndpoints({
     }),
     stripeCheckout: builder.mutation<any, {userId: string, token: string, shoppingCart: IItemResponse[]}>({
       query: (data) => {
-        console.log("DATA STRIPE CHECKOUT:", data) 
+        //console.log("DATA STRIPE CHECKOUT:", data) 
         return {
           url: '/item/create-checkout-session',
           method: 'POST',
@@ -24,7 +24,7 @@ export const placeOrderApi = apiSlice.injectEndpoints({
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          console.log("stripe response Data ", data)
+          //console.log("stripe response Data ", data)
           const { url } = data
           if(url){
             window.location.href = url

@@ -31,7 +31,7 @@ export const refreshToken = async (req: Request, res: Response) => {
 
     if (!user) return res.status(401).json({ message: 'Unauthorized' })
 
-    console.log("foundUser", user)
+    //console.log("foundUser", user)
     //issue a new accessToken if the refreshToken is valid
     const accessToken = jwt.sign(
       {

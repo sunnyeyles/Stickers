@@ -4,13 +4,21 @@ import Stripe from "stripe"
 import dotenv from 'dotenv'
 import { envConfig } from '../../config/env_config'
 
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripeKey = new Stripe(process.env.STRIPE_KEY)
 dotenv.config()
 
 export const createCheckoutSession = async (req: Request, res: Response) => {
-  console.log("req.body from server", req.body)
   const { userId, token, shoppingCart } = req.body
-  const line_items = shoppingCart.map((item : IItem) => {
+  console.log("shopping cart", shoppingCart)
+
+  const customer = await stripeKey.customers.create({
+    metadata: {
+      userId: userId.toString(),
+      cart: JSON.stringify(shoppingCart)
+    }
+  })
+
+  const line_items = shoppingCart.map((item: IItem) => {
     return {
       price_data: {
         currency: 'eur',
@@ -27,8 +35,9 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       quantity: item.numOfItems,
     }
   })
-  const session = await stripe.checkout.sessions.create({
+  const session = await stripeKey.checkout.sessions.create({
     line_items,
+    customer: customer.id,
     mode: 'payment',
     //if payment is successful, where should the payment checkout takes us to
     success_url: `${envConfig.clientUrl}/confirmation`,
@@ -36,3 +45,4 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
   })
   res.send({ url: session.url })
 }
+

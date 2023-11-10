@@ -20,28 +20,13 @@ const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
   return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
-const navBarItems = [
-  {
-    link: '#women',
-    label: 'Women',
-  },
-  {
-    link: '#men',
-    label: 'Men',
-  },
-  {
-    link: '#kids',
-    label: 'Kids',
-  },
-]
-
 export default function App() {
 
   return (
     <MainTheme>
       <Container size="xl">
         <Router>
-          <MainNavBar links={navBarItems} />
+          <MainNavBar />
           <Routes>
 
             {/* landing page */}
@@ -51,6 +36,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route element={<PersistLogin />}>
+
               <Route path="/products" element={<Products />} />
               <Route path="/item/:id" element={<Item />} />
               <Route path="/cart" element={<Cart />} />

@@ -17,7 +17,8 @@ import { moveCartToOrders } from '../controllers/item_controllers/move_user_shop
 import passport from 'passport'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
-import { createCheckoutSession } from '../controllers/item_controllers/create_stripe_checkout'
+import { createCheckoutSession, } from '../controllers/payment_controller/create_stripe_checkout'
+import { triggerStripeWebhook } from '../controllers/payment_controller/trigger_stripe_webhook'
 import { updateUserAddress } from '../controllers/user_controllers/update_user_address'
 import { getUserByEmail } from '../controllers/user_controllers/get_user_by_email'
 
@@ -59,7 +60,17 @@ router.get('/item/get-specific-item/:itemId', getSpecificItem)
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
 router.post('/item/move-cart-to-orders', moveCartToOrders)
+//stripe for credit card payment
 router.post('/item/create-checkout-session', createCheckoutSession)
+//router.post('/stripe/webhook', express.raw({type: 'application/json'}))
+router.post('/stripe/webhook', async (req: Request, res: Response) => {
+  try {
+    await triggerStripeWebhook(req, res);
+  } catch (err) {
+    console.error('Error in handling Stripe webhook:', err.message);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 // google Authentication Routes
 // initialize Google authentication

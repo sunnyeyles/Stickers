@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
-
 
 export type User = {
   user: any | null
@@ -24,7 +23,7 @@ export const userSlice = createSlice({
       state.token = accessToken
       state.isAuthenticated = true
     },
-    updateUserAddress: (state, action) => {
+    updateUserAddress: (state, action:PayloadAction) => {
       return {
         ...state,
         user: {
