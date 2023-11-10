@@ -64,10 +64,11 @@ export default function App() {
               {/* private */}
 
               <Route path="/profile" element={<Profile />} />
-              <Route path="/order-summary" element={<ShippingInfoOrderPage />} />
+              <Route
+                path="/order-summary"
+                element={<ShippingInfoOrderPage />}
+              />
               <Route path="/confirmation" element={<PaymentConfirmation />} />
-              
-
             </Route>
           </Routes>
 

@@ -1,8 +1,9 @@
-import { useRef } from 'react'
 import { Button, TextInput, Box, Grid, Title, Textarea } from '@mantine/core'
+import { notifications } from '@mantine/notifications'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { handleSendMail } from './handle_send_mail'
 
 const contactSchema = z.object({
   name: z.string().min(2, { message: 'Name is Required' }).toLowerCase(),
@@ -11,7 +12,7 @@ const contactSchema = z.object({
   message: z.string().min(2, { message: 'Message is Required' }).toLowerCase(),
 })
 
-type ContactFormType = z.infer<typeof contactSchema>
+export type ContactFormType = z.infer<typeof contactSchema>
 
 export function ContactForm() {
   const {
@@ -31,7 +32,19 @@ export function ContactForm() {
   const onSubmit: SubmitHandler<ContactFormType> = async (formData) => {
     try {
       console.log(formData)
+      handleSendMail(formData)
+      // show success pop up when email is sent
+      notifications.show({
+        title: 'Message Sent!',
+        message: 'We will try to get back to you as soon as possible 😊',
+      })
     } catch (error) {
+      // show error pop up if it fails
+      notifications.show({
+        title: 'Whoops',
+        message: 'Something went wrong, please try again later 😞',
+        color: 'red',
+      })
       console.error('Error:', error)
     }
   }
