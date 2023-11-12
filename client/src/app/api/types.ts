@@ -26,10 +26,6 @@ export interface IUserAddressInfoWithId {
   address: IUserAddressInfo
 }
 
-export interface IUserAddressInfoWithId {
-  _id: string
-}
-
 export interface IUserAddressInfo {
   firstName: string
   lastName: string
@@ -38,6 +34,10 @@ export interface IUserAddressInfo {
   postCode: number | null | undefined
   city: string
   country: string
+}
+export interface IUpdateUserAddressAction {
+  type: string
+  payload: IUserAddressInfoWithId
 }
 // item types
 export interface IItemResponse {
@@ -59,6 +59,6 @@ export interface CartItem extends IItemResponse {
   restItems?: number
 }
 
-export interface IPlacedOrderData extends IUserAddressInfo { }
+export interface IPlacedOrderData extends IUserAddressInfo {}
 
-export interface IShippingInfoFormData { }
+export interface IShippingInfoFormData {}
