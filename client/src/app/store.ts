@@ -7,28 +7,35 @@ import itemReducer from './features/items/itemSlice'
 import cartReducer from './features/cart/cartSlice'
 import uploadReducer from './features/upload/uploadSlice'
 import userAddressInfoReducer from './features/users/userAddressInfoSlice'
-import { persistStore, persistReducer, PERSIST, FLUSH, PAUSE, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
+import {
+  persistStore,
+  persistReducer,
+  PERSIST,
+  FLUSH,
+  PAUSE,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'redux-persist'
 // You can choose different storage options
 import storageSession from 'redux-persist/lib/storage/session'
 
 const persistConfig = {
   key: 'root',
   storage: storageSession,
-};
+}
 
-const persistedReducer = persistReducer(persistConfig, cartReducer);
-
+const persistedReducer = persistReducer(persistConfig, cartReducer)
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     cart: persistedReducer,
     auth: authReducer,
-    item: itemReducer,
     userState: userReducer,
-    //cart: cartReducer,
+    item: itemReducer,
     userAddress: userAddressInfoReducer,
-    upload: uploadReducer
+    upload: uploadReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
@@ -37,7 +44,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(apiSlice.middleware),
-    
 })
 
 setupListeners(store.dispatch)
@@ -45,4 +51,4 @@ setupListeners(store.dispatch)
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store)

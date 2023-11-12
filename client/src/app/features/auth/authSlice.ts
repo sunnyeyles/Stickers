@@ -22,13 +22,14 @@ export const authSlice = createSlice({
       state.user = action.payload.user
       state.token = action.payload.accessToken
       state.isAuthenticated = true
+      console.log('USER AUTH SET!!', state.token)
     },
     logOut: (state) => {
       state.user = null
       state.token = null
       state.isAuthenticated = false
     },
-    signUp: (state, action) => { },
+    signUp: (state, action) => {},
   },
 })
 
@@ -38,4 +39,5 @@ export default authSlice.reducer
 
 export const selectCurrentUser = (state: RootState) => state.auth.user
 export const selectCurrentToken = (state: RootState) => state.auth.token
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated
+export const selectIsAuthenticated = (state: RootState) =>
+  state.auth.isAuthenticated
