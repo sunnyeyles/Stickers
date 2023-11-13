@@ -46,7 +46,7 @@ export default function App() {
     <MainTheme>
       <Container size="xl">
         <Router>
-          <MainNavBar links={navBarItems} />
+          <MainNavBar />
           <Routes>
             {/* landing page */}
             <Route path="/" element={<Dashboard />} />

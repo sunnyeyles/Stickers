@@ -1,16 +1,31 @@
-import { Header, Group, Burger, Button, Box, List} from '@mantine/core'
+import { ReactNode } from 'react'
+import {
+  Header,
+  Group,
+  Burger,
+  Button,
+  Box,
+  List,
+  Text,
+  TextInput,
+  useMantineColorScheme,
+  UnstyledButton,
+  ThemeIcon,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { navBarStyles } from './nav_bar_styles'
 import { Link } from 'react-router-dom'
-import { useUser } from '../../hooks/hooks'
+import { useUser, useUserDetails } from '../../hooks/hooks'
 import { DogHappy } from '../../assets/DogHappy'
 import { NavBarLoggedOut } from './NavBarLoggedOut'
 import { NavBarLoggedIn } from './NavBarLoggedIn'
+import { IconSearch, IconArrowNarrowRight } from '@tabler/icons-react'
 
 export function MainNavBar() {
   const [opened, { toggle }] = useDisclosure(false)
   const { classes } = navBarStyles()
-  const [userAuth] = useUser()
+  // const [userAuth] = useUser()
+  const [userAuth] = useUserDetails()
 
   const UserButtons = () => {
     if (userAuth?.isAuthenticated === false) {
@@ -44,19 +59,41 @@ export function MainNavBar() {
               About
             </Button>
           </Group>
+          <TextInput
+            aria-label="Search Items"
+            icon={<IconSearch size="1rem" />}
+          />
         </Group>
         <UserButtons />
       </Header>
       {opened ? (
-        <List size="md" withPadding sx={{}}>
+        <List className={classes.dropDownMenu}>
+          <TextInput
+            aria-label="Search Items"
+            icon={<IconSearch size="1rem" />}
+          />
+          {userAuth.isAuthenticated ? (
+            <Link to="/profile">
+              <UnstyledButton>
+                <Text size="xl">Account</Text>
+              </UnstyledButton>
+            </Link>
+          ) : null}
+          <Link to="/contact">
+            <UnstyledButton>
+              <Text size="xl">Contact</Text>
+            </UnstyledButton>
+          </Link>
+
           <Link to="/">
-            <List.Item>Products</List.Item>
+            <UnstyledButton>
+              <Text size="xl">Collection</Text>
+            </UnstyledButton>
           </Link>
           <Link to="/">
-            <List.Item>Contacts</List.Item>
-          </Link>
-          <Link to="/">
-            <List.Item>About</List.Item>
+            <UnstyledButton>
+              <Text size="xl">About</Text>
+            </UnstyledButton>
           </Link>
         </List>
       ) : null}
