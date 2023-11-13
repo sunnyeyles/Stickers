@@ -5,16 +5,25 @@ import {
   Avatar,
   ActionIcon,
   Text,
-  Button,
+  useMantineColorScheme,
 } from '@mantine/core'
+
 import { navBarStyles } from './nav_bar_styles'
-import { IconLogout } from '@tabler/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
-import { useAppDispatch, useAppSelector, useUserDetails } from '../../hooks/hooks'
+import { IconLogout, IconMoonStars, IconSun } from '@tabler/icons-react'
+
+import {
+  useAppDispatch,
+  useAppSelector,
+  useUserDetails,
+} from '../../hooks/hooks'
 import { IconShoppingCartFilled } from '@tabler/icons-react'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice'
-import { selectProfileImage, unsetUser } from '../../app/features/users/userSlice'
+import {
+  selectProfileImage,
+  unsetUser,
+} from '../../app/features/users/userSlice'
 
 export function NavBarLoggedIn() {
   const { classes } = navBarStyles()
@@ -26,6 +35,8 @@ export function NavBarLoggedIn() {
   const profileImg: any = useAppSelector(selectProfileImage)
   const [profileImage, setProfileImage] = useState(profileImg?.profileImage)
   const dispatch = useAppDispatch()
+  // change color scheme om toggle
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
 
   useEffect(() => {
     setProfileImage(profileImg?.profileImagePath)
@@ -52,19 +63,34 @@ export function NavBarLoggedIn() {
         ) : null}
 
         <Menu.Target>
-          {/* <Avatar radius="xl" /> */}
-          {userDetails.user?.profileImage !== "" || userDetails.user?.profileImage !== null
-            ? <Avatar className={classes.avatar} src={profileImg?.profileImage} radius="xl" />
-            : <Avatar radius="xl">{userDetails.user?.email.substring(0, 1)}</Avatar>
-          }
+          {userDetails.user?.profileImage !== '' ||
+          userDetails.user?.profileImage !== null ? (
+            <Avatar
+              className={classes.avatar}
+              src={profileImg?.profileImage}
+              radius="xl"
+            />
+          ) : (
+            <Avatar radius="xl">
+              {userDetails.user?.email.substring(0, 1)}
+            </Avatar>
+          )}
         </Menu.Target>
+        <ActionIcon
+          variant="outline"
+          onClick={() => toggleColorScheme()}
+          title="Toggle color scheme"
+        >
+          {colorScheme === 'dark' ? (
+            <IconSun size={18} />
+          ) : (
+            <IconMoonStars size={18} />
+          )}
+        </ActionIcon>
         <ActionIcon aria-label="Logout Icon">
           <IconLogout onClick={logOut} />
         </ActionIcon>
-        <ActionIcon>{/* <LightDarkToggleButton /> */}</ActionIcon>
       </Menu>
     </Group>
   )
 }
-
-

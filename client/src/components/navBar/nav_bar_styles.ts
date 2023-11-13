@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core'
+import { createStyles, UnstyledButton, rem } from '@mantine/core'
 
 export const navBarStyles = createStyles((theme) => ({
   inner: {
@@ -46,7 +46,18 @@ export const navBarStyles = createStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '14px',
   },
-  avatar:{
-    border: `1px solid ${theme.colors.orange[5]}`
-  }
+  avatar: {
+    border: `1px solid ${theme.colors.orange[5]}`,
+  },
+  dropDownMenu: {
+    width: '80vw',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2rem',
+    padding: '2rem',
+    marginBottom: '1rem',
+    borderBottom: `${rem(0.1)} solid ${
+      theme.colorScheme === 'dark' ? theme.colors.gray[2] : theme.colors.dark[5]
+    }`,
+  },
 }))
