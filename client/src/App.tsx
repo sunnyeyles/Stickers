@@ -26,21 +26,6 @@ const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
   return isAuthenticated ? children : <Navigate to="/" replace />
 }
 
-const navBarItems = [
-  {
-    link: '#women',
-    label: 'Women',
-  },
-  {
-    link: '#men',
-    label: 'Men',
-  },
-  {
-    link: '#kids',
-    label: 'Kids',
-  },
-]
-
 export default function App() {
   return (
     <MainTheme>

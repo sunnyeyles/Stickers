@@ -80,7 +80,9 @@ export const MainTheme = ({ children }: IMainTheme) => {
           headings: {
             fontFamily: 'Roboto, sans-serif',
             sizes: {
-              h1: { fontSize: '2rem' },
+              h1: { fontSize: '3rem' },
+              h2: { fontSize: '2.5rem' },
+              h3: { fontSize: '1rem' },
             },
           },
           breakpoints: {
