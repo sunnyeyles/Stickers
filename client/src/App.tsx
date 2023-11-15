@@ -21,10 +21,10 @@ import { Cart } from './pages/cart/Cart'
 import { PaymentConfirmation } from './pages/paymentConfirmation/PaymentConfirmation'
 import { Contact } from './pages/contact/Contact'
 
-const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
-  return isAuthenticated ? children : <Navigate to="/" replace />
-}
+// const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
+//   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
+//   return isAuthenticated ? children : <Navigate to="/" replace />
+// }
 
 export default function App() {
   return (
@@ -41,6 +41,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
 
             <Route element={<PersistLogin />}>
+              <Route path="/" element={<Dashboard />} />
               <Route path="/products" element={<Products />} />
               <Route path="/item/:id" element={<Item />} />
               <Route path="/cart" element={<Cart />} />

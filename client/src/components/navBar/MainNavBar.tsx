@@ -8,12 +8,16 @@ import { NavBarLoggedOut } from './NavBarLoggedOut'
 import { NavBarLoggedIn } from './NavBarLoggedIn'
 import { IconSearch } from '@tabler/icons-react'
 import { HamburgerDropdown } from './HamburgerDropdown'
+import { useUser } from '../../hooks/hooks'
 
 export function MainNavBar() {
   const { classes } = navBarStyles()
-  const [userAuth] = useUserDetails()
+  // const [userAuth] = useUserDetails()
+  const [userAuth] = useUser()
 
   const UserButtons = () => {
+    // gets set to false whenever page is refreshed
+    // need persisted state for isAutheneticated
     if (userAuth?.isAuthenticated === false) {
       return <NavBarLoggedOut />
     } else {
