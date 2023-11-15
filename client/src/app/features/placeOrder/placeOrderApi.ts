@@ -1,5 +1,5 @@
 import { apiSlice } from '../../api/apiSlice'
-import { IItemResponse } from '../../api/types'
+import { IItemResponse, IOrderResponse } from '../../api/types'
 
 export const placeOrderApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -34,11 +34,20 @@ export const placeOrderApi = apiSlice.injectEndpoints({
 
         }
       }
+    }),
+    getAllOrdersFromUser: builder.query<IOrderResponse[], string>({
+      query: (userId) => `/payment/get-all-orders-from-user/${userId}`
     })
   }),
 })
 
 export const { 
   useVerifyCheckoutMutation,
-  useStripeCheckoutMutation
+  useStripeCheckoutMutation,
+  useGetAllOrdersFromUserQuery
 }  = placeOrderApi
+
+
+// getItemById: builder.query<IItemResponse, string>({
+//   query: (id) => `/item/get-specific-item/${id}`,
+// })

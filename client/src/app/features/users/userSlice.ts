@@ -47,7 +47,7 @@ export const userSlice = createSlice({
 
 export const { setUser, updateUserAddress, unsetUser, updateProfileImage } = userSlice.actions
 
-export const selectProfileImage = (state: RootState) => {
+export const selectUser = (state: RootState) => {
   return state.userState.user
 }
 

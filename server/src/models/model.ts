@@ -11,6 +11,7 @@ const itemSchema: Schema = new Schema(
     numOfItems: { type: Number, required: true },
     reduced: { type: Boolean, required: false },
     percentageReduced: { type: Number, required: true },
+    quantity: { type: Number, required: false }
   },
   { timestamps: true }
 )
@@ -45,6 +46,7 @@ const orderSchema: Schema = new Schema(
         numOfItems: { type: Number },
         reduced: { type: Boolean },
         percentageReduced: { type: Number },
+        quantity: { type: Number }
       }
     ],
     subtotal: { type: Number, required: true },

@@ -44,8 +44,10 @@ export const triggerStripeWebhook = async (req: Request, res: Response) => {
         stripeKey.customers
             .retrieve(data.customer)
             .then((customer) => {
+                console.log("customer", customer)
+                console.log("data", data)
                 createOrder(customer, data)
-            }).catch(err => console.log(err.message))
+            }).catch(err => console.log("ERROR", err.message))
     }
     // Return a 200 response to acknowledge receipt of the event
     res.send().end()

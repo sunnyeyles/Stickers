@@ -21,6 +21,7 @@ import { createCheckoutSession, } from '../controllers/payment_controller/create
 import { triggerStripeWebhook } from '../controllers/payment_controller/trigger_stripe_webhook'
 import { updateUserAddress } from '../controllers/user_controllers/update_user_address'
 import { getUserByEmail } from '../controllers/user_controllers/get_user_by_email'
+import { getAllOrdersFromUser } from '../controllers/payment_controller/get_all_orders_from_user'
 
 const router: Router = express.Router()
 
@@ -61,7 +62,7 @@ router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
 router.post('/item/move-cart-to-orders', moveCartToOrders)
 
-//// PAYMENT ENDPOINTS
+//// PAYMENT ENDPOINTS AND ORDERS
 //stripe for credit card payment
 router.post('/payment/create-checkout-session', createCheckoutSession)
 //router.post('/stripe/webhook', express.raw({type: 'application/json'}))
@@ -73,6 +74,7 @@ router.post('/payment/stripe/webhook', async (req: Request, res: Response) => {
     res.status(500).send('Internal Server Error')
   }
 })
+router.get('/payment/get-all-orders-from-user/:userId', getAllOrdersFromUser)
 
 // google Authentication Routes
 // initialize Google authentication

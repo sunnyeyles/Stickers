@@ -8,6 +8,7 @@ export function OrderSummaryCard() {
 
   const cartItems = useAppSelector(getCartItems)
   const [user] = useUserDetails()
+  
 
   const [stripeCheckout, { isLoading, isSuccess }] = useStripeCheckoutMutation()
     if (isLoading) {
@@ -16,6 +17,7 @@ export function OrderSummaryCard() {
 
   const handlePayment = async () => {
     await stripeCheckout({userId: user.user._id, shoppingCart: cartItems})
+    // TO DO: empty shopping cart
   }
 
   return (

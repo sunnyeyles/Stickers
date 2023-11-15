@@ -13,7 +13,7 @@ import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
 import { useAppDispatch, useAppSelector, useUserDetails } from '../../hooks/hooks'
 import { IconShoppingCartFilled, IconSettings } from '@tabler/icons-react'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice'
-import { selectProfileImage, unsetUser } from '../../app/features/users/userSlice'
+import { selectUser, unsetUser } from '../../app/features/users/userSlice'
 
 export function NavBarLoggedIn() {
   const { classes } = navBarStyles()
@@ -22,7 +22,7 @@ export function NavBarLoggedIn() {
   const [userDetails] = useUserDetails()
   const [logout, { isLoading, isSuccess }] = useSendLogoutMutation()
   //initialize state with image from user state
-  const profileImg: any = useAppSelector(selectProfileImage)
+  const profileImg: any = useAppSelector(selectUser)
   const [profileImage, setProfileImage] = useState(profileImg?.profileImage)
   const dispatch = useAppDispatch()
 

@@ -43,7 +43,7 @@ interface IAddressProps {
 export function ShippingInfoForm({ onAddressUpdate }: IAddressProps) {
   const [user] = useUserDetails()
   const dispatch = useDispatch()
-  const userId = user.user._id
+  const userId = user.user?._id
   const [setAddressData] = useUpdateUserAddressMutation()
 
   const setAddressHasChanged = (hasChanged: boolean) => {

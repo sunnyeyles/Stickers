@@ -6,7 +6,7 @@ import { object, z } from 'zod'
 import { useUploadMutation } from '../../app/features/upload/uploadApiSlice'
 import { useAppDispatch, useAppSelector, useUserDetails } from '../../hooks/hooks'
 import { FileInput } from "../../components/form/custom_input_fields/fileInput/FileInput"
-import { selectProfileImage, updateProfileImage } from '../../app/features/users/userSlice'
+import { selectUser, updateProfileImage } from '../../app/features/users/userSlice'
 import { uploadProfileImageStyles } from './upload_profile_image_styles'
 
 const imageUploadSchema = object({
@@ -19,7 +19,7 @@ export function UploadProfileImage() {
     const { classes } = uploadProfileImageStyles()
     const [userDetails] = useUserDetails()
     //initialize state with image from user state
-    const profileImg: any = useAppSelector(selectProfileImage)
+    const profileImg: any = useAppSelector(selectUser)
     const [profileImage, setProfileImage] = useState(profileImg?.profileImage)
     const dispatch = useAppDispatch()
 

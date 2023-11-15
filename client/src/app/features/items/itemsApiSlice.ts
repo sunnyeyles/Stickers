@@ -19,7 +19,6 @@ export const itmesApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getItemById: builder.query<IItemResponse, string>({
             query: (id) => `/item/get-specific-item/${id}`,
         })
