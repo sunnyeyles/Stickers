@@ -1,5 +1,5 @@
 import { apiSlice } from '../../api/apiSlice'
-import { IItemResponse } from '../../api/types'
+import { IItemResponse, IOrderResponse } from '../../api/types'
 
 export const placeOrderApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,11 +12,11 @@ export const placeOrderApi = apiSlice.injectEndpoints({
         }
       }
     }),
-    stripeCheckout: builder.mutation<any, {userId: string, token: string, shoppingCart: IItemResponse[]}>({
+    stripeCheckout: builder.mutation<any, {userId: string, shoppingCart: IItemResponse[]}>({
       query: (data) => {
-        console.log("DATA STRIPE CHECKOUT:", data) 
+        //console.log("DATA STRIPE CHECKOUT:", data) 
         return {
-          url: '/item/create-checkout-session',
+          url: '/payment/create-checkout-session',
           method: 'POST',
           body: data
         }
@@ -24,7 +24,7 @@ export const placeOrderApi = apiSlice.injectEndpoints({
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          console.log("stripe response Data ", data)
+          //console.log("stripe response Data ", data)
           const { url } = data
           if(url){
             window.location.href = url
@@ -34,11 +34,20 @@ export const placeOrderApi = apiSlice.injectEndpoints({
 
         }
       }
+    }),
+    getAllOrdersFromUser: builder.query<IOrderResponse[], string>({
+      query: (userId) => `/payment/get-all-orders-from-user/${userId}`
     })
   }),
 })
 
 export const { 
   useVerifyCheckoutMutation,
-  useStripeCheckoutMutation
+  useStripeCheckoutMutation,
+  useGetAllOrdersFromUserQuery
 }  = placeOrderApi
+
+
+// getItemById: builder.query<IItemResponse, string>({
+//   query: (id) => `/item/get-specific-item/${id}`,
+// })

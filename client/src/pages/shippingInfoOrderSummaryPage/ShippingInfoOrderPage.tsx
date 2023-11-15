@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { Grid, Box } from '@mantine/core'
 import { OrderSummaryCard } from '../../components/orderSummaryCard/OrderSummaryCard'
 import { ShippingInfoForm } from '../../components/form/shippingInfoForm/ShippingInfoForm'
 import { ConfirmAddressDetails } from '../../components/confirmAddressDetails/ConfirmAddressDetails'
-import { useUserDetails, useUser } from '../../hooks/hooks'
-import { useDispatch } from 'react-redux'
-import { updateUserAddress } from '../../app/features/users/userSlice'
+import { useUserDetails } from '../../hooks/hooks'
 
 export const ShippingInfoOrderPage = () => {
   const [addressExists, setAddressExists] = useState<boolean>()
 
   const [user] = useUserDetails()
-  console.log('user:', user)
+  //console.log('user:', user)
 
   useEffect(() => {
     // check for address on initial render, depending on if the user has an address, it will render either the ShippingInfoForm or the ConfirmAddresDetails

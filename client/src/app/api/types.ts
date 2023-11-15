@@ -54,11 +54,40 @@ export interface IItemResponse {
   updatedAt: string
 }
 
+//cart type
 export interface CartItem extends IItemResponse {
   quantity: number
   restItems?: number
 }
 
-export interface IPlacedOrderData extends IUserAddressInfo {}
+//order type
+export interface IOrderResponse {
+  _id: string
+  userId: string
+  customerId: string
+  paymentIntentId: string
+  products: CartItem[]
+  subtotal: number
+  total: number
+  shipping: {
+    address: {
+      city: string
+      country: string
+      line1: string
+      line2: string
+      postal_code: string
+      state: string
+    }
+    email: string
+    name: string
+    phone: string
+    tax_exempt: string
+    tax_ids: []
+  }
+  deliveryStatus: string
+  paymentStatus: string
+}
+
+export interface IPlacedOrderData extends IUserAddressInfo { }
 
 export interface IShippingInfoFormData {}

@@ -18,22 +18,26 @@ const port = process.env.PORT || 3001
 
 connectToDatabase()
 
-// dropCollections()
-// seedUsers(2, 2)
-// seedItems(5)
+ //dropCollections()
+ //seedUsers(2, 2)
+ //seedItems(5)
 
 app.use(cors(corsOptions))
 
 app.use(express.json())
-
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
+
+// Middleware to parse raw JSON payloads for this specific route
+app.use('/payment/stripe/webhook', express.raw({ type: 'application/json' }));
+
+
 
 // built in - middleware: Serve static files from the "uploads" directory
 const _dirname = path.resolve()
 //console.log(_dirname)
 app.use('/uploads', express.static(path.join(_dirname, 'uploads')))
 
-app.use(cookieParser())
 
 // Initialize Passport.js
 app.use(passport.initialize())

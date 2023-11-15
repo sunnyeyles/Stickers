@@ -44,3 +44,10 @@ import {LoginForm} from "../components/LoginForm.tsx"
 import axios from 'axios';
 
 ```
+
+
+### stripe payment in local dev environment
+
+- `4242 4242 4242 4242` dummy credit card number
+- `stripe login` to connect with stripe in cmd
+- `stripe listen --forward-to localhost:3000/stripe/webhook` to call the local test endpoint

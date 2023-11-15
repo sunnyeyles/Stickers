@@ -41,7 +41,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
 
             <Route element={<PersistLogin />}>
-              <Route path="/" element={<Dashboard />} />
+              {/* <Route path="/" element={<Dashboard />} /> */}
               <Route path="/products" element={<Products />} />
               <Route path="/item/:id" element={<Item />} />
               <Route path="/cart" element={<Cart />} />

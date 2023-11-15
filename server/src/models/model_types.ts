@@ -30,4 +30,26 @@ export interface IItem extends Document {
   numOfItems: number
   reduced?: boolean
   percentageReduced?: number
+  quantity?: number
 }
+
+export interface IOrder extends Document {
+  _id: mongoose.Types.ObjectId
+  userId: string
+  customerId: string
+  paymentIntentId: string
+  products: IOrderItem
+  subtotal: number
+  shipping: object
+  deliveryStatus: string
+  paymentStatus: string
+}
+
+export interface IOrderItem {
+  itemId: string
+  itemName: string
+  itemPrice: string
+  quantity: number
+}
+
+

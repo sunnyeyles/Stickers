@@ -7,23 +7,14 @@ import {
   Text,
   useMantineColorScheme,
 } from '@mantine/core'
-
 import { navBarStyles } from './nav_bar_styles'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
-import { IconLogout, IconMoonStars, IconSun } from '@tabler/icons-react'
-
-import {
-  useAppDispatch,
-  useAppSelector,
-  useUserDetails,
-} from '../../hooks/hooks'
-import { IconShoppingCartFilled } from '@tabler/icons-react'
+import { useAppDispatch, useAppSelector, useUserDetails } from '../../hooks/hooks'
+import { IconShoppingCartFilled, IconSettings } from '@tabler/icons-react'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice'
-import {
-  selectProfileImage,
-  unsetUser,
-} from '../../app/features/users/userSlice'
+import { selectUser, unsetUser } from '../../app/features/users/userSlice'
+import { IconLogout, IconMoonStars, IconSun } from '@tabler/icons-react'
 
 export function NavBarLoggedIn() {
   const { classes } = navBarStyles()
@@ -32,7 +23,7 @@ export function NavBarLoggedIn() {
   const [userDetails] = useUserDetails()
   const [logout, { isLoading, isSuccess }] = useSendLogoutMutation()
   //initialize state with image from user state
-  const profileImg: any = useAppSelector(selectProfileImage)
+  const profileImg: any = useAppSelector(selectUser)
   const [profileImage, setProfileImage] = useState(profileImg?.profileImage)
   const dispatch = useAppDispatch()
   // change color scheme om toggle
@@ -52,7 +43,7 @@ export function NavBarLoggedIn() {
 
   return (
     <Group>
-      <Menu shadow="md" width={200}>
+      <Menu shadow="md" width={150}>
         <Link to="/cart">
           <ActionIcon aria-label="Shopping Cart Icon">
             <IconShoppingCartFilled />
@@ -76,6 +67,13 @@ export function NavBarLoggedIn() {
             </Avatar>
           )}
         </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item color='orange' icon={<IconSettings></IconSettings>}>
+            <Link to="/profile">
+              <Text size="md">Settings</Text>
+            </Link>
+          </Menu.Item>
+        </Menu.Dropdown>
         <ActionIcon
           variant="outline"
           onClick={() => toggleColorScheme()}
