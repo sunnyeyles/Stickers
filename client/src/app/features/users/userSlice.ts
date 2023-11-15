@@ -1,51 +1,54 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
-
-export type User = {
+import { IUser } from '../../api/types'
+export type UserWithCredentials = {
+  // need to fix this any type and replace it with IUser
   user: any | null
   token: string | null
   isAuthenticated: boolean
   loading?: boolean
 }
-
+// we expect to receive the token back after login
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
     token: null,
     isAuthenticated: false,
-  } as User,
+  } as UserWithCredentials,
   reducers: {
+    // login
     setUser: (state, action) => {
-      //console.log("set user payload: ", action.payload)
-      const { user, accessToken } = action.payload
-      state.user = user
-      state.token = accessToken
+      state.user = action.payload.user
+      state.token = action.payload.accessToken
       state.isAuthenticated = true
+      console.log('USER SET!!!!!', state.token)
     },
-    updateUserAddress: (state, action:PayloadAction) => {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          address: action.payload,
-        },
-      }
-    },
+    // log out
     unsetUser: (state) => {
-      //console.log("unset user payload: ", action.payload)
       state.user = null
       state.token = null
       state.isAuthenticated = false
     },
+    // set or update the users address
+    updateUserAddress: (state, action) => {
+      return {
+        ...state,
+        user: {
+          address: action.payload,
+        },
+      }
+    },
+    // upload profile image
     updateProfileImage: (state, action) => {
       const { profileImagePath } = action.payload
       state.user.profileImage = profileImagePath
-    }
+    },
   },
 })
 
-export const { setUser, updateUserAddress, unsetUser, updateProfileImage } = userSlice.actions
+export const { setUser, updateUserAddress, unsetUser, updateProfileImage } =
+  userSlice.actions
 
 export const selectUser = (state: RootState) => {
   return state.userState.user

@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core'
+import { createStyles, UnstyledButton, rem } from '@mantine/core'
 
 export const navBarStyles = createStyles((theme) => ({
   inner: {
@@ -30,8 +30,6 @@ export const navBarStyles = createStyles((theme) => ({
     },
   },
   burger: {
-    marginRight: theme.spacing.md,
-
     [theme.fn.largerThan('sm')]: {
       display: 'none',
     },
@@ -46,7 +44,20 @@ export const navBarStyles = createStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '14px',
   },
-  avatar:{
-    border: `1px solid ${theme.colors.orange[5]}`
-  }
+  avatar: {
+    border: `1px solid ${theme.colors.orange[5]}`,
+  },
+  hamburgerDropdown: {
+    position: 'fixed',
+    zIndex: 1000,
+    width: '100vw',
+    marginTop: '2rem',
+    marginLeft: '-2rem',
+    padding: '2rem 0rem 2rem 0rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
+    background: 'white',
+    boxShadow: '0px 10px 15px -3px rgba(0,0,0,0.1)',
+  },
 }))

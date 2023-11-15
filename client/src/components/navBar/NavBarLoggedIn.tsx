@@ -4,16 +4,17 @@ import {
   Menu,
   Avatar,
   ActionIcon,
-  Text
+  Text,
+  useMantineColorScheme,
 } from '@mantine/core'
 import { navBarStyles } from './nav_bar_styles'
-import { IconLogout } from '@tabler/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../app/features/auth/authApiSlice'
 import { useAppDispatch, useAppSelector, useUserDetails } from '../../hooks/hooks'
 import { IconShoppingCartFilled, IconSettings } from '@tabler/icons-react'
 import { getTotalAmountOfItems } from '../../app/features/cart/cartSlice'
 import { selectUser, unsetUser } from '../../app/features/users/userSlice'
+import { IconLogout, IconMoonStars, IconSun } from '@tabler/icons-react'
 
 export function NavBarLoggedIn() {
   const { classes } = navBarStyles()
@@ -25,6 +26,8 @@ export function NavBarLoggedIn() {
   const profileImg: any = useAppSelector(selectUser)
   const [profileImage, setProfileImage] = useState(profileImg?.profileImage)
   const dispatch = useAppDispatch()
+  // change color scheme om toggle
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
 
   useEffect(() => {
     setProfileImage(profileImg?.profileImagePath)
@@ -49,12 +52,20 @@ export function NavBarLoggedIn() {
         {totalAmount > 0 ? (
           <Text className={classes.itemAmount}>{totalAmount}</Text>
         ) : null}
+
         <Menu.Target>
-          {/* <Avatar radius="xl" /> */}
-          {userDetails.user?.profileImage !== "" || userDetails.user?.profileImage !== null
-            ? <Avatar className={classes.avatar} src={profileImg?.profileImage} radius="xl" />
-            : <Avatar radius="xl">{userDetails.user?.email.substring(0, 1)}</Avatar>
-          }
+          {userDetails.user?.profileImage !== '' ||
+          userDetails.user?.profileImage !== null ? (
+            <Avatar
+              className={classes.avatar}
+              src={profileImg?.profileImage}
+              radius="xl"
+            />
+          ) : (
+            <Avatar radius="xl">
+              {userDetails.user?.email.substring(0, 1)}
+            </Avatar>
+          )}
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item color='orange' icon={<IconSettings></IconSettings>}>
@@ -63,13 +74,21 @@ export function NavBarLoggedIn() {
             </Link>
           </Menu.Item>
         </Menu.Dropdown>
+        <ActionIcon
+          variant="outline"
+          onClick={() => toggleColorScheme()}
+          title="Toggle color scheme"
+        >
+          {colorScheme === 'dark' ? (
+            <IconSun size={18} />
+          ) : (
+            <IconMoonStars size={18} />
+          )}
+        </ActionIcon>
         <ActionIcon aria-label="Logout Icon">
           <IconLogout onClick={logOut} />
         </ActionIcon>
-        <ActionIcon>{/* <LightDarkToggleButton /> */}</ActionIcon>
       </Menu>
     </Group>
   )
 }
-
-

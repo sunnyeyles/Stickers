@@ -12,7 +12,6 @@ dotenv.config()
 export const refreshToken = async (req: Request, res: Response) => {
   //we expecting a cookie with the request
   const cookies = req.cookies
-  //console.log('cookie jwt ', cookies.jwt)
 
   try {
     if (!cookies?.jwt) {
@@ -20,32 +19,30 @@ export const refreshToken = async (req: Request, res: Response) => {
     }
 
     const refreshToken = cookies.jwt
-    //console.log('refreshToken', refreshToken)
 
-    // than we need to verify this token
+    // then we need to verify this token
     const decoded: ITokenData = jwt_decode(refreshToken)
-    //console.log('decoded token: ', decoded)
 
-    const { _id } = decoded._id;
+    const { _id } = decoded._id
     const user = await User.findOne(_id).exec()
 
     if (!user) return res.status(401).json({ message: 'Unauthorized' })
 
-    //console.log("foundUser", user)
+    //console.log('foundUser', user)
+
     //issue a new accessToken if the refreshToken is valid
     const accessToken = jwt.sign(
       {
-        "UserInfo": {
-          "_id": user._id,
-          "email": user.email
-        }
+        UserInfo: {
+          _id: user._id,
+          email: user.email,
+        },
       },
       `${process.env.ACCESS_TOKEN_SECRET}`,
       { expiresIn: '7min' }
     )
 
     res.json({ accessToken, user })
-
   } catch (error) {
     console.error('Error refresh Token:', error)
     res.status(500).json({ error: 'Internal server error' })
