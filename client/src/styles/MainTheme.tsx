@@ -31,7 +31,7 @@ export const MainTheme = ({ children }: IMainTheme) => {
         theme={{
           fontFamily: 'Noto Sans',
           colorScheme,
-          primaryColor: 'orange',
+          primaryColor: 'green',
 
           colors: {
             orange: [
