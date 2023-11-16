@@ -8,6 +8,7 @@ export function MyOrders() {
   const user: any = useAppSelector(selectUser)
   const { data: orders } = useGetAllOrdersFromUserQuery(user?._id)
   const userAddress = user?.address
+  console.log(orders)
 
   return (
     <>
@@ -33,7 +34,7 @@ export function MyOrders() {
           </Group>
           {order.products.map((product) => (
             <>
-              <Grid justify="flex-start" align="center" key={product._id} mt={60}>
+              <Grid key={product._id} justify="flex-start" align="center" mt={60}>
                 <Grid.Col xs={4}>
                   <img src={product.imagePath} alt="Duck" width="50%" height="auto" />
                 </Grid.Col>
