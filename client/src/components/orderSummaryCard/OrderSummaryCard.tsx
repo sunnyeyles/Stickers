@@ -1,23 +1,30 @@
 import { Card, Button, Box } from '@mantine/core'
 import { ShoppingTableItem } from '../shoppingTableItem/ShoppingTableItem'
 import { getCartItems } from '../../app/features/cart/cartSlice'
-import { useAppSelector, useUserDetails} from '../../hooks/hooks'
+import { useAppSelector } from '../../hooks/hooks'
 import { useStripeCheckoutMutation } from '../../app/features/placeOrder/placeOrderApi'
+import { selectUser } from '../../app/features/users/userSlice'
+import { notifications } from '@mantine/notifications'
 
 export function OrderSummaryCard() {
 
   const cartItems = useAppSelector(getCartItems)
-  const [user] = useUserDetails()
+  const user: any = useAppSelector(selectUser)
   
-
   const [stripeCheckout, { isLoading, isSuccess }] = useStripeCheckoutMutation()
     if (isLoading) {
         return <p>Loading...</p>
     }
 
   const handlePayment = async () => {
-    await stripeCheckout({userId: user.user._id, shoppingCart: cartItems})
-    // TO DO: empty shopping cart
+    if(user.address !== null){
+      await stripeCheckout({userId: user?._id, shoppingCart: cartItems})
+    }else{
+      notifications.show({
+        title: 'Sorry',
+        message: 'Fill out shipping adress form'
+    })
+    }
   }
 
   return (

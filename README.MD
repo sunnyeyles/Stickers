@@ -47,7 +47,12 @@ import axios from 'axios';
 
 
 ### stripe payment in local dev environment
+To test and manage your Stripe integration from command line, install the Stripe CLI: 'https://stripe.com/docs/stripe-cli'
 
-- `4242 4242 4242 4242` dummy credit card number
+Than login and authenticate your Stripe user Account
 - `stripe login` to connect with stripe in cmd
+
+And test your webhook endpoint function 
+To forward events to your local endpoint, run the following command with the the CLI to set up a local listener
 - `stripe listen --forward-to localhost:3000/stripe/webhook` to call the local test endpoint
+- `4242 4242 4242 4242` dummy credit card number
