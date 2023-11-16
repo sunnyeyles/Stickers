@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IOrderResponse } from '../../api/types'
+import { RootState } from '../../store'
 
 export type OrdersState = {
     orders: IOrderResponse[]
@@ -10,7 +11,6 @@ export const placeOrderSlice = createSlice({
     initialState: { orders: [] } as OrdersState,
     reducers: {
         setOrders: (state, action) => {
-            console.log("action payload orders", action.payload)
             state.orders = action.payload
         },
 
@@ -18,5 +18,9 @@ export const placeOrderSlice = createSlice({
 })
 
 export const { setOrders } = placeOrderSlice.actions
+
+export const selectOrders = (state: RootState) => {
+    return state.placeOrder.orders
+  }
 
 export default placeOrderSlice.reducer

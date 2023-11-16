@@ -18,9 +18,9 @@ const links = [
 export function Footer() {
   const { classes } = useStyles()
   const matches = useMediaQuery('(min-width: 56.25em)')
-
+  
   const items = links.map((link) => (
-    <Link to={link.link} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link key={link.link} to={link.link} style={{ textDecoration: 'none', color: 'inherit' }}>
       <Text>{link.label}</Text>
     </Link>
   ))

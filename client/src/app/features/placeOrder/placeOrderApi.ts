@@ -1,5 +1,6 @@
 import { apiSlice } from '../../api/apiSlice'
 import { IItemResponse, IOrderResponse } from '../../api/types'
+import { setOrders } from './placeOrderSlice'
 
 export const placeOrderApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -31,12 +32,19 @@ export const placeOrderApi = apiSlice.injectEndpoints({
           }
         } catch (err) {
           console.log(err)
-
         }
       }
     }),
     getAllOrdersFromUser: builder.query<IOrderResponse[], string>({
-      query: (userId) => `/payment/get-all-orders-from-user/${userId}`
+      query: (userId) => `/payment/get-all-orders-from-user/${userId}`,
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          dispatch(setOrders(data))
+        } catch (err) {
+          console.log(err)
+        }
+      }
     })
   }),
 })

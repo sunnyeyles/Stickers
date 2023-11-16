@@ -8,16 +8,17 @@ export function MyOrders() {
   const user: any = useAppSelector(selectUser)
   const { data: orders } = useGetAllOrdersFromUserQuery(user?._id)
   const userAddress = user?.address
-
+  //console.log("Orders: ",orders)
+  
   if (!orders) {
     return null
   }
   return (
     <>
       <Title mb="lg">My Orders</Title>
-      {orders?.map((order) =>
+      {orders?.map((order:any) =>
       (
-        <Card key={order?._id} mb="lg" shadow="sm" padding="lg" radius="md" withBorder>
+        <Card key={order._id} mb="lg" shadow="sm" padding="lg" radius="md" withBorder>
           <Group>
             <Text size="lg" weight="bold">customer name: </Text>
             <Text>{user.userName}</Text>
@@ -34,7 +35,7 @@ export function MyOrders() {
             <Text size="lg" weight="bold">Payment method: </Text>
             <Text>Credit Card</Text>
           </Group>
-          {order.products.map((product) => (
+          {order.products.map((product:any) => (
             <div key={product._id}>
               <Grid justify="flex-start" align="center" mt={60}>
                 <Grid.Col xs={4}>
