@@ -39,7 +39,7 @@ const cartSlice = createSlice({
         (item) => item._id === action.payload
       )
       if (itemIndex !== -1) {
-        state.cartItems.splice(itemIndex)
+        state.cartItems.splice(itemIndex,1)
       }
     },
     changeQuantityItemFromCart: (
