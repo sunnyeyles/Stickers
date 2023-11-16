@@ -1,9 +1,10 @@
 import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
-import { useRefreshMutation } from './authApiSlice'
 import { usePersistentState } from '../../../hooks/usePersistentState'
 import { useSelector } from 'react-redux'
 import { selectCurrentToken } from './authSlice'
+import { useRefreshMutation } from './authApiSlice'
+
 
 export const PersistLogin = () => {
   const [persist] = usePersistentState()
@@ -12,7 +13,10 @@ export const PersistLogin = () => {
 
   const [trueSuccess, setTrueSuccess] = useState(false)
 
-  const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
+  // const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
+  //   useRefreshMutation()
+
+    const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
     useRefreshMutation()
 
   useEffect(() => {
@@ -29,7 +33,6 @@ export const PersistLogin = () => {
           console.error(err)
         }
       }
-
       if (!token && persist) verifyRefreshToken()
     }
 

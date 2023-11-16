@@ -14,7 +14,7 @@ export function MyOrders() {
       <Title mb="lg">My Orders</Title>
       {orders?.map((order) =>
       (
-        <Card key={order._id} mb="lg" shadow="sm" padding="lg" radius="md" withBorder>
+        <Card key={order?._id} mb="lg" shadow="sm" padding="lg" radius="md" withBorder>
           <Group>
             <Text size="lg" weight="bold">customer name: </Text>
             <Text>{order.shipping.name}</Text>

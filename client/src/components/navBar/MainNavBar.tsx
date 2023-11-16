@@ -2,7 +2,6 @@ import { Header, Group, Button, Box, TextInput } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { navBarStyles } from './nav_bar_styles'
 import { Link } from 'react-router-dom'
-import { useUserDetails } from '../../hooks/hooks'
 import { DogHappy } from '../../assets/DogHappy'
 import { NavBarLoggedOut } from './NavBarLoggedOut'
 import { NavBarLoggedIn } from './NavBarLoggedIn'
@@ -18,7 +17,7 @@ export function MainNavBar() {
   const UserButtons = () => {
     // gets set to false whenever page is refreshed
     // need persisted state for isAutheneticated
-    if (userAuth?.isAuthenticated === false) {
+    if (userAuth?.token === null ||userAuth.token === undefined) {
       return <NavBarLoggedOut />
     } else {
       return <NavBarLoggedIn />
