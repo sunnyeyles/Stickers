@@ -33,8 +33,8 @@ export function MyOrders() {
             <Text>Credit Card</Text>
           </Group>
           {order.products.map((product) => (
-            <>
-              <Grid key={product._id} justify="flex-start" align="center" mt={60}>
+            <div key={product._id}>
+              <Grid justify="flex-start" align="center" mt={60}>
                 <Grid.Col xs={4}>
                   <img src={product.imagePath} alt="Duck" width="50%" height="auto" />
                 </Grid.Col>
@@ -46,7 +46,7 @@ export function MyOrders() {
                   <Text align='right'>{product.itemPrice}</Text>
                 </Grid.Col>
               </Grid>
-            </>
+            </div>
           ))}
           <Divider my="sm" /><Grid mt={20}>
             <Grid.Col sm={8}></Grid.Col>

@@ -29,7 +29,7 @@ export function Profile() {
 
   useEffect(() => {
     // check for address on initial render, depending on if the user has an address, it will render either the ShippingInfoForm or the ConfirmAddresDetails
-    user && user.user.hasOwnProperty('address')
+    user && user.user?.hasOwnProperty('address')
       ? setAddressExists(true)
       : setAddressExists(false)
   }, [user])
