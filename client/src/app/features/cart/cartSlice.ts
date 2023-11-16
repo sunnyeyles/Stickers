@@ -56,10 +56,13 @@ const cartSlice = createSlice({
         state.cartItems.push({ ...action.payload.addedItem, quantity: amount })
       }
     },
+    clearCart: (state) => {
+      state.cartItems = []
+    }
   },
 })
 
-export const { addItemToCart, removeItemFromCart, changeQuantityItemFromCart } =
+export const { addItemToCart, removeItemFromCart, changeQuantityItemFromCart, clearCart } =
   cartSlice.actions
 
 export const getCartItems = (state: RootState) => state.cart.cartItems

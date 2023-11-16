@@ -8,7 +8,6 @@ export function MyOrders() {
   const user: any = useAppSelector(selectUser)
   const { data: orders } = useGetAllOrdersFromUserQuery(user?._id)
   const userAddress = user?.address
-  console.log(orders)
 
   return (
     <>
