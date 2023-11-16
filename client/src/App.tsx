@@ -1,6 +1,7 @@
 import { MainTheme } from './styles/MainTheme'
 import { Login } from '../src/pages/login/Login'
 import { MainNavBar } from './components/navBar/MainNavBar'
+import { About } from './pages/about/About'
 import { Dashboard } from './pages/dashboard/Dashboard'
 import { Register } from './pages/register/Register'
 import { ShippingInfoOrderPage } from './pages/shippingInfoOrderSummaryPage/ShippingInfoOrderPage'
@@ -39,6 +40,7 @@ export default function App() {
             {/* public */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/about" element={<About />} />
 
             <Route element={<PersistLogin />}>
               {/* <Route path="/" element={<Dashboard />} /> */}

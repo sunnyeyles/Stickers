@@ -1,4 +1,4 @@
-import { Anchor, Group, ActionIcon, rem, Image } from '@mantine/core'
+import { Anchor, Group, ActionIcon, rem, Image, Text } from '@mantine/core'
 import {
   IconBrandTwitter,
   IconBrandYoutube,
@@ -6,13 +6,13 @@ import {
 } from '@tabler/icons-react'
 import { useStyles } from './footer_styles'
 import { useMediaQuery } from '@mantine/hooks'
-import { IconBeach } from '@tabler/icons-react'
+import { Link } from 'react-router-dom'
 import dogHappy from './../../assets/dog_happy.svg'
 
 const links = [
-  { link: '#', label: 'Contact' },
-  { link: '#', label: 'Blog' },
-  { link: '#', label: 'Shop' },
+  { link: '/contact', label: 'Contact' },
+  { link: '/about', label: 'About' },
+  { link: '/products', label: 'Shop' },
 ]
 
 export function Footer() {
@@ -20,16 +20,9 @@ export function Footer() {
   const matches = useMediaQuery('(min-width: 56.25em)')
 
   const items = links.map((link) => (
-    <Anchor
-      c="dimmed"
-      key={link.label}
-      href={link.link}
-      lh={1}
-      onClick={(event) => event.preventDefault()}
-      size="md"
-    >
-      {link.label}
-    </Anchor>
+    <Link to={link.link} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Text>{link.label}</Text>
+    </Link>
   ))
 
   return (
@@ -41,7 +34,6 @@ export function Footer() {
       }}
     >
       <Group>
-        {/* <IconBeach size={50} /> */}
         <Image height="3.5rem" width="3.5rem" src={dogHappy} alt="Happy Dog" />
       </Group>
 
