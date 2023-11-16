@@ -9,6 +9,9 @@ export function MyOrders() {
   const { data: orders } = useGetAllOrdersFromUserQuery(user?._id)
   const userAddress = user?.address
 
+  if (!orders) {
+    return null
+  }
   return (
     <>
       <Title mb="lg">My Orders</Title>
@@ -17,7 +20,7 @@ export function MyOrders() {
         <Card key={order?._id} mb="lg" shadow="sm" padding="lg" radius="md" withBorder>
           <Group>
             <Text size="lg" weight="bold">customer name: </Text>
-            <Text>{order.shipping.name}</Text>
+            <Text>{user.userName}</Text>
           </Group>
           <Group>
             <Text size="lg" weight="bold">Order number: </Text>

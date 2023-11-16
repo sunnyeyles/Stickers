@@ -22,7 +22,7 @@ export const authSlice = createSlice({
       const {data} = action.payload
       state.user = data?.user
       state.token = data?.accessToken
-      console.log('USER AUTH SET!!', state.token)
+      //console.log('USER AUTH SET!!', state.token)
     },
     logOut: (state) => {
       state.user = null

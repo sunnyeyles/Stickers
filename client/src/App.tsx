@@ -56,6 +56,7 @@ export default function App() {
               />
               <Route path="/confirmation" element={<PaymentConfirmation />} />
             </Route>
+
           </Routes>
 
           <Footer />

@@ -89,6 +89,5 @@ export interface IOrderResponse {
   createdAt: string
 }
 
-export interface IPlacedOrderData extends IUserAddressInfo { }
 
 export interface IShippingInfoFormData {}

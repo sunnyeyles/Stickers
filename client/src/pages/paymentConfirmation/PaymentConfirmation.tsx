@@ -26,7 +26,7 @@ export function PaymentConfirmation() {
                 />
                 <Title mt={rem(20)} mb={rem(80)}>Payment Successful</Title>
                 <Stack>
-                    <Text>Please login to see your Order:</Text><Button component={Link} to="/profile" radius="xl">Login</Button>
+                    <Button component={Link} to="/profile" radius="xl">My Orders</Button>
                     <Anchor
                             component="button"
                             type="button"
