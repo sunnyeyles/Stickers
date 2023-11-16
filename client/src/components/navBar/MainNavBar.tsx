@@ -1,5 +1,4 @@
 import { Header, Group, Button, Box, TextInput } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
 import { navBarStyles } from './nav_bar_styles'
 import { Link } from 'react-router-dom'
 import { DogHappy } from '../../assets/DogHappy'
@@ -17,7 +16,7 @@ export function MainNavBar() {
   const UserButtons = () => {
     // gets set to false whenever page is refreshed
     // need persisted state for isAutheneticated
-    if (userAuth?.token === null ||userAuth.token === undefined) {
+    if (userAuth?.token === null || userAuth.token === undefined) {
       return <NavBarLoggedOut />
     } else {
       return <NavBarLoggedIn />
@@ -45,10 +44,6 @@ export function MainNavBar() {
               About
             </Button>
           </Group>
-          <TextInput
-            aria-label="Search Items"
-            icon={<IconSearch size="1rem" />}
-          />
         </Group>
         <UserButtons />
       </Header>
