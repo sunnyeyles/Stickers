@@ -14,6 +14,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
     item => ({
       itemId: item._id,
       itemName: item.itemName,
+      imagePath: item.imagePath,
       itemPrice: item.itemPrice,
       quantity: item.quantity
     })

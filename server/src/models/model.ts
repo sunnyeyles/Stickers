@@ -22,7 +22,6 @@ const userSchema: Schema = new Schema(
     password: { type: String, required: true },
     address: {},
     shoppingCart: [itemSchema],
-    orders: [],
     terms: { type: Boolean, required: true },
     profileImage: { type: String }
   },
@@ -40,12 +39,7 @@ const orderSchema: Schema = new Schema(
         _id: { type: String },
         itemName: { type: String },
         itemPrice: { type: String },
-        itemDescription: { type: String },
         imagePath: { type: String },
-        itemCategory: { type: String },
-        numOfItems: { type: Number },
-        reduced: { type: Boolean },
-        percentageReduced: { type: Number },
         quantity: { type: Number }
       }
     ],

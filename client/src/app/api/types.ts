@@ -86,6 +86,7 @@ export interface IOrderResponse {
   }
   deliveryStatus: string
   paymentStatus: string
+  createdAt: string
 }
 
 export interface IPlacedOrderData extends IUserAddressInfo { }

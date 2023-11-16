@@ -1,14 +1,13 @@
 import { Card, Divider, Grid, Group, Text, Title } from '@mantine/core'
-import Ducks from '../../assets/two_ducks_with_hat.png'
 import { useGetAllOrdersFromUserQuery } from '../../app/features/placeOrder/placeOrderApi'
 import { selectUser } from '../../app/features/users/userSlice'
 import { useAppSelector } from '../../hooks/hooks'
+import dayjs from 'dayjs'
 
 export function MyOrders() {
   const user: any = useAppSelector(selectUser)
   const { data: orders } = useGetAllOrdersFromUserQuery(user?._id)
-  console.log("Orders", orders)
-  console.log("user", user)
+  const userAddress = user?.address
 
   return (
     <>
@@ -17,23 +16,32 @@ export function MyOrders() {
       (
         <Card key={order._id} mb="lg" shadow="sm" padding="lg" radius="md" withBorder>
           <Group>
-            <Title>customer name: {order.shipping.name}</Title>
-            <Title>Order number: {order.paymentIntentId}</Title>
-            <Text>Order date:</Text>
-            <Text>Payment method: Credit Card</Text>
+            <Text size="lg" weight="bold">customer name: </Text>
+            <Text>{order.shipping.name}</Text>
           </Group>
-
+          <Group>
+            <Text size="lg" weight="bold">Order number: </Text>
+            <Text>{order.paymentIntentId}</Text>
+          </Group>
+          <Group>
+            <Text size="lg" weight="bold">Order date: </Text>
+            <Text>{dayjs(order.createdAt).format('DD-MM-YYYY')}</Text>
+          </Group>
+          <Group>
+            <Text size="lg" weight="bold">Payment method: </Text>
+            <Text>Credit Card</Text>
+          </Group>
           {order.products.map((product) => (
             <>
-              <Grid key={product._id} mt={60}>
-                <Grid.Col sm={4}>
-                  <img src={Ducks} alt="Duck" width="100%" height="auto" />
+              <Grid justify="flex-start" align="center" key={product._id} mt={60}>
+                <Grid.Col xs={4}>
+                  <img src={product.imagePath} alt="Duck" width="50%" height="auto" />
                 </Grid.Col>
-                <Grid.Col sm={4}>
+                <Grid.Col xs={4}>
                   <Text>{product.itemName}</Text>
                   <Text>quantity: {product.quantity}</Text>
                 </Grid.Col>
-                <Grid.Col sm={4}>
+                <Grid.Col xs={4}>
                   <Text align='right'>{product.itemPrice}</Text>
                 </Grid.Col>
               </Grid>
@@ -55,17 +63,24 @@ export function MyOrders() {
           <Divider my="sm" />
           <Grid mt={20}>
             <Grid.Col sm={6}>
-              <Title>Delivery address</Title>
+              <Title size="h4">Delivery address</Title>
+              <Group>
+                <Text>{userAddress.firstName} {userAddress.lastName}</Text>
+              </Group>
+              <Group>
+                <Text>{userAddress.streetName} {userAddress.houseNumber}</Text>
+              </Group>
+              <Group>
+                <Text>{userAddress.postCode}, {userAddress.city}, {userAddress.country}</Text>
+                <Text></Text>
+              </Group>
+            </Grid.Col>
+            {/* <Grid.Col sm={6}>
+              <Title size="h4">Billing address</Title>
               <Text>Name</Text>
               <Text>Street Nr.</Text>
               <Text>Post Code, City, Country</Text>
-            </Grid.Col>
-            <Grid.Col sm={6}>
-              <Title>Billing address</Title>
-              <Text>Name</Text>
-              <Text>Street Nr.</Text>
-              <Text>Post Code, City, Country</Text>
-            </Grid.Col>
+            </Grid.Col> */}
           </Grid>
         </Card>
       )

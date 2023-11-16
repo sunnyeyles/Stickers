@@ -15,7 +15,6 @@ export interface IUser extends Document {
     country: string
   } | null
   shoppingCart: object[] | null
-  orders: object[] | null
   terms: boolean
   profileImage: string
 }
@@ -48,6 +47,7 @@ export interface IOrder extends Document {
 export interface IOrderItem {
   itemId: string
   itemName: string
+  imagePath: string
   itemPrice: string
   quantity: number
 }
