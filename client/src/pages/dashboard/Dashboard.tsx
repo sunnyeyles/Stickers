@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Overlay, Container, Title, Button, Text } from '@mantine/core'
 import { useStyles } from './dashboard_styles'
-import { ItemsCollection } from '../../components/itemsCollection/ItemsCollection'
+import { ItemCard } from '../../components/itemCard/ItemCard'
 
 export function Dashboard() {
   const { classes } = useStyles()
@@ -34,7 +34,7 @@ export function Dashboard() {
           </Button>
         </Container>
       </div>
-      <ItemsCollection />
+      <ItemCard />
     </>
   )
 }
