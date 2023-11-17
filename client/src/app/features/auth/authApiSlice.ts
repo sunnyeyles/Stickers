@@ -2,6 +2,7 @@ import { IUser } from '../../api/types'
 import { FormSchemaType } from '../../../components/form/loginForm/LoginForm'
 import { logOut, setCredentials } from './authSlice'
 import { apiSlice } from '../../api/apiSlice'
+import { unsetUser } from '../users/userSlice'
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

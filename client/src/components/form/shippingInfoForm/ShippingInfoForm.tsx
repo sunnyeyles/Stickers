@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Title, Button, Grid, Box, TextInput, NumberInput } from '@mantine/core'
 import { useDispatch } from 'react-redux'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
@@ -6,12 +5,10 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   updateUserAddress,
-  setUser,
 } from '../../../app/features/users/userSlice'
 import { useUserDetails } from '../../../hooks/hooks'
 import { useUpdateUserAddressMutation } from '../../../app/features/users/usersApiSlice'
 import {
-  IUserAddressInfo,
   IUserAddressInfoWithId,
 } from '../../../app/api/types'
 

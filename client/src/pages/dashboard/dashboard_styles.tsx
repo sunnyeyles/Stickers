@@ -5,7 +5,7 @@ export const useStyles = createStyles((theme) => ({
     header: {
       position: 'relative',
       background:`url(${BackgroundImage})`,
-      backgroundSize: 'cover',
+      backgroundSize: 'cover'
     },
   
     container: {
@@ -39,6 +39,14 @@ export const useStyles = createStyles((theme) => ({
         fontSize: rem(28),
         lineHeight: 1.3,
       },
+    },
+
+    welcome: {
+      fontFamily: theme.fontFamilyMonospace,
+      color: theme.black,
+      fontSize: rem(40),
+      fontWeight: 900,
+      textAlign: 'right'
     },
   
     description: {
