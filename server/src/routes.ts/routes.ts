@@ -13,7 +13,6 @@ import { getAllItemsFromDb } from '../controllers/item_controllers/get_all_items
 import { getItemsByCategory } from '../controllers/item_controllers/get_items_by_category'
 import { verifyCheckout } from '../controllers/item_controllers/verify_checkout'
 import { handleGoogleAuthCallback } from '../middleware/google_auth'
-import { moveCartToOrders } from '../controllers/item_controllers/move_user_shopping_cart_to_orders'
 import passport from 'passport'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
@@ -60,7 +59,6 @@ router.get(
 router.get('/item/get-specific-item/:itemId', getSpecificItem)
 router.get('/item/reduced', getReducedItems)
 router.post('/item/verify-checkout', verifyCheckout)
-router.post('/item/move-cart-to-orders', moveCartToOrders)
 
 //// PAYMENT ENDPOINTS AND ORDERS
 //stripe for credit card payment

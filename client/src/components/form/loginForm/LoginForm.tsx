@@ -70,7 +70,7 @@ export function LoginForm() {
     const userData = await login(loginData).unwrap()
     dispatch(setCredentials({ ...userData }))
     dispatch(setUser({ ...userData }))
-    navigate('/profile')
+    navigate('/dashboard')
   }
 
   const handleToggle = () => {

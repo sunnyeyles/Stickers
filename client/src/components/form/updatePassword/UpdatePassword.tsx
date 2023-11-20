@@ -3,6 +3,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextInput } from "../custom_input_fields/textInput/TextInput";
+import { selectUser } from "../../../app/features/users/userSlice";
+import { useAppSelector } from "../../../hooks/hooks";
 
 const updatePasswordSchema = z
     .object({
@@ -25,20 +27,22 @@ const updatePasswordSchema = z
 type FormSchemaType = z.infer<typeof updatePasswordSchema>
 
 export function UpdatePassword() {
-
+    const user = useAppSelector(selectUser)
+    //console.log(user)
     const {
         control,
         handleSubmit,
         formState: { isSubmitting },
     } = useForm<FormSchemaType>({
         defaultValues: {
-            userName: '',
-            email: '',
+            userName: user.userName,
+            email: user.email,
             currentPassword: '',
             newPassword: ''
         },
         resolver: zodResolver(updatePasswordSchema),
     })
+    //console.log(control._defaultValues)
 
 
     const onSubmit = async (values: any) => {
@@ -56,21 +60,21 @@ export function UpdatePassword() {
                         <Stack>
                             <TextInput
                                 control={control}
-                                placeholder="Username"
                                 size="md"
                                 radius="md"
                                 id="userName"
                                 name="userName"
                                 disabled={true}
+                                defaultValue={control._defaultValues.userName}
                             />
                             <TextInput
                                 control={control}
-                                placeholder="Email"
                                 size="md"
                                 radius="md"
                                 id="email"
                                 name="email"
                                 disabled={true}
+                                defaultValue={control._defaultValues.email}
                             />
                         </Stack>
                     </Grid.Col>
