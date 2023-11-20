@@ -28,7 +28,7 @@ type FormSchemaType = z.infer<typeof updatePasswordSchema>
 
 export function UpdatePassword() {
     const user = useAppSelector(selectUser)
-    console.log(user)
+    //console.log(user)
     const {
         control,
         handleSubmit,
@@ -42,7 +42,7 @@ export function UpdatePassword() {
         },
         resolver: zodResolver(updatePasswordSchema),
     })
-    console.log(control._defaultValues)
+    //console.log(control._defaultValues)
 
 
     const onSubmit = async (values: any) => {
