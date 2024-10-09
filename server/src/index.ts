@@ -20,7 +20,7 @@ connectToDatabase()
 
 //dropCollections()
 //seedUsers(2, 2)
-seedItems(5)
+// seedItems(5)
 
 app.use(cors(corsOptions))
 
