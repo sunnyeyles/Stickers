@@ -12,11 +12,11 @@ import { getReducedItems } from '../controllers/item_controllers/get_reduced_ite
 import { getAllItemsFromDb } from '../controllers/item_controllers/get_all_items_from_db'
 import { getItemsByCategory } from '../controllers/item_controllers/get_items_by_category'
 import { verifyCheckout } from '../controllers/item_controllers/verify_checkout'
-import { handleGoogleAuthCallback } from '../middleware/google_auth'
-import passport from 'passport'
+// import { handleGoogleAuthCallback } from '../middleware/google_auth'
+// import passport from 'passport'
 import { uploadProfileImage } from '../controllers/user_controllers/upload_profile_image'
 import { upload } from '../middleware/upload'
-import { createCheckoutSession, } from '../controllers/payment_controller/create_stripe_checkout'
+import { createCheckoutSession } from '../controllers/payment_controller/create_stripe_checkout'
 import { triggerStripeWebhook } from '../controllers/payment_controller/trigger_stripe_webhook'
 import { updateUserAddress } from '../controllers/user_controllers/update_user_address'
 import { getUserByEmail } from '../controllers/user_controllers/get_user_by_email'
@@ -24,20 +24,20 @@ import { getAllOrdersFromUser } from '../controllers/payment_controller/get_all_
 
 const router: Router = express.Router()
 
-//// USER ENDPOINTS
-router.get('/user/get-user-by-id/:userId', getUserById)
-router.post('/user/create-user', createNewUser) //register
-router.post('/user/authenticate-user', userAuth) //login
-router.get('/user/refresh-token', refreshToken)
-router.post('/user/user-log-out', userLogOut)
-router.post('/user/create-user', createNewUser)
-router.post('/user/authenticate-user', userAuth)
-router.get('/user/get-user-by-id', getUserById)
-router.get('/user/get-user-by-email', getUserByEmail)
-router.get('/user/refresh-token', refreshToken)
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
-router.put('/user/change-user-password', changeUserPassword)
-router.put('/user/update-user-address', updateUserAddress)
+// //// USER ENDPOINTS
+// router.get('/user/get-user-by-id/:userId', getUserById)
+// router.post('/user/create-user', createNewUser) //register
+// router.post('/user/authenticate-user', userAuth) //login
+// router.get('/user/refresh-token', refreshToken)
+// router.post('/user/user-log-out', userLogOut)
+// router.post('/user/create-user', createNewUser)
+// router.post('/user/authenticate-user', userAuth)
+// router.get('/user/get-user-by-id', getUserById)
+// router.get('/user/get-user-by-email', getUserByEmail)
+// router.get('/user/refresh-token', refreshToken)
+// // router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
+// router.put('/user/change-user-password', changeUserPassword)
+// router.put('/user/update-user-address', updateUserAddress)
 
 //// ITEM ENDPOINTS
 router.get('/item/get-all-items', getAllItemsFromDb)
@@ -72,18 +72,18 @@ router.post('/payment/stripe/webhook', async (req: Request, res: Response) => {
     res.status(500).send('Internal Server Error')
   }
 })
-router.get('/payment/get-all-orders-from-user/:userId', getAllOrdersFromUser)
+// router.get('/payment/get-all-orders-from-user/:userId', getAllOrdersFromUser)
 
 // google Authentication Routes
 // initialize Google authentication
 // when google auth button is clicked, this uri will be fetched
-router.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
-)
+// router.get(
+//   '/auth/google',
+//   passport.authenticate('google', { scope: ['profile'] })
+// )
 
 // once user is authenticated, they will be routed here
-router.get('/auth/google/callback', handleGoogleAuthCallback)
+// router.get('/auth/google/callback', handleGoogleAuthCallback)
 
 // UPLOAD SINGLE FILE
 router.post(

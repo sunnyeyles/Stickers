@@ -27,7 +27,7 @@ export const seedItems = (numOfEntries: number) => {
       itemPrice: faker.commerce.price({ min: 100, max: 200 }),
       itemCategory: faker.commerce.department(),
       itemDescription:
-        "Sees bird in air, breaks into cage and attacks creature.",
+        'Sees bird in air, breaks into cage and attacks creature.',
       imagePath: `${envConfig.developmentServer}/uploads/three-froggos.png`,
       numOfItems: faker.number.int(100),
       reduced: isReduced,
