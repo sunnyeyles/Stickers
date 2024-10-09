@@ -8,7 +8,8 @@ export const connectToDatabase = async () => {
     const dbUsername = process.env.DB_USERNAME
     const dbPassword = process.env.DB_PASSWORD
     await mongoose.connect(
-      `mongodb+srv://${dbUsername}:${dbPassword}@ecommerce.1rapvds.mongodb.net/?retryWrites=true&w=majority`,
+      // `mongodb+srv://${dbUsername}:${dbPassword}@ecommerce.1rapvds.mongodb.net/?retryWrites=true&w=majority`,
+      `mongodb+srv://${dbUsername}:${dbPassword}@cluster0.lexrc0z.mongodb.net/`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -16,6 +17,6 @@ export const connectToDatabase = async () => {
     )
     console.log('database connected')
   } catch (error) {
-    console.error('connection error:', error)
+    console.error('Something went wronnngggg!:', error)
   }
 }
